@@ -225,9 +225,9 @@
 	$$\begin{split}{ { f }(x) }^{ ' }=\begin{cases} \begin{matrix} 0 & x<0 \end{matrix} \\ \begin{matrix} 1 & x\ge 0 \end{matrix} \end{cases}\end{split}$$  
 - LeakyReLU函数  
 	公式：  
-	$$\begin{split} f(x)=\begin{cases} \begin{matrix} \alpha x & x<0 \end{matrix} \\ \begin{matrix} x & x\ge 0 \end{matrix} \end{cases}\end{split}$$  
+	$$\begin{split} f(x)=\begin{cases} \begin{matrix} 0.01 x & x<0 \end{matrix} \\ \begin{matrix} x & x\ge 0 \end{matrix} \end{cases}\end{split}$$  
 	导函数：  
-	$$\begin{split}{ { f }(x) }^{ ' }=\begin{cases} \begin{matrix} \alpha & x<0 \end{matrix} \\ \begin{matrix} 1 & x\ge 0 \end{matrix} \end{cases}\end{split}$$    
+	$$\begin{split}{ { f }(x) }^{ ' }=\begin{cases} \begin{matrix} 0.01 & x<0 \end{matrix} \\ \begin{matrix} 1 & x\ge 0 \end{matrix} \end{cases}\end{split}$$    
 - ELU函数  
 	公式：  
 	$$\begin{split} f(\alpha ,x)=\begin{cases} \begin{matrix} \alpha \left( { e }^{ x }-1 \right) & x<0 \end{matrix} \\ \begin{matrix} x & x\ge 0 \end{matrix} \end{cases}\end{split}$$  
