@@ -246,8 +246,6 @@ namespace faQnet{
 	//2024/10/9 fQwQf
 	//ELU函数
 	//传入一个矩阵，返回该矩阵经过ELU函数处理后的矩阵。
-	//公式：  
-	//$$\begin{split} f(\alpha ,x)=\begin{cases} \begin{matrix} \alpha \left( { e }^{ x }-1 \right) & x<0 \end{matrix} \\ \begin{matrix} x & x\ge 0 \end{matrix} \end{cases}\end{split}$$
 	cv::Mat elu(cv::Mat matrix){
 		cv::Mat fx;
     	cv::exp(matrix, fx); 
