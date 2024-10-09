@@ -157,7 +157,13 @@ namespace faQnet{
 		偏置项矩阵的规格为下一层节点数*1，这是因为偏置项矩阵的每一项代表下一层某一节点的偏置项。 
 		传入参数：
 		输入矩阵
-		这是一个Mat对象，储存输入矩阵。规格为输入数据数*1。*/
+		这是一个Mat对象，储存输入矩阵。规格为输入数据数*1。
+		输出矩阵
+		这是一个Mat对象，储存输出矩阵。*/
+		cv::Mat forward(cv::Mat input){
+			result = input * weight + bias;
+			return activation_function(result);
+		}
 		
 
 	}
