@@ -197,7 +197,23 @@ namespace faQnet{
 		return fx;
 	}
 
-	
+	//2024/10/9 fQwQf
+	//ReLU函数
+	//传入一个矩阵，返回该矩阵经过ReLU函数处理后的矩阵。
+	cv::Mat relu(cv::Mat matrix){
+		cv::Mat fx;
+		cv::max(matrix, 0, fx);
+		return fx;
+	}
+
+	//2024/10/9 fQwQf
+	//Leaky ReLU函数
+	//传入一个矩阵，返回该矩阵经过Leaky ReLU函数处理后的矩阵。
+	cv::Mat leaky_relu(cv::Mat matrix){
+		cv::Mat fx;
+		cv::max(matrix, 0.01 * matrix, fx);
+		return fx;
+	}
 
 }
 
