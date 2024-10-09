@@ -213,21 +213,25 @@
 	$${ f }(x)=\sigma (x)=\frac { 1 }{ 1+{ e }^{ -x } } $$
 	导函数：  
 	$${ f }^{ ' }(x)=f(x)(1-f(x))$$  
+	2024/10/9 fQwQf 已完成
 - Tanh函数  
 	公式：  
 	$${ f }(x)=tanh(x)=\frac { { e }^{ x }-{ e }^{ -x } }{ { e }^{ x }+{ e }^{ -x } }$$
 	导函数：  
 	$${ f }^{ ' }(x)=1-f(x)^{ 2 }$$    
+	2024/10/9 fQwQf 已完成
 - ReLU函数  
 	公式：  
 	$$\begin{split}f(x)=\begin{cases} \begin{matrix} 0 & x<0 \end{matrix} \\ \begin{matrix} x & x\ge 0 \end{matrix} \end{cases}\end{split}$$  
 	导函数：  
 	$$\begin{split}{ { f }(x) }^{ ' }=\begin{cases} \begin{matrix} 0 & x<0 \end{matrix} \\ \begin{matrix} 1 & x\ge 0 \end{matrix} \end{cases}\end{split}$$  
+	2024/10/9 fQwQf 已完成
 - LeakyReLU函数  
 	公式：  
 	$$\begin{split} f(x)=\begin{cases} \begin{matrix} 0.01 x & x<0 \end{matrix} \\ \begin{matrix} x & x\ge 0 \end{matrix} \end{cases}\end{split}$$  
 	导函数：  
 	$$\begin{split}{ { f }(x) }^{ ' }=\begin{cases} \begin{matrix} 0.01 & x<0 \end{matrix} \\ \begin{matrix} 1 & x\ge 0 \end{matrix} \end{cases}\end{split}$$    
+	2024/10/9 fQwQf 已完成
 - ELU函数  
 	公式：  
 	$$\begin{split} f(\alpha ,x)=\begin{cases} \begin{matrix} \alpha \left( { e }^{ x }-1 \right) & x<0 \end{matrix} \\ \begin{matrix} x & x\ge 0 \end{matrix} \end{cases}\end{split}$$  
@@ -238,6 +242,7 @@
 	$$f(x)=\ln { (1+{ e }^{ x }) }$$  
 	导函数：  
 	$${ f }^{ ' }(x)=\frac { 1 }{ 1+{ e }^{ -x } }$$  
+	2024/10/9 fQwQf 已完成
 - Softsign函数  
 	公式：  
 	$$f(x)=\frac { x }{ \left| x \right| +1 }$$  
