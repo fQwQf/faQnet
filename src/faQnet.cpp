@@ -167,4 +167,38 @@ namespace faQnet{
 		
 
 	}
+
+
+	//2024/10/9 fQwQf
+	//激活函数
+	//激活函数是神经网络中不可或缺的部分。
+	//对该函数，传入要处理的矩阵和激活函数名称，返回激活函数的输出矩阵。
+	//激活函数名称是一个字符串，储存激活函数名称。
+
+
+	//2024/10/9 fQwQf
+	//sigmoid函数
+	//传入一个矩阵，返回该矩阵经过sigmoid函数处理后的矩阵。
+	cv::Mat sigmoid(cv::Mat matrix){
+		cv::Mat exp_x, fx;
+		cv::exp(-matrix, exp_x);
+		fx = 1.0 / (1.0 + exp_x);
+		return fx;
+	}
+
+	//2024/10/9 fQwQf
+	//tanh函数
+	//传入一个矩阵，返回该矩阵经过tanh函数处理后的矩阵。
+	cv::Mat tanh(cv::Mat matrix){
+		cv::Mat exp_x, exp_neg_x, fx;
+		cv::exp(matrix, exp_x);
+		cv::exp(-matrix, exp_neg_x);
+		fx = (exp_x - exp_neg_x) / (exp_x + exp_neg_x);
+		return fx;
+	}
+
+	
+
 }
+
+
