@@ -234,6 +234,15 @@ namespace faQnet{
 		return fx;
 	}
 
+	//2024/10/9 fQwQf
+	//swish函数
+	//传入一个矩阵，返回该矩阵经过swish函数处理后的矩阵。
+	cv::Mat swish(cv::Mat matrix){
+		cv::Mat fx;
+		fx = matrix / (1.0 + exp(-matrix));
+		return fx;
+	}
+
 
 }
 
