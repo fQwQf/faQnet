@@ -174,6 +174,33 @@ namespace faQnet{
 	//激活函数是神经网络中不可或缺的部分。
 	//对该函数，传入要处理的矩阵和激活函数名称，返回激活函数的输出矩阵。
 	//激活函数名称是一个字符串，储存激活函数名称。
+	//该函数会根据激活函数名称调用不同的激活函数，返回激活函数的输出矩阵。
+	cv::Mat activation_function(cv::Mat matrix, std::string act_function = "sigmoid"){
+		if(act_function == "sigmoid"){
+			return sigmoid(matrix);
+		}
+		else if(act_function == "tanh"){
+			return tanh(matrix);
+		}
+		else if(act_function == "relu"){
+			return relu(matrix);
+		}
+		else if(act_function == "leaky_relu"){
+			return leaky_relu(matrix);
+		}
+		else if(act_function == "softplus"){
+			return softplus(matrix);
+		}
+		else if(act_function == "softsign"){
+			return softsign(matrix);
+		}
+		else if(act_function == "swish"){
+			return swish(matrix);
+		}
+		else if(act_function == "elu"){
+			return elu(matrix);
+		}
+	}
 
 
 	//2024/10/9 fQwQf
