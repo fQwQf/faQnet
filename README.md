@@ -248,12 +248,14 @@
 	$$f(x)=\frac { x }{ \left| x \right| +1 }$$  
 	导函数：  
 	$${ f }^{ ' }(x)=\frac { 1 }{ { (1+\left| x \right| ) }^{ 2 } } $$  
+	2024/10/9 fQwQf 已完成  
 - Swish函数  
 	公式：  
 	$$f\left( x \right) =x\cdot \sigma \left( x \right) $$  
 	其中，$\sigma(x)$ 是 $sigmoid$ 函数。
 	导函数：  
 	$$f^{'}\left( x \right) =\sigma \left( x \right) +x\cdot \sigma^{'} \left( x \right) $$  
+	2024/10/9 fQwQf 已完成  
 
 ## 一些可能的想法  
 - 过滤函数  
