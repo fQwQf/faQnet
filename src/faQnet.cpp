@@ -225,6 +225,15 @@ namespace faQnet{
 		return fx;
 	}
 
+	//2024/10/9 fQwQf
+	//softsign函数
+	//传入一个矩阵，返回该矩阵经过softsign函数处理后的矩阵。
+	cv::Mat softsign(cv::Mat matrix){
+		cv::Mat fx;
+		fx = matrix / (1.0 + abs(matrix));
+		return fx;
+	}
+
 
 }
 
