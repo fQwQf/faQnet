@@ -233,10 +233,12 @@
 	$$\begin{split}{ { f }(x) }^{ ' }=\begin{cases} \begin{matrix} 0.01 & x<0 \end{matrix} \\ \begin{matrix} 1 & x\ge 0 \end{matrix} \end{cases}\end{split}$$    
 	2024/10/9 fQwQf 已完成
 - ELU函数  
+	这里我们取$\alpha =1$。  
 	公式：  
 	$$\begin{split} f(\alpha ,x)=\begin{cases} \begin{matrix} \alpha \left( { e }^{ x }-1 \right) & x<0 \end{matrix} \\ \begin{matrix} x & x\ge 0 \end{matrix} \end{cases}\end{split}$$  
 	导函数：  
 	$$\begin{split}{ { f }(\alpha ,x) }^{ ' }=\begin{cases} \begin{matrix} f(\alpha ,x)+\alpha & x<0 \end{matrix} \\ \begin{matrix} 1 & x\ge 0 \end{matrix} \end{cases}\end{split}$$   
+	2024/10/9 fQwQf 已完成  
 - Softplus函数  
 	公式：  
 	$$f(x)=\ln { (1+{ e }^{ x }) }$$  
