@@ -384,6 +384,23 @@ namespace faQnet{
 		return sigmoid_matrix * (1 + matrix * (1 - sigmoid_matrix));
 	}
 
+	//2024/10/10 fQwQf
+	//ELU函数的导数
+	//传入一个矩阵，返回该矩阵经过ELU函数的导函数处理后的矩阵。
+	cv::Mat elu_derivative(cv::Mat matrix){
+		cv::Mat result = matrix.clone();
+		for(int i = 0; i < matrix.rows; ++i){
+			for(int j = 0; j < matrix.cols; ++j){
+				if(matrix.at<float>(i, j) >= 0){
+					result.at<float>(i, j) = 1;
+				}else{
+					result.at<float>(i, j) = exp(matrix.at<float>(i, j));
+				}
+			}
+		}
+		return result;
+	}
+
 
 }
 
