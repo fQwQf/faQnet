@@ -110,7 +110,7 @@ namespace faQnet {
 	//传入一个矩阵，返回该矩阵经过ELU函数处理后的矩阵。
 	cv::Mat elu(cv::Mat matrix){
 		cv::Mat fx;
-		cv::exp(matrix, fx); 
+		cv::exp(matrix, fx);
 		return matrix < 0 ? (fx - 1) : matrix;
 	}
 
@@ -135,7 +135,7 @@ namespace faQnet {
 			return leaky_relu_derivative(matrix);
 		}
 		else if(act_function == "softplus"){
-			return softplus_derivative(matrix); 
+			return softplus_derivative(matrix);
 		}
 		else if(act_function == "softsign"){
 			return softsign_derivative(matrix);
@@ -147,7 +147,7 @@ namespace faQnet {
 			return elu_derivative(matrix);
 		}
 	}
-	
+
 	//2024/10/10 fQwQf
 	//Sigmoid函数的导数
 	//传入一个矩阵，返回该矩阵经过sigmoid函数的导函数处理后的矩阵。
@@ -204,7 +204,7 @@ namespace faQnet {
 		return fx;
 	}
 
-	//2024/10/10 fQwQf 
+	//2024/10/10 fQwQf
 	//Softsign函数的导数
 	//传入一个矩阵，返回该矩阵经过Softsign函数的导函数处理后的矩阵。
 	cv::Mat softsign_derivative(cv::Mat matrix){
@@ -290,7 +290,7 @@ namespace faQnet {
 	//平滑平均绝对误差 (SLL/Smooth L1Loss)
 	float sll(cv::Mat y_true, cv::Mat y_pred){
 		cv::Mat diff = y_true - y_pred;
-		cv::Mat smooth_l1 = cv::Mat::zeros(abs_diff.size(), abs_diff.type());
+		cv::Mat smooth_l1 = cv::Mat::zeros(diff.size(), diff.type());
 		for (int i = 0; i < diff.rows; ++i) {
 			for (int j = 0; j < diff.cols; ++j) {
 				float val = abs(diff.at<float>(i, j));
@@ -302,6 +302,35 @@ namespace faQnet {
 			}
 		}
 		return smooth_l1.sum() / y_true.rows;
+	}
+
+	//2024/10/10 fQwQf
+	//均方对数误差 (MSLE)
+	float msle(cv::Mat y_true, cv::Mat y_pred){
+		// 计算自然对数
+		cv::Mat log_y_true, log_y_pred;
+		cv::log(y_true, log_y_true + 1);
+		cv::log(y_pred, log_y_pred + 1);
+
+		// 计算差的平方
+		cv::Mat diff_squared = (log_y_true - log_y_pred).mul(log_y_true - log_y_pred);
+
+		// 求平均值
+		return diff_squared.sum() / y_true.rows;
+	}
+
+	//2024/10/10 fQwQf
+	//二元交叉熵损失函数（CE）
+	float ce(cv::Mat y_true, cv::Mat y_pred){
+		cv::Mat result = cv::Mat::zeros(y_true.size(), y_true.type());
+		for (int i = 0; i < diff.rows; ++i) {
+			for (int j = 0; j < diff.cols; ++j) {
+				float tru = y_true.at<float>(i, j);
+				float pre = y_pred.at<float>(i, j);
+				result.at<float>(i, j) = tru * log(pre) + (1 - tru) * log(1 - pre);
+			}
+		}
+		return -result.sum() / y_true.rows;
 	}
 
 }

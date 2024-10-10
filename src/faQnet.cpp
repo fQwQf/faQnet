@@ -6,7 +6,7 @@
 
 
 namespace faQnet{
-    
+
 
 	//2024/10/9 fQwQf
 	//layer类 代表神经网络的一层
@@ -19,7 +19,7 @@ namespace faQnet{
 	//这里我们采用openCV的Mat对象实现矩阵。
 	//（也可以用UMat对象，这样可以在计算机配置了openCL的情况下利用GPU加速，但是我觉得没必要）
 	class layer{
-		
+
 
 		protected:
 
@@ -40,7 +40,7 @@ namespace faQnet{
 
 		//2024/10/9 fQwQf
 		//激活函数
-		//一个字符串，用于储存该层所用的激活函数。 
+		//一个字符串，用于储存该层所用的激活函数。
 		std::string act_func;
 
 
@@ -88,13 +88,13 @@ namespace faQnet{
 			}
 		}
 		//其实这个完全可以用opencv的randu函数实现，但是为了学习，我还是自己写了。
-		
+
 		//正态分布初始化
 		//传入正态分布的均值和标准差和需要初始化的矩阵，将矩阵中的每一项赋值为一个正态分布的随机值。
 		void normal_init(float mean, float std, cv::Mat &matrix){
 			cv:randn(matrix, mean, std);
 		}
-		
+
 		//摆烂了。
 
 		//常数初始化
@@ -116,7 +116,7 @@ namespace faQnet{
 		将中间矩阵保存为结果矩阵，然后将其代入激活函数，将激活函数的输出矩阵作为该层的输出。
 		从这里我们可以发现：权值矩阵的规格为该层节点数*下一层节点数，
 		这是因为权值矩阵的每一列列代表一个节点，每一行代表对下一层某一个节点的权重；
-		偏置项矩阵的规格为下一层节点数*1，这是因为偏置项矩阵的每一项代表下一层某一节点的偏置项。 
+		偏置项矩阵的规格为下一层节点数*1，这是因为偏置项矩阵的每一项代表下一层某一节点的偏置项。
 		传入参数：
 		输入矩阵
 		这是一个Mat对象，储存输入矩阵。规格为输入数据数*1。
@@ -126,7 +126,7 @@ namespace faQnet{
 			result = input * weight + bias;
 			return activation_function(result);
 		}
-		
+
 
 
 		//2024/10/10 fQwQf
@@ -154,16 +154,16 @@ namespace faQnet{
 		这是一个double型变量，代表学习率。
 		上层误差矩阵*/
 		void update_weight(double learning_rate, cv::Mat last_error){
-		    cv::Mat output_derivative = activation_function_derivative(result, act_func);
-    		cv::Mat delta = last_error * result.t();
-    		delta = delta.mul(output_derivative);
-    		weight -= learning_rate * delta;
+			cv::Mat output_derivative = activation_function_derivative(result, act_func);
+			cv::Mat delta = last_error * result.t();
+			delta = delta.mul(output_derivative);
+			weight -= learning_rate * delta;
 		}
 
 
 		//2024/10/10 fQwQf
 		/*
-		单层偏置更新 
+		单层偏置更新
 		这个函数接受一个学习率和上层误差矩阵。
 		偏置项更新的具体操作是：将偏置项矩阵减去（学习率*上层误差矩阵）。
 		传入参数：
@@ -183,7 +183,7 @@ namespace faQnet{
 	//net类 代表整个神经网络
 	//这是整个神经网络最大的类，代表整个神经网络。
 	class net{
-	    
+
 		protected:
 
 		//层
@@ -198,7 +198,7 @@ namespace faQnet{
 		//这个函数接受每一层每一层节点详情，然后借此初始化神经网络。
 		//这里所谓初始化神经网络的含义是：在成员变量层生成每一层。
 		//实际上这非常简单——只需要将该层节点数和下一层节点数及激活函数类型传入构造函数即可。
-		//要注意的是最后一层没有下一层，因此不进行神经网络运算，而是直接输出或执行过滤函数（这点还没有实现）。  
+		//要注意的是最后一层没有下一层，因此不进行神经网络运算，而是直接输出或执行过滤函数（这点还没有实现）。
 		//因此，最后一层不存在layers里，而是存在另一个变量里（现在还未实现）。
 		//传入参数：
 		//传入参数：
@@ -274,7 +274,8 @@ namespace faQnet{
 
 
 
-	
+
+
 
 }
 

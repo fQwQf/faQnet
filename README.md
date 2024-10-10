@@ -131,7 +131,7 @@
 
 - 偏置项矩阵  
 	一个Mat对象，储存该层的偏置项。规格为下一层节点数*1。（实际上，每一项代表该层所有节点到下一层某一节点的该层节点偏置项之和。这样处理的意义见下文。）  
-        2024/10/9 fQwQf 已完成  
+		2024/10/9 fQwQf 已完成  
 
 - 激活函数  
 	一个字符串，用于储存该层所用的激活函数。
@@ -275,34 +275,42 @@
 - 平均绝对误差 (MAE/L1Loss)  
 	公式：  
 	$$L=\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ \left| y_{ i }-y_{ i }^{ \prime } \right| }$$  
-	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。
+	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
+	2024/10/10 fQwQf 已完成
 - 平均平方误差 (MSE/L2Loss)  
 	公式：  
 	$$L=\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ { (y_{ i }-y_{ i }^{ \prime } ) }^{ 2 } }$$  
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
-- 平滑平均绝对误差 (SLL/Smooth L1Loss)
+	2024/10/10 fQwQf 已完成
+- 平滑平均绝对误差 (SLL/Smooth L1Loss)  
 	公式：
 	$$\begin{split} L =  \frac { 1 }{ n } \sum _{ i=1 }^{ n } \begin{cases} \begin{matrix} 0.5 \left( y_{ i } - y_{ i }^{ \prime } \right) ^{ 2 } & \left| y_{ i } - y_{ i }^{ \prime } \right| <1 \end{matrix} \\ \begin{matrix} \left| y_{ i } - y_{ i } \right| - 0.5 & \left| y_{ i } - y_{ i }^{ \prime } \right| \ge 1 \end{matrix} \end{cases}\end{split}$$  
-	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。 
+	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
+	2024/10/10 fQwQf 已完成
 - 均方根误差（RMSE）  
 	公式：
 	$$L=\sqrt { \frac { 1 }{ n } \sum _{ i=1 }^{ n }{ { (y_{ i }-y_{ i }^{ \prime } ) }^{ 2 } } }$$  
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
+	2024/10/10 fQwQf 已完成
 - 平均绝对百分比误差 (MAPE)
 	公式：
 	$$L=\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ \left| \frac { y_{ i }-y_{ i }^{ \prime } }{ y_{ i } } \right| }$$  
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
+	2024/10/10 fQwQf 已完成
 - 均方对数误差 (MSLE)  
 	公式：
 	$$L=\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ { \left( \log { (1+y_{ i }^{ \prime }) } -\log { (1+y_{ i }) } \right) }^{ 2 } }$$
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
-  
+	注意！不能有任何一项为-1!  
+	2024/10/10 fQwQf 已完成
+
 
 以下函数适合分类问题：  
-- 二元交叉熵损失函数（CEL）
+- 二元交叉熵损失函数（CE）
 	公式：  
 	$$L=-\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ y_{ i }\log { (y_{ i }^{ \prime }) } +\left( 1-y_{ i } \right) \log { \left( 1-y_{ i }^{ \prime } \right) } }$$  
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i 个样本的预测值，$n$ 是样本数量。  
+	2024/10/10 fQwQf 已完成
 
 ## 一些可能的想法  
 - 过滤函数  

@@ -2,7 +2,7 @@
 #include<opencv2/core/core.hpp>
 
 namespace faQnet {
-    //2024/10/9 fQwQf
+	//2024/10/9 fQwQf
 	//激活函数
 	//激活函数是神经网络中不可或缺的部分。
 	//对该函数，传入要处理的矩阵和激活函数名称，返回激活函数的输出矩阵。
@@ -56,7 +56,7 @@ namespace faQnet {
 	//该函数会根据激活函数名称调用不同的激活函数的导数，返回激活函数的导数矩阵。
 	//激活函数名称是一个字符串，储存激活函数名称。
 	cv::Mat activation_function_derivative(cv::Mat matrix, std::string act_function = "sigmoid");
-	
+
 	//2024/10/10 fQwQf
 	//Sigmoid函数的导数
 	//传入一个矩阵，返回该矩阵经过sigmoid函数的导函数处理后的矩阵。
@@ -88,7 +88,7 @@ namespace faQnet {
 	//说实话，在保证可读性的前提下，实现同样的功能，代码量应该是越少越好的。
 	cv::Mat softplus_derivative(cv::Mat matrix);
 
-	//2024/10/10 fQwQf 
+	//2024/10/10 fQwQf
 	//Softsign函数的导数
 	//传入一个矩阵，返回该矩阵经过Softsign函数的导函数处理后的矩阵。
 	cv::Mat softsign_derivative(cv::Mat matrix);
@@ -101,5 +101,41 @@ namespace faQnet {
 	//ELU函数的导数
 	//传入一个矩阵，返回该矩阵经过ELU函数的导函数处理后的矩阵。
 	cv::Mat elu_derivative(cv::Mat matrix);
+
+
+
+	//2024/10/10 fQwQf
+	//损失函数
+	//传入两个矩阵和采用的损失函数名称，返回两个矩阵之间的损失值。
+	float loss_function(cv::Mat y_true, cv::Mat y_pred, std::string loss_function_name);
+
+
+	//2024/10/10 fQwQf
+	//平均绝对误差 (MAE/L1Loss)
+	float mae(cv::Mat y_true, cv::Mat y_pred);
+
+	//2024/10/10 fQwQf
+	//平均平方误差 (MSE/L2Loss)
+	float mse(cv::Mat y_true, cv::Mat y_pred);
+
+	//2024/10/10 fQwQf
+	//均方根误差 (RMSE)
+	float rmse(cv::Mat y_true, cv::Mat y_pred);
+
+	//2024/10/10 fQwQf
+	//平均绝对百分比误差 (MAPE)
+	float mape(cv::Mat y_true, cv::Mat y_pred);
+
+	//2024/10/10 fQwQf
+	//平滑平均绝对误差 (SLL/Smooth L1Loss)
+	float sll(cv::Mat y_true, cv::Mat y_pred);
+
+	//2024/10/10 fQwQf
+	//均方对数误差 (MSLE)
+	float msle(cv::Mat y_true, cv::Mat y_pred);
+
+	//2024/10/10 fQwQf
+	//二元交叉熵损失函数（CE）
+	float ce(cv::Mat y_true, cv::Mat y_pred);
 
 }
