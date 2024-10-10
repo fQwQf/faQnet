@@ -4,7 +4,8 @@
 
 #include"function/function.h"
 
-
+using std::cout;
+using std::endl;
 namespace faQnet{
 
 
@@ -50,13 +51,13 @@ namespace faQnet{
 		//规格为该层节点数*1。在反向传播中会用到。
 		cv::Mat result;
 
+		public:
 
 		//2024/10/9 fQwQf
 		//误差矩阵
 		//在反向传播中计算，并用于优化。规格为该层节点数*1。
 		cv::Mat error;
 
-		public:
 
 		//2024/10/9 fQwQf
 		//构造函数：
@@ -254,7 +255,7 @@ namespace faQnet{
 		这是一个double型变量，代表学习率。*/
 		void update_weight(double learning_rate){
 			for(int i = 0; i < layers.size(); i++){
-				layers[i].update_weight(learning_rate);
+				layers[i].update_weight(learning_rate, layers[i + 1].error);
 			}
 		}
 
@@ -266,7 +267,7 @@ namespace faQnet{
 		这是一个double型变量，代表学习率。*/
 		void update_bias(double learning_rate){
 			for(int i = 0; i < layers.size(); i++){
-				layers[i].update_bias(learning_rate);
+				layers[i].update_bias(learning_rate, layers[i + 1].error);
 			}
 		}
 
@@ -280,7 +281,7 @@ namespace faQnet{
 		目标矩阵
 		这是一个Mat对象，即目标输出矩阵。*/
 		float loss(cv::Mat output, cv::Mat target, std::string loss_function_name){
-			return loss_function(target, output, string loss_function_name);
+			return loss_function(target, output,loss_function_name);
 		}
 
 		//2024/10/10 fQwQf
