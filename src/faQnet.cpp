@@ -368,6 +368,14 @@ namespace faQnet{
 		return fx;
 	}
 
+	//2024/10/10 fQwQf 
+	//Softsign函数的导数
+	//传入一个矩阵，返回该矩阵经过Softsign函数的导函数处理后的矩阵。
+	cv::Mat softsign_derivative(cv::Mat matrix){
+	    cv::Mat abs_matrix = abs(matrix);
+	    return 1 / (abs_matrix + 1) / (abs_matrix + 1);
+	}
+
 
 }
 
