@@ -321,11 +321,26 @@ namespace faQnet{
     	cv::Mat result = matrix.clone();
     	for(int i = 0; i < matrix.rows; ++i){
         	for(int j = 0; j < matrix.cols; ++j){
-        	    result.at<float>(i, j) = matrix.at<float>(i, j) > 0 ? 1 : 0;
+        	    result.at<float>(i, j) = matrix.at<float>(i, j) >= 0 ? 1 : 0;
     	    }
 	    }
     	return result;
 	}
+
+	//2024/10/10 fQwQf
+	//Leaky ReLU函数的导数
+	//传入一个矩阵，返回该矩阵经过Leaky ReLU函数的导函数处理后的矩阵。
+	cv::Mat leaky_relu_derivative(cv::Mat matrix){
+	    cv::Mat result = matrix.clone();
+    	for(int i = 0; i < matrix.rows; ++i){
+        	for(int j = 0; j < matrix.cols; ++j){
+        	    result.at<float>(i, j) = matrix.at<float>(i, j) >= 0 ? 1 : 0.01;
+    	    }
+	    }
+    	return result;
+	}
+
+	
 
 }
 
