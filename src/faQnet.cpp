@@ -9,46 +9,6 @@ namespace faQnet{
     
 
 	//2024/10/9 fQwQf
-	//net类 代表整个神经网络
-	//这是整个神经网络最大的类，代表整个神经网络。
-	class net{
-	    
-		protected:
-
-		//层
-		//这是一个vector，储存layer类对象。
-		//所有的层都储存在这里。
-		std::vector<layer> layers;
-
-
-		public:
-
-		//构造函数
-		//这个函数接受每一层每一层节点详情，然后借此初始化神经网络。
-		//这里所谓初始化神经网络的含义是：在成员变量层生成每一层。
-		//实际上这非常简单——只需要将该层节点数和下一层节点数及激活函数类型传入构造函数即可。
-		//要注意的是最后一层没有下一层，因此不进行神经网络运算，而是直接输出或执行过滤函数（这点还没有实现）。  
-		//传入参数：
-		//传入参数：
-		//每一层节点数
-		//这是一个vector，储存一些整数。
-		//每一层激活函数类型
-		//这是一个vector，储存一些字符串。
-		net(std::vector<int> node_num, std::vector<std::string> act_function){
-
-			for(int i = 0; i < node_num.size() - 1; i++){
-				layers.push_back(layer(node_num[i], node_num[i + 1], act_function[i]));
-			}
-		}
-
-
-	};
-
-
-
-
-
-	//2024/10/9 fQwQf
 	//layer类 代表神经网络的一层
 	//这是神经网络中每一层的类，代表神经网络中的一层。
 	//每一层都有权重，偏置，激活函数等属性。
@@ -169,6 +129,50 @@ namespace faQnet{
 		
 
 	};
+
+
+
+
+
+	//2024/10/9 fQwQf
+	//net类 代表整个神经网络
+	//这是整个神经网络最大的类，代表整个神经网络。
+	class net{
+	    
+		protected:
+
+		//层
+		//这是一个vector，储存layer类对象。
+		//所有的层都储存在这里。
+		std::vector<layer> layers;
+
+
+		public:
+
+		//构造函数
+		//这个函数接受每一层每一层节点详情，然后借此初始化神经网络。
+		//这里所谓初始化神经网络的含义是：在成员变量层生成每一层。
+		//实际上这非常简单——只需要将该层节点数和下一层节点数及激活函数类型传入构造函数即可。
+		//要注意的是最后一层没有下一层，因此不进行神经网络运算，而是直接输出或执行过滤函数（这点还没有实现）。  
+		//传入参数：
+		//传入参数：
+		//每一层节点数
+		//这是一个vector，储存一些整数。
+		//每一层激活函数类型
+		//这是一个vector，储存一些字符串。
+		net(std::vector<int> node_num, std::vector<std::string> act_function){
+
+			for(int i = 0; i < node_num.size() - 1; i++){
+				layers.push_back(layer(node_num[i], node_num[i + 1], act_function[i]));
+			}
+		}
+
+
+	};
+
+
+
+	
 
 }
 
