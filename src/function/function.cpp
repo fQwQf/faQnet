@@ -3,6 +3,8 @@
 
 #include"function.h"
 
+//这个文件储存了神经网络中用到的的激活函数，激活函数的导函数，以及损失函数的实现。
+
 namespace faQnet {
 	//2024/10/9 fQwQf
 	//激活函数
