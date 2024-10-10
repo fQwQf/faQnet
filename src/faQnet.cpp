@@ -280,8 +280,32 @@ namespace faQnet{
 	}
 
 
-	
 
+	//2024/10/10 fQwQf
+	//激活函数的导数
+	//该函数会根据激活函数名称调用不同的激活函数的导数，返回激活函数的导数矩阵。
+	//激活函数名称是一个字符串，储存激活函数名称。
+	cv::Mat activation_function_derivative(cv::Mat matrix, std::string act_function = "sigmoid"){
+		if(act_function == "sigmoid"){
+			return sigmoid_derivative(matrix);
+		}
+		else if(act_function == "tanh"){
+			return tanh_derivative(matrix);
+		}
+		else if(act_function == "relu"){
+			return relu_derivative(matrix);
+		}
+		else if(act_function == "leaky_relu"){
+			return leaky_relu_derivative(matrix);
+		}
+	}
+	
+	//2024/10/10 fQwQf
+	//Sigmoid函数的导数
+	//传入一个矩阵，返回该矩阵经过sigmoid函数的导函数处理后的矩阵。
+	cv::Mat sigmoid_derivative(cv::Mat matrix){
+		return sigmoid(matrix) * (1 - sigmoid(matrix));
+	}
 
 }
 
