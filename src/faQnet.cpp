@@ -307,6 +307,15 @@ namespace faQnet{
 		return sigmoid(matrix) * (1 - sigmoid(matrix));
 	}
 
+	//2024/10/10 fQwQf
+	//Tanh函数的导数
+	//传入一个矩阵，返回该矩阵经过tanh函数的导函数处理后的矩阵。
+	cv::Mat tanh_derivative(cv::Mat matrix){
+		return 1 - tanh(matrix) * tanh(matrix);
+	}
+
+	
+
 }
 
 
