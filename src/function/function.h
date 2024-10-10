@@ -8,74 +8,74 @@ namespace faQnet {
 	//对该函数，传入要处理的矩阵和激活函数名称，返回激活函数的输出矩阵。
 	//激活函数名称是一个字符串，储存激活函数名称。
 	//该函数会根据激活函数名称调用不同的激活函数，返回激活函数的输出矩阵。
-	cv::Mat activation_function(cv::Mat matrix, std::string act_function = "sigmoid")
+	cv::Mat activation_function(cv::Mat matrix, std::string act_function = "sigmoid");
 
 	//2024/10/9 fQwQf
 	//sigmoid函数
 	//传入一个矩阵，返回该矩阵经过sigmoid函数处理后的矩阵。
-	cv::Mat sigmoid(cv::Mat matrix)
+	cv::Mat sigmoid(cv::Mat matrix);
 
 	//2024/10/9 fQwQf
 	//tanh函数
 	//传入一个矩阵，返回该矩阵经过tanh函数处理后的矩阵。
-	cv::Mat tanh(cv::Mat matrix)
+	cv::Mat tanh(cv::Mat matrix);
 
 	//2024/10/9 fQwQf
 	//ReLU函数
 	//传入一个矩阵，返回该矩阵经过ReLU函数处理后的矩阵。
-	cv::Mat relu(cv::Mat matrix)
+	cv::Mat relu(cv::Mat matrix);
 
 	//2024/10/9 fQwQf
 	//Leaky ReLU函数
 	//传入一个矩阵，返回该矩阵经过Leaky ReLU函数处理后的矩阵。
-	cv::Mat leaky_relu(cv::Mat matrix)
+	cv::Mat leaky_relu(cv::Mat matrix);
 
 	//2024/10/9 fQwQf
 	//softplus函数
 	//传入一个矩阵，返回该矩阵经过softmax函数处理后的矩阵。
-	cv::Mat softplus(cv::Mat matrix)
+	cv::Mat softplus(cv::Mat matrix);
 
 	//2024/10/9 fQwQf
 	//softsign函数
 	//传入一个矩阵，返回该矩阵经过softsign函数处理后的矩阵。
-	cv::Mat softsign(cv::Mat matrix)
+	cv::Mat softsign(cv::Mat matrix);
 
 	//2024/10/9 fQwQf
 	//swish函数
 	//传入一个矩阵，返回该矩阵经过swish函数处理后的矩阵。
-	cv::Mat swish(cv::Mat matrix)
+	cv::Mat swish(cv::Mat matrix);
 
 	//2024/10/9 fQwQf
 	//ELU函数
 	//传入一个矩阵，返回该矩阵经过ELU函数处理后的矩阵。
-	cv::Mat elu(cv::Mat matrix)
+	cv::Mat elu(cv::Mat matrix);
 
 
 	//2024/10/10 fQwQf
 	//激活函数的导数
 	//该函数会根据激活函数名称调用不同的激活函数的导数，返回激活函数的导数矩阵。
 	//激活函数名称是一个字符串，储存激活函数名称。
-	cv::Mat activation_function_derivative(cv::Mat matrix, std::string act_function = "sigmoid")
+	cv::Mat activation_function_derivative(cv::Mat matrix, std::string act_function = "sigmoid");
 	
 	//2024/10/10 fQwQf
 	//Sigmoid函数的导数
 	//传入一个矩阵，返回该矩阵经过sigmoid函数的导函数处理后的矩阵。
-	cv::Mat sigmoid_derivative(cv::Mat matrix)
+	cv::Mat sigmoid_derivative(cv::Mat matrix);
 
 	//2024/10/10 fQwQf
 	//Tanh函数的导数
 	//传入一个矩阵，返回该矩阵经过tanh函数的导函数处理后的矩阵。
-	cv::Mat tanh_derivative(cv::Mat matrix)
+	cv::Mat tanh_derivative(cv::Mat matrix);
 
 	//2024/10/10 fQwQf
 	//ReLU函数的导数
 	//传入一个矩阵，返回该矩阵经过ReLU函数的导函数处理后的矩阵。
-	cv::Mat relu_derivative(cv::Mat matrix)
+	cv::Mat relu_derivative(cv::Mat matrix);
 
 	//2024/10/10 fQwQf
 	//Leaky ReLU函数的导数
 	//传入一个矩阵，返回该矩阵经过Leaky ReLU函数的导函数处理后的矩阵。
-	cv::Mat leaky_relu_derivative(cv::Mat matrix)
+	cv::Mat leaky_relu_derivative(cv::Mat matrix);
 
 	//2024/10/10 fQwQf
 	//Softplus函数的导数
@@ -86,20 +86,20 @@ namespace faQnet {
 	//这是不合理的，但是，我必须这么做。
 	//所以，我必须写一个一模一样的函数，来增加代码量。
 	//说实话，在保证可读性的前提下，实现同样的功能，代码量应该是越少越好的。
-	cv::Mat softplus_derivative(cv::Mat matrix)
+	cv::Mat softplus_derivative(cv::Mat matrix);
 
 	//2024/10/10 fQwQf 
 	//Softsign函数的导数
 	//传入一个矩阵，返回该矩阵经过Softsign函数的导函数处理后的矩阵。
-	cv::Mat softsign_derivative(cv::Mat matrix)
+	cv::Mat softsign_derivative(cv::Mat matrix);
 
 	//2024/10/10 fQwQf
 	//Swish函数的导数
 	//传入一个矩阵，返回该矩阵经过Swish函数的导函数处理后的矩阵。
-	cv::Mat swish_derivative(cv::Mat matrix)
+	cv::Mat swish_derivative(cv::Mat matrix);
 	//2024/10/10 fQwQf
 	//ELU函数的导数
 	//传入一个矩阵，返回该矩阵经过ELU函数的导函数处理后的矩阵。
-	cv::Mat elu_derivative(cv::Mat matrix)
+	cv::Mat elu_derivative(cv::Mat matrix);
 
 }

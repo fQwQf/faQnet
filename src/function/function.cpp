@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 #include<opencv2/core/core.hpp>
 
+#include"function.h"
+
 namespace faQnet {
     //2024/10/9 fQwQf
 	//激活函数

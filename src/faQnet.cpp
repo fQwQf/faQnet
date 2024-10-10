@@ -42,7 +42,7 @@ namespace faQnet{
 		}
 
 
-	}
+	};
 
 
 
@@ -168,7 +168,7 @@ namespace faQnet{
 		}
 		
 
-	}
+	};
 
 }
 
