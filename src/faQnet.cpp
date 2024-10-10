@@ -270,6 +270,45 @@ namespace faQnet{
 			}
 		}
 
+		//2024/10/10 fQwQf
+		/*损失函数 这个函数接受前向传播的输出矩阵和目标矩阵。计算损失值主要是为了显示出来便于分析，或者是因为这样看起来比较厉害。
+		实际上，损失函数直接调用在function.cpp中定义的即可。
+		总感觉这样有一点………奇怪，但是这样比较方便，而且比较简单。
+		传入参数：
+		输出矩阵
+		这是一个Mat对象，即前向传播的输出。
+		目标矩阵
+		这是一个Mat对象，即目标输出矩阵。*/
+		float loss(cv::Mat output, cv::Mat target, std::string loss_function_name){
+			return loss_function(target, output, string loss_function_name);
+		}
+
+		//2024/10/10 fQwQf
+		/*训练
+		大的要来了！
+		这个函数接受一个训练集，一个学习率，一个训练次数。
+		每次训练，先将训练集传入前向传播函数为每一层生成结果矩阵，然后调用损失函数计算loss值，接着调用反向传播函数为每一层生成误差矩阵，最后完成权值更新和偏置更新。
+		这个例子里采用的是固定循环次数的训练方法。另外，也可以采用当loss值小于某个值时停止训练的方法。
+		传入参数：
+		输入矩阵
+		这是一个Mat对象，储存训练集。是一个单列矩阵，第一层节点数应当等于它的行数。
+		目标矩阵
+		这是一个Mat对象，储存目标输出矩阵。是一个单列矩阵，最后一层节点数应当等于它的行数。
+		学习率
+		这是一个double型变量，代表学习率。
+		训练次数
+		这是一个整数，代表训练次数。*/
+		void train(cv::Mat input, cv::Mat target, double learning_rate, int train_times){
+			for(int i = 0; i < train_times; i++){
+				cv::Mat output = forward(input);
+				float loss_value = loss(output, target, "mse");
+				cout <<"训练次数：" << i+1 <<"/" << train_times << "  loss值: " << loss_value << endl;
+				backward(output, target);
+				update_weight(learning_rate);
+				update_bias(learning_rate);
+			}
+		}
+
 	};
 
 
