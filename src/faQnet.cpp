@@ -227,8 +227,22 @@ namespace faQnet{
 			return input;
 		}
 
-		
 
+		//2024/10/10 fQwQf
+		/*反向传播
+		这个函数接受前向传播的输出矩阵和目标矩阵，
+		首先通过输出矩阵减去目标矩阵得到最后一层的误差矩阵，
+		然后通过调用每一层的反向传播函数，将误差矩阵传入倒数第二层，将倒数第二层的误差矩阵传入倒数第三层，以此类推，直到第一层。
+		传入参数：
+		输出矩阵
+		这是一个Mat对象，即前向传播的输出。
+		目标矩阵
+		这是一个Mat对象，即目标输出矩阵。*/
+		void backward(cv::Mat output, cv::Mat target){
+			cv::Mat error = output - target;
+			for(int i = layers.size() - 1; i >= 0; i--){
+				error = layers[i].backward(error);
+		}
 
 	};
 
