@@ -376,6 +376,14 @@ namespace faQnet{
 	    return 1 / (abs_matrix + 1) / (abs_matrix + 1);
 	}
 
+	//2024/10/10 fQwQf
+	//Swish函数的导数
+	//传入一个矩阵，返回该矩阵经过Swish函数的导函数处理后的矩阵。
+	cv::Mat swish_derivative(cv::Mat matrix){
+		cv::Mat sigmoid_matrix = sigmoid(matrix);
+		return sigmoid_matrix * (1 + matrix * (1 - sigmoid_matrix));
+	}
+
 
 }
 
