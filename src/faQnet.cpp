@@ -298,6 +298,18 @@ namespace faQnet{
 		else if(act_function == "leaky_relu"){
 			return leaky_relu_derivative(matrix);
 		}
+		else if(act_function == "softplus"){
+			return softplus_derivative(matrix); 
+		}
+		else if(act_function == "softsign"){
+			return softsign_derivative(matrix);
+		}
+		else if(act_function == "swish"){
+			return swish_derivative(matrix);
+		}
+		else if(act_function == "elu"){
+			return elu_derivative(matrix);
+		}
 	}
 	
 	//2024/10/10 fQwQf
@@ -340,7 +352,9 @@ namespace faQnet{
     	return result;
 	}
 
-	
+	//2024/10/10 fQwQf
+	//Softplus函数的导数
+
 
 }
 
