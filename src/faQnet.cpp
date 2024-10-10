@@ -41,7 +41,7 @@ namespace faQnet{
 		//2024/10/9 fQwQf
 		//激活函数
 		//一个字符串，用于储存该层所用的激活函数。 
-		std::string activation_function;
+		std::string act_func;
 
 
 		//2024/10/9 fQwQf
@@ -67,7 +67,7 @@ namespace faQnet{
 			bias = cv::Mat::zeros(next_layer_node_num, 1, CV_32FC1);
 			result = cv::Mat::zeros(this_layer_node_num, 1, CV_32FC1);
 			error = cv::Mat::zeros(this_layer_node_num, 1, CV_32FC1);
-			activation_function = act_function;
+			act_func = act_function;
 
 		}
 
