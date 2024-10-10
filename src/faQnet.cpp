@@ -143,6 +143,22 @@ namespace faQnet{
 		}
 
 
+		//2024/10/10 fQwQf
+		/*单层权值更新
+		这个函数接受一个学习率和上层误差矩阵。
+		权值更新的具体操作是：
+		将权值矩阵减去（学习率*上层误差矩阵*该层输出矩阵的转置矩阵mul这一层的激活函数在结果矩阵处的导函数值）
+		。注：只需将结果矩阵代入激活函数即可得到输出矩阵。
+		传入参数：
+		学习率
+		这是一个double型变量，代表学习率。
+		上层误差矩阵*/
+		void update_weight(double learning_rate, cv::Mat last_error){
+		    cv::Mat output_derivative = activation_function_derivative(result, act_func);
+    		cv::Mat delta = last_error * result.t();
+    		delta = delta.mul(output_derivative);
+    		weight -= learning_rate * delta;
+		}
 	};
 
 
