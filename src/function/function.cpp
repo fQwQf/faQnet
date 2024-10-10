@@ -4,7 +4,7 @@
 #include"function.h"
 
 namespace faQnet {
-    //2024/10/9 fQwQf
+	//2024/10/9 fQwQf
 	//激活函数
 	//激活函数是神经网络中不可或缺的部分。
 	//对该函数，传入要处理的矩阵和激活函数名称，返回激活函数的输出矩阵。
@@ -110,8 +110,8 @@ namespace faQnet {
 	//传入一个矩阵，返回该矩阵经过ELU函数处理后的矩阵。
 	cv::Mat elu(cv::Mat matrix){
 		cv::Mat fx;
-    	cv::exp(matrix, fx); 
-    	return matrix < 0 ? (fx - 1) : matrix;
+		cv::exp(matrix, fx); 
+		return matrix < 0 ? (fx - 1) : matrix;
 	}
 
 
@@ -166,26 +166,26 @@ namespace faQnet {
 	//ReLU函数的导数
 	//传入一个矩阵，返回该矩阵经过ReLU函数的导函数处理后的矩阵。
 	cv::Mat relu_derivative(cv::Mat matrix){
-    	cv::Mat result = matrix.clone();
-    	for(int i = 0; i < matrix.rows; ++i){
-        	for(int j = 0; j < matrix.cols; ++j){
-        	    result.at<float>(i, j) = matrix.at<float>(i, j) >= 0 ? 1 : 0;
-    	    }
-	    }
-    	return result;
+		cv::Mat result = matrix.clone();
+		for(int i = 0; i < matrix.rows; ++i){
+			for(int j = 0; j < matrix.cols; ++j){
+				result.at<float>(i, j) = matrix.at<float>(i, j) >= 0 ? 1 : 0;
+			}
+		}
+		return result;
 	}
 
 	//2024/10/10 fQwQf
 	//Leaky ReLU函数的导数
 	//传入一个矩阵，返回该矩阵经过Leaky ReLU函数的导函数处理后的矩阵。
 	cv::Mat leaky_relu_derivative(cv::Mat matrix){
-	    cv::Mat result = matrix.clone();
-    	for(int i = 0; i < matrix.rows; ++i){
-        	for(int j = 0; j < matrix.cols; ++j){
-        	    result.at<float>(i, j) = matrix.at<float>(i, j) >= 0 ? 1 : 0.01;
-    	    }
-	    }
-    	return result;
+		cv::Mat result = matrix.clone();
+		for(int i = 0; i < matrix.rows; ++i){
+			for(int j = 0; j < matrix.cols; ++j){
+				result.at<float>(i, j) = matrix.at<float>(i, j) >= 0 ? 1 : 0.01;
+			}
+		}
+		return result;
 	}
 
 	//2024/10/10 fQwQf
@@ -208,8 +208,8 @@ namespace faQnet {
 	//Softsign函数的导数
 	//传入一个矩阵，返回该矩阵经过Softsign函数的导函数处理后的矩阵。
 	cv::Mat softsign_derivative(cv::Mat matrix){
-	    cv::Mat abs_matrix = abs(matrix);
-	    return 1 / (abs_matrix + 1) / (abs_matrix + 1);
+		cv::Mat abs_matrix = abs(matrix);
+		return 1 / (abs_matrix + 1) / (abs_matrix + 1);
 	}
 
 	//2024/10/10 fQwQf
@@ -262,7 +262,47 @@ namespace faQnet {
 	}
 
 
+	//2024/10/10 fQwQf
+	//平均绝对误差 (MAE/L1Loss)
+	float mae(cv::Mat y_true, cv::Mat y_pred){
+		return cv::abs(y_true - y_pred).sum() / y_true.rows;
+	}
 
+	//2024/10/10 fQwQf
+	//平均平方误差 (MSE/L2Loss)
+	float mse(cv::Mat y_true, cv::Mat y_pred){
+		return (y_true - y_pred).mul(y_true - y_pred).sum() / y_true.rows;
+	}
+
+	//2024/10/10 fQwQf
+	//均方根误差 (RMSE)
+	float rmse(cv::Mat y_true, cv::Mat y_pred){
+		return sqrt(mse(y_true, y_pred));
+	}
+
+	//2024/10/10 fQwQf
+	//平均绝对百分比误差 (MAPE)
+	float mape(cv::Mat y_true, cv::Mat y_pred){
+		return cv::abs((y_true - y_pred) / y_true).sum() / y_true.rows;
+	}
+
+	//2024/10/10 fQwQf
+	//平滑平均绝对误差 (SLL/Smooth L1Loss)
+	float sll(cv::Mat y_true, cv::Mat y_pred){
+		cv::Mat diff = y_true - y_pred;
+		cv::Mat smooth_l1 = cv::Mat::zeros(abs_diff.size(), abs_diff.type());
+		for (int i = 0; i < diff.rows; ++i) {
+			for (int j = 0; j < diff.cols; ++j) {
+				float val = abs(diff.at<float>(i, j));
+				if (val < 1.0) {
+					smooth_l1.at<float>(i, j) = 0.5 * val * val;
+				} else {
+					smooth_l1.at<float>(i, j) = val - 0.5;
+				}
+			}
+		}
+		return smooth_l1.sum() / y_true.rows;
+	}
 
 }
 

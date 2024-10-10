@@ -282,8 +282,8 @@
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
 - 平滑平均绝对误差 (SLL/Smooth L1Loss)
 	公式：
-	$$L=\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ \left( 0.5 \left| y_{ i }-y_{ i }^{ \prime } \right| + 0.5 { (y_{ i }-y_{ i }^{ \prime } ) }^{ 2 } \right) }$$  
-	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量，$\alpha$ 是一个平滑因子。 
+	$$\begin{split} L =  \frac { 1 }{ n } \sum _{ i=1 }^{ n } \begin{cases} \begin{matrix} 0.5 \left( y_{ i } - y_{ i }^{ \prime } \right) ^{ 2 } & \left| y_{ i } - y_{ i }^{ \prime } \right| <1 \end{matrix} \\ \begin{matrix} \left| y_{ i } - y_{ i } \right| - 0.5 & \left| y_{ i } - y_{ i }^{ \prime } \right| \ge 1 \end{matrix} \end{cases}\end{split}$$  
+	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。 
 - 均方根误差（RMSE）  
 	公式：
 	$$L=\sqrt { \frac { 1 }{ n } \sum _{ i=1 }^{ n }{ { (y_{ i }-y_{ i }^{ \prime } ) }^{ 2 } } }$$  
