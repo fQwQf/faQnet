@@ -237,6 +237,33 @@ namespace faQnet {
 		return result;
 	}
 
+
+
+
+	//2024/10/10 fQwQf
+	//损失函数
+	//传入两个矩阵和采用的损失函数名称，返回两个矩阵之间的损失值。
+	float loss_function(cv::Mat y_true, cv::Mat y_pred, std::string loss_function_name){
+		if(loss_function_name == "mse"){
+			return mse(y_true, y_pred);
+		}else if(loss_function_name == "mae"){
+			return mae(y_true, y_pred);
+		}else if(loss_function_name == "sll"){
+			return sll(y_true, y_pred);
+		}else if(loss_function_name == "ce"){
+			return ce(y_true, y_pred);
+		}else if(loss_function_name == "rmse"){
+			return rmse(y_true, y_pred);
+		}else if(loss_function_name == "mape"){
+			return mape(y_true, y_pred);
+		}else if(loss_function_name == "msle"){
+			return msle(y_true, y_pred);
+		}
+	}
+
+
+
+
 }
 
 
