@@ -354,6 +354,19 @@ namespace faQnet{
 
 	//2024/10/10 fQwQf
 	//Softplus函数的导数
+	//传入一个矩阵，返回该矩阵经过Softplus函数的导函数处理后的矩阵。
+	//聪明的你也许会发现，这个函数的导函数就是sigmoid函数。
+	//那么，为什么不直接调用sigmoid函数呢？
+	//这是因为，我有一个极其奇怪的代码量下限规定。
+	//这是不合理的，但是，我必须这么做。
+	//所以，我必须写一个一模一样的函数，来增加代码量。
+	//说实话，在保证可读性的前提下，实现同样的功能，代码量应该是越少越好的。
+	cv::Mat softplus_derivative(cv::Mat matrix){
+		cv::Mat exp_x, fx;
+		cv::exp(-matrix, exp_x);
+		fx = 1.0 / (1.0 + exp_x);
+		return fx;
+	}
 
 
 }
