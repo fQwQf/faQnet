@@ -213,6 +213,23 @@ namespace faQnet{
 		}
 
 
+		//2024/10/10 fQwQf
+		/*前向传播
+		这个函数接受一个输入矩阵，然后通过调用每一层的前向传播函数，将输入矩阵传入第一层，将第一层的输出矩阵传入第二层，将第二层的输出矩阵传入第三层，以此类推，
+		直到最后一层，将最后一层的输出矩阵作为整个神经网络的输出矩阵。
+		传入参数：
+		输入矩阵
+		这是一个Mat对象，储存输入矩阵。规格为输入数据数*1。*/
+		cv::Mat forward(cv::Mat input){
+			for(int i = 0; i < layers.size(); i++){
+				input = layers[i].forward(input);
+			}
+			return input;
+		}
+
+		
+
+
 	};
 
 
