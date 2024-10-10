@@ -243,6 +243,31 @@ namespace faQnet{
 			cv::Mat error = output - target;
 			for(int i = layers.size() - 1; i >= 0; i--){
 				error = layers[i].backward(error);
+			}
+		}
+
+
+		//2024/10/10 fQwQf
+		/*权值更新 这个函数接受一个学习率，然后循环调用每一层的权值更新函数。
+		传入参数：
+		学习率
+		这是一个double型变量，代表学习率。*/
+		void update_weight(double learning_rate){
+			for(int i = 0; i < layers.size(); i++){
+				layers[i].update_weight(learning_rate);
+			}
+		}
+
+
+		//2024/10/10 fQwQf
+		/*偏置更新 这个函数接受一个学习率，然后循环调用每一层的偏置更新函数。
+		传入参数：
+		学习率
+		这是一个double型变量，代表学习率。*/
+		void update_bias(double learning_rate){
+			for(int i = 0; i < layers.size(); i++){
+				layers[i].update_bias(learning_rate);
+			}
 		}
 
 	};
