@@ -128,6 +128,21 @@ namespace faQnet{
 		}
 		
 
+
+		//2024/10/10 fQwQf
+		/*单层反向传播
+		这个函数接受上一层的误差矩阵，
+		首先将其与这一层的激活函数在结果矩阵处的导函数值进行点乘得到一个中间矩阵，
+		然后将其与该层权值矩阵的转置矩阵相乘即得到该层的误差矩阵，将其输出并保存。
+		传入参数：
+		上一层的误差矩阵*/
+		cv::Mat backward(cv::Mat last_error){
+			cv::Mat temp = last_error.mul(activation_function_derivative(result));
+			error = temp * weight.t();
+			return error;
+		}
+
+
 	};
 
 
