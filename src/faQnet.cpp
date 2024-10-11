@@ -387,3 +387,14 @@ namespace faQnet{
 }
 
 
+/*int main(){
+
+	std::vector<cv::Mat> input = load_data("data.csv", 1, 10);
+	std::vector<cv::Mat> target = load_data("data.csv", 11, 11);
+	std::vector<int> layer_size = {10, 10, 1};
+	std::vector<std::string> activation_function = {"sigmoid", "sigmoid"};
+    faQnet::net net(layer_size, activation_function);
+
+	net.train(input, target, 0.01, 1000);
+	net.save_model("model.xml");
+}*/
