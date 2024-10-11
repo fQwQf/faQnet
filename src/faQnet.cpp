@@ -327,11 +327,11 @@ namespace faQnet{
 		传入参数：
 		文件名
 		这是一个字符串，代表文件名。*/
-		void save_model(std::string file_name){
+		/*void save_model(std::string file_name){
 			cv::FileStorage model(file_name, cv::FileStorage::WRITE);
 			model << "layers" << layers;
 			model.release();
-		}
+		}*/
 
 
 		//2024/10/10 fQwQf
@@ -340,12 +340,12 @@ namespace faQnet{
 		传入参数：
 		文件名
 		这是一个字符串，代表文件名。*/
-		void load_model(std::string file_name){
+		/*void load_model(std::string file_name){
 		    cv::FileStorage fs;
 			fs.open(file_name, cv::FileStorage::READ);
 			fs["layers"] >> layers;
 			fs.release();
-		}
+		}*/
 	};
 
 
@@ -382,6 +382,7 @@ namespace faQnet{
 		}
 		csv_data.close();
 		
+		return output;
 	}
 
 
