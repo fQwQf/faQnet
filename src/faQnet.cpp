@@ -2,7 +2,7 @@
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 
-#include"function/function.h"
+#include "function.h"
 
 using std::cout;
 using std::endl;
@@ -389,14 +389,15 @@ namespace faQnet{
 }
 
 
-/*int main(){
+int main(){
 
-	std::vector<cv::Mat> input = load_data("data.csv", 1, 10);
-	std::vector<cv::Mat> target = load_data("data.csv", 11, 11);
+	std::vector<cv::Mat> input = faQnet::load_data("winequality-white.csv", 1, 10);
+	std::vector<cv::Mat> target = faQnet::load_data("winequality-white.csv", 11, 11);
 	std::vector<int> layer_size = {10, 10, 1};
 	std::vector<std::string> activation_function = {"sigmoid", "sigmoid"};
     faQnet::net net(layer_size, activation_function);
 
-	net.train(input, target, 0.01, 1000);
-	net.save_model("model.xml");
-}*/
+	for (int i = 0; i < input.size(); i++){
+		net.train(input[i], target[i], 0.01, 1000);
+	}
+}
