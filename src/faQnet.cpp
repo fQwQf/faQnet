@@ -360,7 +360,7 @@ namespace faQnet{
 		std::ifstream csv_data(file_name, std::ios::in);
 		std::vector<cv::Mat> output;
 		
-		string line;
+		std::string line;
 
 		//读取的第一行可能是数据，但也可能是标题，在数据量充足的情况下，舍弃一行无关紧要。
 		getline(csv_data, line);
@@ -369,7 +369,7 @@ namespace faQnet{
 		while (getline(csv_data, line))
 		{
 			cv::Mat temp(end-start+1, 1, CV_32F);
-			istringstream sin;
+			std::istringstream sin;
 
 			for (int i = 1 ;getline(sin, word, ',')  && i <= end; i++){
 				if (i >= start){
