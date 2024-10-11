@@ -271,17 +271,17 @@ namespace faQnet {
 	//平均绝对误差 (MAE/L1Loss)
 	/*float mae(cv::Mat y_true, cv::Mat y_pred){
 		return cv::sum(cv::abs(y_true - y_pred)) / y_true.rows;
-	}
+	}*/
 
 	//2024/10/10 fQwQf
 	//平均平方误差 (MSE/L2Loss)
-	float mse(cv::Mat y_true, cv::Mat y_pred){
+	/*float mse(cv::Mat y_true, cv::Mat y_pred){
 		return cv::sum((y_true - y_pred).mul(y_true - y_pred)) / y_true.rows;
-	}
+	}*/
 
 	//2024/10/10 fQwQf
 	//均方根误差 (RMSE)
-	float rmse(cv::Mat y_true, cv::Mat y_pred){
+	/*float rmse(cv::Mat y_true, cv::Mat y_pred){
 		return sqrt(mse(y_true, y_pred));
 	}
 
