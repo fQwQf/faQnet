@@ -12,7 +12,7 @@ namespace faQnet {
 	//对该函数，传入要处理的矩阵和激活函数名称，返回激活函数的输出矩阵。
 	//激活函数名称是一个字符串，储存激活函数名称。
 	//该函数会根据激活函数名称调用不同的激活函数，返回激活函数的输出矩阵。
-	cv::Mat activation_function(cv::Mat matrix, std::string act_function = "sigmoid"){
+	cv::Mat activation_function(cv::Mat matrix, std::string act_function){
 		if(act_function == "sigmoid"){
 			return sigmoid(matrix);
 		}
@@ -82,12 +82,12 @@ namespace faQnet {
 	//2024/10/9 fQwQf
 	//softplus函数
 	//传入一个矩阵，返回该矩阵经过softmax函数处理后的矩阵。
-	cv::Mat softplus(cv::Mat matrix){
+	/*cv::Mat softplus(cv::Mat matrix){
 		cv::Mat exp_x, fx;
 		cv::exp(matrix, exp_x);
 		fx = log(1.0 + exp_x);
 		return fx;
-	}
+	}*/
 
 	//2024/10/9 fQwQf
 	//softsign函数
@@ -101,11 +101,11 @@ namespace faQnet {
 	//2024/10/9 fQwQf
 	//swish函数
 	//传入一个矩阵，返回该矩阵经过swish函数处理后的矩阵。
-	cv::Mat swish(cv::Mat matrix){
+	/*cv::Mat swish(cv::Mat matrix){
 		cv::Mat fx;
 		fx = matrix / (1.0 + exp(-matrix));
 		return fx;
-	}
+	}*/
 
 	//2024/10/9 fQwQf
 	//ELU函数
@@ -266,7 +266,7 @@ namespace faQnet {
 
 	//2024/10/10 fQwQf
 	//平均绝对误差 (MAE/L1Loss)
-	float mae(cv::Mat y_true, cv::Mat y_pred){
+	/*float mae(cv::Mat y_true, cv::Mat y_pred){
 		return cv::sum(cv::abs(y_true - y_pred)) / y_true.rows;
 	}
 
@@ -333,7 +333,7 @@ namespace faQnet {
 			}
 		}
 		return - cv::sum(result) / y_true.rows;
-	}
+	}*/
 
 }
 
