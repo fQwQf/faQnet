@@ -354,7 +354,8 @@ namespace faQnet{
 	一般而言，现有的数据集都是存储在文件中的，因此需要将文件中的数据转化为矩阵格式导入到程序中。
 	需要注意的是，导入数据不一定指明了输入和标签，且c++函数一次只能返回一个值，
 	因此这个函数实际上是返回每一行指定的两个位置间的所有数据构成的一维矩阵构成的vector,应当设计相应的能指明开始读取位置和结束读取位置的变量。
-	这也意味着，输入和标签要分别读取。*/
+	这也意味着，输入和标签要分别读取。
+	注：此处下标从1开始。*/
 	std::vector<cv::Mat> load_data(std::string file_name, int start, int end){
 		std::ifstream csv_data(file_name, ios::in);
 		std::vector<cv::Mat> output;
