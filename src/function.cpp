@@ -110,11 +110,11 @@ namespace faQnet {
 	//2024/10/9 fQwQf
 	//ELU函数
 	//传入一个矩阵，返回该矩阵经过ELU函数处理后的矩阵。
-	cv::Mat elu(cv::Mat matrix){
+	/*cv::Mat elu(cv::Mat matrix){
 		cv::Mat fx;
 		cv::exp(matrix, fx);
 		return matrix < 0 ? (fx - 1) : matrix;
-	}
+	}*/
 
 
 
