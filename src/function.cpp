@@ -123,7 +123,7 @@ namespace faQnet {
 	//激活函数的导数
 	//该函数会根据激活函数名称调用不同的激活函数的导数，返回激活函数的导数矩阵。
 	//激活函数名称是一个字符串，储存激活函数名称。
-	cv::Mat activation_function_derivative(cv::Mat matrix, std::string act_function = "sigmoid"){
+	cv::Mat activation_function_derivative(cv::Mat matrix, std::string act_function){
 		if(act_function == "sigmoid"){
 			return sigmoid_derivative(matrix);
 		}
