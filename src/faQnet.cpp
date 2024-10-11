@@ -373,7 +373,7 @@ namespace faQnet{
 
 			for (int i = 1 ;getline(sin, word, ',')  && i <= end; i++){
 				if (i >= start){
-					temp.at<float>(i-start,0) = stof(word);
+					temp.at<float>(i-start,0) = std::stof(word);
 			    }
 			}
 
