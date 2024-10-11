@@ -267,13 +267,13 @@ namespace faQnet {
 	//2024/10/10 fQwQf
 	//平均绝对误差 (MAE/L1Loss)
 	float mae(cv::Mat y_true, cv::Mat y_pred){
-		return cv::abs(y_true - y_pred).sum() / y_true.rows;
+		return cv::sum(cv::abs(y_true - y_pred)) / y_true.rows;
 	}
 
 	//2024/10/10 fQwQf
 	//平均平方误差 (MSE/L2Loss)
 	float mse(cv::Mat y_true, cv::Mat y_pred){
-		return (y_true - y_pred).mul(y_true - y_pred).sum() / y_true.rows;
+		return cv::sum((y_true - y_pred).mul(y_true - y_pred)) / y_true.rows;
 	}
 
 	//2024/10/10 fQwQf
@@ -285,7 +285,7 @@ namespace faQnet {
 	//2024/10/10 fQwQf
 	//平均绝对百分比误差 (MAPE)
 	float mape(cv::Mat y_true, cv::Mat y_pred){
-		return cv::abs((y_true - y_pred) / y_true).sum() / y_true.rows;
+		return cv::abs(cv::sum((y_true - y_pred) / y_true)) / y_true.rows;
 	}
 
 	//2024/10/10 fQwQf
@@ -303,7 +303,7 @@ namespace faQnet {
 				}
 			}
 		}
-		return smooth_l1.sum() / y_true.rows;
+		return cv::sum(smooth_l1) / y_true.rows;
 	}
 
 	//2024/10/10 fQwQf
@@ -318,7 +318,7 @@ namespace faQnet {
 		cv::Mat diff_squared = (log_y_true - log_y_pred).mul(log_y_true - log_y_pred);
 
 		// 求平均值
-		return diff_squared.sum() / y_true.rows;
+		return cv::sum(diff_squared) / y_true.rows;
 	}
 
 	//2024/10/10 fQwQf
@@ -332,7 +332,7 @@ namespace faQnet {
 				result.at<float>(i, j) = tru * log(pre) + (1 - tru) * log(1 - pre);
 			}
 		}
-		return -result.sum() / y_true.rows;
+		return - cv::sum(result) / y_true.rows;
 	}
 
 }
