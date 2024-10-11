@@ -37,6 +37,7 @@ namespace faQnet {
 		else if(act_function == "elu"){
 			return elu(matrix);
 		}
+		return matrix;
 	}
 
 
@@ -148,6 +149,7 @@ namespace faQnet {
 		else if(act_function == "elu"){
 			return elu_derivative(matrix);
 		}
+		return matrix;
 	}
 
 	//2024/10/10 fQwQf
@@ -261,6 +263,7 @@ namespace faQnet {
 		}else if(loss_function_name == "msle"){
 			return msle(y_true, y_pred);
 		}
+		return 0;
 	}
 
 
