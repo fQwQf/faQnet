@@ -342,7 +342,7 @@ namespace faQnet{
 		这是一个字符串，代表文件名。*/
 		void load_model(std::string file_name){
 		    cv::FileStorage fs;
-			fs.open(file—_name, cv::FileStorage::READ);
+			fs.open(file_name, cv::FileStorage::READ);
 			fs["layers"] >> layers;
 			fs.release();
 		}
