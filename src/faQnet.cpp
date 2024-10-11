@@ -351,9 +351,36 @@ namespace faQnet{
 
 	//2024/10/11 fQwQf
 	/*数据导入  
-	一般而言，现有的数据集都是存储在文件中的，因此需要将文件中的数据转化为矩阵格式导入到程序中。  
-	需要注意的是，导入数据不一定指明了输入和标签，应当设计相应的能指明输入和标签的传入变量。*/
-	
+	一般而言，现有的数据集都是存储在文件中的，因此需要将文件中的数据转化为矩阵格式导入到程序中。
+	需要注意的是，导入数据不一定指明了输入和标签，且c++函数一次只能返回一个值，
+	因此这个函数实际上是返回每一行指定的两个位置间的所有数据构成的一维矩阵构成的vector,应当设计相应的能指明开始读取位置和结束读取位置的变量。
+	这也意味着，输入和标签要分别读取。*/
+	std::vector<cv::Mat> load_data(std::string file_name, int start, int end){
+		std::ifstream csv_data(file_name, ios::in);
+		std::vector<cv::Mat> output;
+		
+		string line;
+
+		//读取的第一行可能是数据，但也可能是标题，在数据量充足的情况下，舍弃一行无关紧要。
+		getline(csv_data, line);
+				
+		
+		while (getline(csv_data, line))
+		{
+			cv::Mat temp(end-start+1, 1, CV_32F);
+			istringstream sin;
+
+			for (int i = 1 ;getline(sin, word, ',')  && i <= end; i++){
+				if (i >= start){
+					temp.at<float>(i-start,0) = stof(word);
+			    }
+			}
+
+			output.push_back(temp);
+		}
+		csv_data.close();
+		
+	}
 
 
 }
