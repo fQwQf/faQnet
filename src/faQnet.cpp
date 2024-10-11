@@ -370,8 +370,9 @@ namespace faQnet{
 		{
 			cv::Mat temp(end-start+1, 1, CV_32F);
 			std::istringstream sin;
-
-			for (int i = 1 ;getline(sin, word, ',')  && i <= end; i++){
+			std::string data;
+			sin.str(line);
+			for (int i = 1 ;getline(sin, data, ',')  && i <= end; i++){
 				if (i >= start){
 					temp.at<float>(i-start,0) = std::stof(word);
 			    }
