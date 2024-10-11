@@ -281,13 +281,13 @@ namespace faQnet {
 
 	//2024/10/10 fQwQf
 	//均方根误差 (RMSE)
-	/*float rmse(cv::Mat y_true, cv::Mat y_pred){
+	float rmse(cv::Mat y_true, cv::Mat y_pred){
 		return sqrt(mse(y_true, y_pred));
 	}
 
 	//2024/10/10 fQwQf
 	//平均绝对百分比误差 (MAPE)
-	float mape(cv::Mat y_true, cv::Mat y_pred){
+	/*float mape(cv::Mat y_true, cv::Mat y_pred){
 		return cv::abs(cv::sum((y_true - y_pred) / y_true)) / y_true.rows;
 	}
 
