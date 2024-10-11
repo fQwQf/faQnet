@@ -342,7 +342,7 @@ namespace faQnet{
 		这是一个字符串，代表文件名。*/
 		void load_model(std::string file_name){
 		    cv::FileStorage fs;
-			fs.open(filename, cv::FileStorage::READ);
+			fs.open(file—_name, cv::FileStorage::READ);
 			fs["layers"] >> layers;
 			fs.release();
 		}
@@ -357,7 +357,7 @@ namespace faQnet{
 	这也意味着，输入和标签要分别读取。
 	注：此处输入的位置序号从1开始。*/
 	std::vector<cv::Mat> load_data(std::string file_name, int start, int end){
-		std::ifstream csv_data(file_name, ios::in);
+		std::ifstream csv_data(file_name, std::ios::in);
 		std::vector<cv::Mat> output;
 		
 		string line;
