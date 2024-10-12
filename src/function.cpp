@@ -281,19 +281,19 @@ namespace faQnet {
 
 	//2024/10/10 fQwQf
 	//均方根误差 (RMSE)
-	float rmse(cv::Mat y_true, cv::Mat y_pred){
-		return sqrt(mse(y_true, y_pred));
-	}
+	/*float rmse(cv::Mat y_true, cv::Mat y_pred){
+		return std::sqrt(mse(y_true, y_pred));
+	}*/
 
 	//2024/10/10 fQwQf
 	//平均绝对百分比误差 (MAPE)
 	/*float mape(cv::Mat y_true, cv::Mat y_pred){
 		return cv::abs(cv::sum((y_true - y_pred) / y_true)) / y_true.rows;
-	}
+	}*/
 
 	//2024/10/10 fQwQf
 	//平滑平均绝对误差 (SLL/Smooth L1Loss)
-	float sll(cv::Mat y_true, cv::Mat y_pred){
+	/*float sll(cv::Mat y_true, cv::Mat y_pred){
 		cv::Mat diff = y_true - y_pred;
 		cv::Mat smooth_l1 = cv::Mat::zeros(diff.size(), diff.type());
 		for (int i = 0; i < diff.rows; ++i) {
@@ -307,11 +307,11 @@ namespace faQnet {
 			}
 		}
 		return cv::sum(smooth_l1) / y_true.rows;
-	}
+	}*/
 
 	//2024/10/10 fQwQf
 	//均方对数误差 (MSLE)
-	float msle(cv::Mat y_true, cv::Mat y_pred){
+	/*float msle(cv::Mat y_true, cv::Mat y_pred){
 		// 计算自然对数
 		cv::Mat log_y_true, log_y_pred;
 		cv::log(y_true, log_y_true + 1);
@@ -322,11 +322,11 @@ namespace faQnet {
 
 		// 求平均值
 		return cv::sum(diff_squared) / y_true.rows;
-	}
+	}*/
 
 	//2024/10/10 fQwQf
 	//二元交叉熵损失函数（CE）
-	float ce(cv::Mat y_true, cv::Mat y_pred){
+	/*float ce(cv::Mat y_true, cv::Mat y_pred){
 		cv::Mat result = cv::Mat::zeros(y_true.size(), y_true.type());
 		for (int i = 0; i < diff.rows; ++i) {
 			for (int j = 0; j < diff.cols; ++j) {
