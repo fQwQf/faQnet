@@ -2,7 +2,7 @@
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 
-#include "function.h"
+#include "function.cpp"
 
 using std::cout;
 using std::endl;
@@ -302,8 +302,8 @@ namespace faQnet{
 		void train(cv::Mat input, cv::Mat target, double learning_rate, int train_times){
 			for(int i = 0; i < train_times; i++){
 				cv::Mat output = forward(input);
-				float loss_value = loss(output, target, "mse");
-				cout <<"训练次数：" << i+1 <<"/" << train_times << "  loss值: " << loss_value << endl;
+				//float loss_value = loss(output, target, "mse");
+				cout <<"训练次数：" << i+1 <<"/" << train_times ;//<< "  loss值: " << loss_value << endl;
 				backward(output, target);
 				update_weight(learning_rate);
 				update_bias(learning_rate);

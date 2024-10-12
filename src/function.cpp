@@ -25,18 +25,19 @@ namespace faQnet {
 		else if(act_function == "leaky_relu"){
 			return leaky_relu(matrix);
 		}
-		else if(act_function == "softplus"){
-			return softplus(matrix);
-		}
+		
 		else if(act_function == "softsign"){
 			return softsign(matrix);
+		}
+		/*else if(act_function == "softplus"){
+			return softplus(matrix);
 		}
 		else if(act_function == "swish"){
 			return swish(matrix);
 		}
 		else if(act_function == "elu"){
 			return elu(matrix);
-		}
+		}*/
 		return matrix;
 	}
 
@@ -137,11 +138,11 @@ namespace faQnet {
 		else if(act_function == "leaky_relu"){
 			return leaky_relu_derivative(matrix);
 		}
-		else if(act_function == "softplus"){
-			return softplus_derivative(matrix);
-		}
 		else if(act_function == "softsign"){
 			return softsign_derivative(matrix);
+		}
+		else if(act_function == "softplus"){
+			return softplus_derivative(matrix);
 		}
 		else if(act_function == "swish"){
 			return swish_derivative(matrix);
@@ -247,7 +248,7 @@ namespace faQnet {
 	//2024/10/10 fQwQf
 	//损失函数
 	//传入两个矩阵和采用的损失函数名称，返回两个矩阵之间的损失值。
-	float loss_function(cv::Mat y_true, cv::Mat y_pred, std::string loss_function_name){
+	/*float loss_function(cv::Mat y_true, cv::Mat y_pred, std::string loss_function_name){
 		if(loss_function_name == "mse"){
 			return mse(y_true, y_pred);
 		}else if(loss_function_name == "mae"){
@@ -264,7 +265,7 @@ namespace faQnet {
 			return msle(y_true, y_pred);
 		}
 		return 0;
-	}
+	}*/
 
 
 	//2024/10/10 fQwQf
