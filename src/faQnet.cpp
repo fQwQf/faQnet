@@ -174,6 +174,17 @@ namespace faQnet{
 		void update_bias(double learning_rate, cv::Mat last_error){
 			bias -= learning_rate * last_error;
 		}
+
+
+		//2024/10/12 fQwQf
+		//输出本层详情
+		//今天测试中遇到了一些问题，因此我设计了这个函数，以便调试。
+		void print(){
+			std::cout << "weight:" << std::endl << weight << std::endl;
+			std::cout << "bias:" << std::endl << bias << std::endl;
+			std::cout << "result:" << std::endl << result << std::endl;
+			std::cout << "error:" << std::endl << error << std::endl;
+		}
 	};
 
 
@@ -394,7 +405,7 @@ int main(){
 	std::cout << input[0] << std::endl;
 	std::vector<cv::Mat> target = faQnet::load_data("winequality-white.csv", 12, 12);
 	std::cout << target[0] << std::endl;
-	std::vector<int> layer_size = {10, 10, 1};
+	std::vector<int> layer_size = {11, 5, 1};
 	std::cout << "3";
 	std::vector<std::string> activation_function = {"sigmoid", "sigmoid"};
 	std::cout << 4;

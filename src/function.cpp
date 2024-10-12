@@ -245,7 +245,7 @@ namespace faQnet {
 
 
 
-	//2024/10/10 fQwQf
+	//2024/10/11 fQwQf
 	//损失函数
 	//传入两个矩阵和采用的损失函数名称，返回两个矩阵之间的损失值。
 	/*float loss_function(cv::Mat y_true, cv::Mat y_pred, std::string loss_function_name){
@@ -268,31 +268,31 @@ namespace faQnet {
 	}*/
 
 
-	//2024/10/10 fQwQf
+	//2024/10/11 fQwQf
 	//平均绝对误差 (MAE/L1Loss)
 	/*float mae(cv::Mat y_true, cv::Mat y_pred){
 		return cv::sum(cv::abs(y_true - y_pred)) / y_true.rows;
 	}*/
 
-	//2024/10/10 fQwQf
+	//2024/10/11 fQwQf
 	//平均平方误差 (MSE/L2Loss)
 	/*float mse(cv::Mat y_true, cv::Mat y_pred){
 		return cv::sum((y_true - y_pred).mul(y_true - y_pred)) / y_true.rows;
 	}*/
 
-	//2024/10/10 fQwQf
+	//2024/10/11 fQwQf
 	//均方根误差 (RMSE)
 	/*float rmse(cv::Mat y_true, cv::Mat y_pred){
 		return std::sqrt(mse(y_true, y_pred));
 	}*/
 
-	//2024/10/10 fQwQf
+	//2024/10/11 fQwQf
 	//平均绝对百分比误差 (MAPE)
 	/*float mape(cv::Mat y_true, cv::Mat y_pred){
 		return cv::abs(cv::sum((y_true - y_pred) / y_true)) / y_true.rows;
 	}*/
 
-	//2024/10/10 fQwQf
+	//2024/10/11 fQwQf
 	//平滑平均绝对误差 (SLL/Smooth L1Loss)
 	/*float sll(cv::Mat y_true, cv::Mat y_pred){
 		cv::Mat diff = y_true - y_pred;
@@ -310,7 +310,7 @@ namespace faQnet {
 		return cv::sum(smooth_l1) / y_true.rows;
 	}*/
 
-	//2024/10/10 fQwQf
+	//2024/10/11 fQwQf
 	//均方对数误差 (MSLE)
 	/*float msle(cv::Mat y_true, cv::Mat y_pred){
 		// 计算自然对数
@@ -325,7 +325,7 @@ namespace faQnet {
 		return cv::sum(diff_squared) / y_true.rows;
 	}*/
 
-	//2024/10/10 fQwQf
+	//2024/10/11 fQwQf
 	//二元交叉熵损失函数（CE）
 	/*float ce(cv::Mat y_true, cv::Mat y_pred){
 		cv::Mat result = cv::Mat::zeros(y_true.size(), y_true.type());
