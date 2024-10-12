@@ -83,7 +83,7 @@ namespace faQnet {
 
 	//2024/10/9 fQwQf
 	//softplus函数
-	//传入一个矩阵，返回该矩阵经过softmax函数处理后的矩阵。
+	//传入一个矩阵，返回该矩阵经过softplus函数处理后的矩阵。
 	/*cv::Mat softplus(cv::Mat matrix){
 		cv::Mat exp_x, fx;
 		cv::exp(matrix, exp_x);

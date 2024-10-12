@@ -125,7 +125,6 @@ namespace faQnet{
 		这是一个Mat对象，储存输出矩阵。*/
 		cv::Mat forward(cv::Mat input){
 			result = weight * input + bias;
-			std::cout << "forward result:" << std::endl << result << std::endl;
 			return activation_function(result);
 		}
 
@@ -139,13 +138,7 @@ namespace faQnet{
 		传入参数：
 		上一层的误差矩阵*/
 		cv::Mat backward(cv::Mat last_error){
-			std::cout << "backward" << std::endl;
-			std::cout << "last error:" << std::endl << last_error << std::endl;
-			std::cout << "result:" << std::endl << result << std::endl;
-			std::cout << "act_func:" << act_func << std::endl;
-			std::cout << "activation_result:" << std::endl << activation_function_derivative(result, act_func) << std::endl;
 			cv::Mat temp = last_error.mul(activation_function_derivative(result));
-			std::cout << "temp:" << std::endl << temp << std::endl;
 			error = weight.t() * temp;
 			return error;
 		}
@@ -161,10 +154,15 @@ namespace faQnet{
 		学习率
 		这是一个double型变量，代表学习率。
 		上层误差矩阵*/
-		void update_weight(double learning_rate, cv::Mat last_error){
-			cv::Mat output_derivative = activation_function_derivative(result, act_func);
-			cv::Mat delta = last_error * result.t();
-			delta = delta.mul(output_derivative);
+		void update_weight(double learning_rate, cv::Mat last_error){//last_error其实是本层误差矩阵
+			cv::Mat output_derivative = activation_function_derivative(last_error, act_func);
+			std::cout << "last_error" << std::endl << last_error << std::endl;
+			std::cout << "output_derivative" << std::endl << output_derivative << std::endl;
+			cv::Mat delta = last_error.mul(output_derivative);
+			std::cout << "delta:" << std::endl << delta << std::endl;
+			std::cout << "output_derivative" << std::endl << output_derivative << std::endl;
+			delta =  result * delta.t() ;
+			std::cout << learning_rate * delta << std::endl;
 			weight -= learning_rate * delta;
 		}
 
@@ -274,7 +272,9 @@ namespace faQnet{
 		这是一个double型变量，代表学习率。*/
 		void update_weight(double learning_rate){
 			for(int i = 0; i < layers.size(); i++){
-				layers[i].update_weight(learning_rate, layers[i + 1].error);
+				std::cout << "更新第" << i << "层" << std::endl;
+				std::cout << "error:" << std::endl << layers[i].error << std::endl;
+				layers[i].update_weight(learning_rate, layers[i].error);
 			}
 		}
 
@@ -284,9 +284,18 @@ namespace faQnet{
 		传入参数：
 		学习率
 		这是一个double型变量，代表学习率。*/
-		void update_bias(double learning_rate){
+		void update_bias(double learning_rate,cv::Mat error){
 			for(int i = 0; i < layers.size(); i++){
-				layers[i].update_bias(learning_rate, layers[i + 1].error);
+				std::cout << "更新第" << i << "层" << std::endl;
+				
+				if(i == layers.size() - 1){
+					std::cout << "error:" << std::endl << error << std::endl;
+					layers[i].update_bias(learning_rate, error);
+				}else{
+					std::cout << "error:" << std::endl << layers[i+1].error << std::endl;
+				    layers[i].update_bias(learning_rate, layers[i+1].error);
+				}
+				
 			}
 		}
 
@@ -324,8 +333,10 @@ namespace faQnet{
 				//float loss_value = loss(output, target, "mse");
 				cout <<"训练次数：" << i+1 <<"/" << train_times ;//<< "  loss值: " << loss_value << endl;
 				backward(output, target);
+				layers[0].print();
+				layers[1].print();
 				update_weight(learning_rate);
-				update_bias(learning_rate);
+				update_bias(learning_rate,output-target);
 			}
 		}
 
