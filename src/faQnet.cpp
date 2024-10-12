@@ -66,7 +66,7 @@ namespace faQnet{
 
 			weight = cv::Mat::zeros(this_layer_node_num, next_layer_node_num, CV_32FC1);
 			bias = cv::Mat::zeros(next_layer_node_num, 1, CV_32FC1);
-			result = cv::Mat::zeros(this_layer_node_num, 1, CV_32FC1);
+			result = cv::Mat::zeros(next_layer_node_num, 1, CV_32FC1);
 			error = cv::Mat::zeros(this_layer_node_num, 1, CV_32FC1);
 			act_func = act_function;
 
@@ -198,13 +198,14 @@ namespace faQnet{
 
 		protected:
 
+		
+
+
+		public:
 		//层
 		//这是一个vector，储存layer类对象。
 		//所有的层都储存在这里。
 		std::vector<layer> layers;
-
-
-		public:
 
 		//构造函数
 		//这个函数接受每一层每一层节点详情，然后借此初始化神经网络。
@@ -410,7 +411,8 @@ int main(){
 	std::vector<std::string> activation_function = {"sigmoid", "sigmoid"};
 	std::cout << 4;
     faQnet::net net(layer_size, activation_function);
-	std::cout << 5;
+	std::cout << 5 << std::endl;
+	net.layers[0].print();
 
 	//for (int i = 0; i < input.size(); i++){
 	//	net.train(input[i], target[i], 0.01, 1000);
