@@ -124,11 +124,8 @@ namespace faQnet{
 		输出矩阵
 		这是一个Mat对象，储存输出矩阵。*/
 		cv::Mat forward(cv::Mat input){
-			std::cout << "forward" << std::endl;
-			std::cout << "input:" << std::endl << input << std::endl;
-			std::cout << "weight:" << std::endl << weight << std::endl;
 			result = weight * input + bias;
-			std::cout << "result:" << std::endl << result << std::endl;
+			std::cout << "forward result:" << std::endl << result << std::endl;
 			return activation_function(result);
 		}
 
@@ -143,8 +140,13 @@ namespace faQnet{
 		上一层的误差矩阵*/
 		cv::Mat backward(cv::Mat last_error){
 			std::cout << "backward" << std::endl;
+			std::cout << "last error:" << std::endl << last_error << std::endl;
+			std::cout << "result:" << std::endl << result << std::endl;
+			std::cout << "act_func:" << act_func << std::endl;
+			std::cout << "activation_result:" << std::endl << activation_function_derivative(result, act_func) << std::endl;
 			cv::Mat temp = last_error.mul(activation_function_derivative(result));
-			error = temp * weight.t();
+			std::cout << "temp:" << std::endl << temp << std::endl;
+			error = weight.t() * temp;
 			return error;
 		}
 
