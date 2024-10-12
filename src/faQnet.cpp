@@ -64,7 +64,7 @@ namespace faQnet{
 		//传入该层节点数和下一层节点数，将成员变量的矩阵规格按上文设定。
 		layer(int this_layer_node_num, int next_layer_node_num, std::string act_function = "sigmoid"){
 
-			weight = cv::Mat::zeros(this_layer_node_num, next_layer_node_num, CV_32FC1);
+			weight = cv::Mat::zeros(next_layer_node_num, this_layer_node_num, CV_32FC1);
 			bias = cv::Mat::zeros(next_layer_node_num, 1, CV_32FC1);
 			result = cv::Mat::zeros(next_layer_node_num, 1, CV_32FC1);
 			error = cv::Mat::zeros(this_layer_node_num, 1, CV_32FC1);
@@ -124,7 +124,11 @@ namespace faQnet{
 		输出矩阵
 		这是一个Mat对象，储存输出矩阵。*/
 		cv::Mat forward(cv::Mat input){
-			result = input * weight + bias;
+			std::cout << "forward" << std::endl;
+			std::cout << "input:" << std::endl << input << std::endl;
+			std::cout << "weight:" << std::endl << weight << std::endl;
+			result = weight * input + bias;
+			std::cout << "result:" << std::endl << result << std::endl;
 			return activation_function(result);
 		}
 
@@ -138,6 +142,7 @@ namespace faQnet{
 		传入参数：
 		上一层的误差矩阵*/
 		cv::Mat backward(cv::Mat last_error){
+			std::cout << "backward" << std::endl;
 			cv::Mat temp = last_error.mul(activation_function_derivative(result));
 			error = temp * weight.t();
 			return error;
@@ -407,14 +412,12 @@ int main(){
 	std::vector<cv::Mat> target = faQnet::load_data("winequality-white.csv", 12, 12);
 	std::cout << target[0] << std::endl;
 	std::vector<int> layer_size = {11, 5, 1};
-	std::cout << "3";
 	std::vector<std::string> activation_function = {"sigmoid", "sigmoid"};
-	std::cout << 4;
     faQnet::net net(layer_size, activation_function);
-	std::cout << 5 << std::endl;
 	net.layers[0].print();
+	net.layers[1].print();
 
-	//for (int i = 0; i < input.size(); i++){
-	//	net.train(input[i], target[i], 0.01, 1000);
-	//}
+	for (int i = 0; i < input.size(); i++){
+		net.train(input[i], target[i], 0.01, 1000);
+	}
 }
