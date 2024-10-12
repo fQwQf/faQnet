@@ -390,14 +390,18 @@ namespace faQnet{
 
 
 int main(){
-
-	std::vector<cv::Mat> input = faQnet::load_data("winequality-white.csv", 1, 10);
-	std::vector<cv::Mat> target = faQnet::load_data("winequality-white.csv", 11, 11);
+	std::vector<cv::Mat> input = faQnet::load_data("winequality-white.csv", 1, 11);
+	std::cout << input[0] << std::endl;
+	std::vector<cv::Mat> target = faQnet::load_data("winequality-white.csv", 12, 12);
+	std::cout << target[0] << std::endl;
 	std::vector<int> layer_size = {10, 10, 1};
+	std::cout << "3";
 	std::vector<std::string> activation_function = {"sigmoid", "sigmoid"};
+	std::cout << 4;
     faQnet::net net(layer_size, activation_function);
+	std::cout << 5;
 
-	for (int i = 0; i < input.size(); i++){
-		net.train(input[i], target[i], 0.01, 1000);
-	}
+	//for (int i = 0; i < input.size(); i++){
+	//	net.train(input[i], target[i], 0.01, 1000);
+	//}
 }
