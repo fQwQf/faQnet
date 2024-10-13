@@ -217,6 +217,11 @@ namespace faQnet{
 			std::cout << "result:" << std::endl << result << std::endl;
 			std::cout << "error:" << std::endl << error << std::endl;
 		}
+
+
+		//2024/10/13 fQwQf
+		//数据归一化
+		
 	};
 
 
@@ -304,7 +309,7 @@ namespace faQnet{
 			}
 		}
 
-
+ 
 		//2024/10/10 fQwQf
 		/*偏置更新 这个函数接受一个学习率，然后循环调用每一层的偏置更新函数。
 		传入参数：
@@ -439,6 +444,8 @@ namespace faQnet{
 		
 		return output;
 	}
+
+
 
 
 }
