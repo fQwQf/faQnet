@@ -108,7 +108,35 @@ namespace faQnet{
 			}
 		}
 
+		//2024/10/12 fQwQf
+		//单层初始化权值矩阵
+		//这个函数接受一个初始化方法，将权值矩阵进行初始化。
+		void init_weight(std::string init_method,float a,float b=0){
+			if(init_method == "uniform"){
+				uniform_init(a, b, weight);
+			}
+			else if(init_method == "normal"){
+				normal_init(a, b, weight);
+			}
+			else if(init_method == "constant"){
+				constant_init(a, weight);
+			}
+		}
 
+		//2024/10/12 fQwQf
+		//单层初始化偏置矩阵
+		//这个函数接受一个初始化方法，将权值矩阵进行初始化。
+		void init_bias(std::string init_method,float a,float b=0){
+			if(init_method == "uniform"){
+				uniform_init(a, b, bias);
+			}
+			else if(init_method == "normal"){
+				normal_init(a, b, bias);
+			}
+			else if(init_method == "constant"){
+				constant_init(a, bias);
+			}
+		}
 
 		//2024/10/9 fQwQf
 		//单层前向传播
@@ -127,6 +155,10 @@ namespace faQnet{
 			result = weight * input + bias;
 			return activation_function(result);
 		}
+
+
+
+		
 
 
 
@@ -156,13 +188,8 @@ namespace faQnet{
 		上层误差矩阵*/
 		void update_weight(double learning_rate, cv::Mat last_error){//last_error其实是本层误差矩阵
 			cv::Mat output_derivative = activation_function_derivative(last_error, act_func);
-			std::cout << "last_error" << std::endl << last_error << std::endl;
-			std::cout << "output_derivative" << std::endl << output_derivative << std::endl;
 			cv::Mat delta = last_error.mul(output_derivative);
-			std::cout << "delta:" << std::endl << delta << std::endl;
-			std::cout << "output_derivative" << std::endl << output_derivative << std::endl;
 			delta =  result * delta.t() ;
-			std::cout << learning_rate * delta << std::endl;
 			weight -= learning_rate * delta;
 		}
 
@@ -272,8 +299,7 @@ namespace faQnet{
 		这是一个double型变量，代表学习率。*/
 		void update_weight(double learning_rate){
 			for(int i = 0; i < layers.size(); i++){
-				std::cout << "更新第" << i << "层" << std::endl;
-				std::cout << "error:" << std::endl << layers[i].error << std::endl;
+				std::cout << "更新第" << i << "层weight" << std::endl;
 				layers[i].update_weight(learning_rate, layers[i].error);
 			}
 		}
@@ -286,13 +312,11 @@ namespace faQnet{
 		这是一个double型变量，代表学习率。*/
 		void update_bias(double learning_rate,cv::Mat error){
 			for(int i = 0; i < layers.size(); i++){
-				std::cout << "更新第" << i << "层" << std::endl;
+				std::cout << "更新第" << i << "层bias" << std::endl;
 				
 				if(i == layers.size() - 1){
-					std::cout << "error:" << std::endl << error << std::endl;
 					layers[i].update_bias(learning_rate, error);
 				}else{
-					std::cout << "error:" << std::endl << layers[i+1].error << std::endl;
 				    layers[i].update_bias(learning_rate, layers[i+1].error);
 				}
 				
@@ -329,14 +353,15 @@ namespace faQnet{
 		这是一个整数，代表训练次数。*/
 		void train(cv::Mat input, cv::Mat target, double learning_rate, int train_times){
 			for(int i = 0; i < train_times; i++){
+				cout <<"训练次数：" << i+1 <<"/" << train_times ;//<< "  loss值: " << loss_value << endl;
 				cv::Mat output = forward(input);
 				//float loss_value = loss(output, target, "mse");
-				cout <<"训练次数：" << i+1 <<"/" << train_times ;//<< "  loss值: " << loss_value << endl;
 				backward(output, target);
-				layers[0].print();
-				layers[1].print();
+				
 				update_weight(learning_rate);
 				update_bias(learning_rate,output-target);
+				layers[0].print();
+				layers[1].print();
 			}
 		}
 
@@ -425,12 +450,26 @@ int main(){
 	std::vector<cv::Mat> target = faQnet::load_data("winequality-white.csv", 12, 12);
 	std::cout << target[0] << std::endl;
 	std::vector<int> layer_size = {11, 5, 1};
-	std::vector<std::string> activation_function = {"sigmoid", "sigmoid"};
+	std::vector<std::string> activation_function = {"relu", "relu"};
     faQnet::net net(layer_size, activation_function);
+
+
+	net.layers[0].init_bias("normal", 0, 0.1);
+	net.layers[1].init_bias("normal", 0, 0.1);
+	net.layers[0].init_weight("normal", 0, 1);
+	net.layers[1].init_weight("normal", 0, 1);
+
 	net.layers[0].print();
 	net.layers[1].print();
 
-	for (int i = 0; i < input.size(); i++){
-		net.train(input[i], target[i], 0.01, 1000);
+
+	for (int i = 0; i < 3; i++){
+		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
+		net.train(input[i], target[i], 0.01, 3);
 	}
+
+	//for (int i = 0; i < 100; i++){
+	//	std::cout << "预测数据：" << i+1 <<"/" << 100 << std::endl;
+	//	std::cout << net.predict(input[i]) << std::endl;
+	//}
 }
