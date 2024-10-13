@@ -450,7 +450,7 @@ int main(){
 	std::vector<cv::Mat> target = faQnet::load_data("winequality-white.csv", 12, 12);
 	std::cout << target[0] << std::endl;
 	std::vector<int> layer_size = {11, 5, 1};
-	std::vector<std::string> activation_function = {"relu", "relu"};
+	std::vector<std::string> activation_function = {"sigmoid", "relu"};
     faQnet::net net(layer_size, activation_function);
 
 
@@ -463,13 +463,15 @@ int main(){
 	net.layers[1].print();
 
 
-	for (int i = 0; i < 3; i++){
+	for (int i = 0; i < 100; i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.train(input[i], target[i], 0.01, 3);
+		net.train(input[i], target[i], 0.01, 10);
 	}
 
-	//for (int i = 0; i < 100; i++){
-	//	std::cout << "预测数据：" << i+1 <<"/" << 100 << std::endl;
-	//	std::cout << net.predict(input[i]) << std::endl;
-	//}
+	for (int i = 0; i < 100; i++){
+		std::cout << "预测数据：" << i+1 <<"/" << 100 ;
+		std::cout << net.predict(input[i]) << std::endl;
+		std::cout << "实际数据：" << i+1 <<"/" << 100 ;
+		std::cout << target[i] << std::endl;
+	}
 }
