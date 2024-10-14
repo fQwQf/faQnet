@@ -293,6 +293,7 @@ namespace faQnet{
 		输入矩阵
 		这是一个Mat对象，储存输入矩阵。规格为输入数据数*1。*/
 		cv::Mat forward(cv::Mat input){
+			input = normalize_input(input);
 			for(int i = 0; i < layers.size(); i++){
 				input = layers[i].forward(input);
 			}
@@ -311,6 +312,8 @@ namespace faQnet{
 		目标矩阵
 		这是一个Mat对象，即目标输出矩阵。*/
 		void backward(cv::Mat output, cv::Mat target){
+			output = normalize_target(output);
+			target = normalize_target(target);
 			cv::Mat error = output - target;
 			for(int i = layers.size() - 1; i >= 0; i--){
 				error = layers[i].backward(error);
@@ -399,6 +402,7 @@ namespace faQnet{
 		这是一个Mat对象，储存输入矩阵。是一个行数等于第一层节点数的单列矩阵。*/
 		cv::Mat predict(cv::Mat input){
 			cv::Mat output = forward(input);
+			output = denormalize_target(output);
 			return output;//我们尚未实现过滤函数。
 		}
 
