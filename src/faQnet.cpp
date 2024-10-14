@@ -598,7 +598,7 @@ int main(){
 
 	net.print_network();
 
-	/*for (int i = 0; i < 100; i++){
+	for (int i = 0; i < 100; i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
 		net.train(input[i], target[i], 0.01, 10);
 	}
@@ -608,5 +608,5 @@ int main(){
 		std::cout << net.predict(input[i]) << std::endl;
 		std::cout << "实际数据：" << i+1 <<"/" << 100 ;
 		std::cout << target[i] << std::endl;
-	}*/
+	}
 }
