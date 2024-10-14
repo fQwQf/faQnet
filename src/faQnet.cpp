@@ -234,16 +234,24 @@ namespace faQnet{
 		protected:
 
 		//输入均值矩阵
-		//这是一个Mat对象，储存所有输入矩阵的均值。
+		//这是一个Mat对象，储存所有输入矩阵每一项的均值。
+		cv::Mat input_mean;
+
 
 		//输入标准差矩阵
-		//这是一个Mat对象，储存所有输入矩阵的标准差。
+		//这是一个Mat对象，储存所有输入矩阵每一项的标准差。
+		cv::Mat input_std;
+
 
 		//输出均值矩阵
 		//这是一个Mat对象，储存所有输出矩阵每一项的均值。
+		cv::Mat output_mean;
+
 
 		//输出标准差矩阵
 		//这是一个Mat对象，储存所有输出矩阵每一项的标准差。
+		cv::Mat output_std;
+
 
 
 		public:
@@ -269,6 +277,11 @@ namespace faQnet{
 			for(int i = 0; i < node_num.size() - 1; i++){
 				layers.push_back(layer(node_num[i], node_num[i + 1], act_function[i]));
 			}
+
+			input_mean = cv::Mat::zeros(node_num[0], 1, CV_32F);
+			input_std = cv::Mat::zeros(node_num[0], 1, CV_32F);
+			output_mean = cv::Mat::zeros(node_num[node_num.size() - 1], 1, CV_32F);
+			output_std = cv::Mat::zeros(node_num[node_num.size() - 1], 1, CV_32F);
 		}
 
 
@@ -423,12 +436,22 @@ namespace faQnet{
 		输入矩阵（若干） 
 		这是一个储存Mat对象的vector，储存若干输入矩阵。*/
 		void preprocess(std::vector<cv::Mat> input){
-			for(int i = 0; i < input.size(); i++){
-				for(int k = 0; k < input[i].rows; k++){
+			
+			for(int k = 0; k < input[0].rows; k++){
+				float sum = 0;
+				for(int i = 0; i < input.size(); i++){
 					sum += input[i].at<float>(k, 1);
 				}
+				input_mean.at<float>(k,1)=sum / input.size();
+			}
 			
-			
+			for(int k = 0; k < input[0].rows; k++){
+				float sum = 0;
+				for(int i = 0; i < input.size(); i++){
+					sum += pow(input[i].at<float>(k, 1) - input_mean.at<float>(k, 1), 2);
+				}
+				input_std.at<float>(k,1) = sqrt(sum / input.size());
+			}
 		}
 	
 	
