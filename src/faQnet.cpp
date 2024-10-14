@@ -80,10 +80,10 @@ namespace faQnet{
 
 		//均匀分布初始化
 		//传入均匀分布的最小值和最大值和需要初始化的矩阵，将矩阵中的每一项赋值为一个均匀分布的随机值。
-		void uniform_init(float min, float max, cv::Mat &matrix){
-			for(int i = 0; i < matrix.rows; i++){
-				for(int j = 0; j < matrix.cols; j++){
-					matrix.at<float>(i, j) = min + (max - min) * (rand() / (RAND_MAX + 1.0));
+		void uniform_init(float min, float max, cv::Mat &Matrix){
+			for(int i = 0; i < Matrix.rows; i++){
+				for(int j = 0; j < Matrix.cols; j++){
+					Matrix.at<float>(i, j) = min + (max - min) * (rand() / (RAND_MAX + 1.0));
 				}
 			}
 		}
@@ -91,18 +91,18 @@ namespace faQnet{
 
 		//正态分布初始化
 		//传入正态分布的均值和标准差和需要初始化的矩阵，将矩阵中的每一项赋值为一个正态分布的随机值。
-		void normal_init(float mean, float std, cv::Mat &matrix){
-			cv:randn(matrix, mean, std);
+		void normal_init(float mean, float std, cv::Mat &Matrix){
+			cv:randn(Matrix, mean, std);
 		}
 
 		//摆烂了。
 
 		//常数初始化
 		//传入一个常数和需要初始化的矩阵，将矩阵中的每一项赋值为该常数。
-		void constant_init(float constant, cv::Mat &matrix){
-			for(int i = 0; i < matrix.rows; i++){
-				for(int j = 0; j < matrix.cols; j++){
-					matrix.at<float>(i, j) = constant;
+		void constant_init(float constant, cv::Mat &Matrix){
+			for(int i = 0; i < Matrix.rows; i++){
+				for(int j = 0; j < Matrix.cols; j++){
+					Matrix.at<float>(i, j) = constant;
 				}
 			}
 		}
@@ -167,6 +167,9 @@ namespace faQnet{
 		cv::Mat backward(cv::Mat last_error){
 			cv::Mat temp = last_error.mul(activation_function_derivative(result));
 			error = weight.t() * temp;
+			std::cout << "result:" << std::endl << result << std::endl;
+			std::cout << "activation_function_derivative:" << std::endl << activation_function_derivative(result) << std::endl;
+			std::cout << "error:" << std::endl << error << std::endl;
 			return error;
 		}
 
@@ -435,7 +438,7 @@ namespace faQnet{
 		输入矩阵（若干）
 		这是一个储存Mat对象的vector，储存若干输入矩阵。*/
 		void preprocess_input(std::vector<cv::Mat> input){
-
+			std::cout <<input.size();
 			for(int k = 0; k < input[0].rows; k++){
 				float sum = 0;
 				for(int i = 0; i < input.size(); i++){
@@ -573,28 +576,35 @@ namespace faQnet{
 
 
 int main(){
-	std::vector<cv::Mat> input = faQnet::load_data("winequality-white.csv", 1, 11);
-	std::vector<cv::Mat> target = faQnet::load_data("winequality-white.csv", 12, 12);
-	std::vector<int> layer_size = {11, 5, 1};
-	std::vector<std::string> activation_function = {"sigmoid", "sigmoid"};
-
+	std::vector<cv::Mat> input = faQnet::load_data("wdbc.csv", 4, 32);
+	std::vector<cv::Mat> target = faQnet::load_data("wdbc.csv", 2, 3);
+	std::cout << "数据导入完成" << std::endl;
+	std::vector<int> layer_size = {29, 14, 2};
+	std::vector<std::string> activation_function = {"softsign", "leaky_relu"};
 	faQnet::net net(layer_size, activation_function);
+	std::cout << "网络初始化完成" << std::endl;
+
+	
 
 	net.layers[0].init_bias("uniform", -0.001, 0.001);
 	net.layers[1].init_bias("uniform", -0.001, 0.001);
-	net.layers[0].init_weight("normal", 0, 50);
-	net.layers[1].init_weight("normal", 0, 50);
+	net.layers[0].init_weight("normal", 0, 10);
+	net.layers[1].init_weight("normal", 0, 10);
+	std::cout << "矩阵初始化完成" << std::endl;
 
+	std::cout <<input.size() << std::endl;
 	net.preprocess_input(input);
+	std::cout << "数据预处理1完成" << std::endl;
 	net.preprocess_target(target);
+	std::cout << "数据预处理2完成" << std::endl;
 
 	net.train(input[0], target[0], 0.0001, 1);
 
-	//net.print_network();
+	net.print_network();
 
-	/*for (int i = 0; i < input.size(); i++){
+	for (int i = 0; i < input.size(); i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.train(input[i], target[i], 0.0001, 10);
+		net.train(input[i], target[i], 0.0001, 50);
 	}
 
 	for (int i = 0; i < 100; i++){
@@ -602,5 +612,5 @@ int main(){
 		std::cout << net.predict(input[i]) << std::endl;
 		std::cout << "实际数据：" << i+1 <<"/" << 100 ;
 		std::cout << target[i] << std::endl;
-	}*/
+	}
 }
