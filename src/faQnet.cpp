@@ -482,11 +482,33 @@ namespace faQnet{
 	
 		//2024/10/14 fQwQf
 		/*输入数据归一化
-		这个函数接受一个输入矩阵，然后将其归一化。
+		这个函数接受一个输入矩阵，然后返回归一化后的矩阵。
 		传入参数：
 		输入矩阵
 		这是一个Mat对象，储存输入矩阵。是一个行数等于第一层节点数的单列矩阵。*/
-		
+		cv::Mat normalize_input(cv::Mat input){
+			return (input - input_mean) / input_std;
+		}
+
+
+		//2024/10/14 fQwQf
+		/*输出数据归一化
+		这个函数接受若干输出矩阵，然后返回将其归一化后的矩阵。
+		传入参数：
+		输出矩阵*/
+		cv::Mat normalize_target(cv::Mat target){
+			return (target - target_mean) / target_std;
+		}
+
+
+		//2024/10/14 fQwQf
+		/*输出数据反归一化
+		这个函数接受若干输出矩阵，然后返回将其反归一化后的矩阵。
+		传入参数：
+		输出矩阵*/
+		cv::Mat denormalize_target(cv::Mat target){
+			return target.mul(target_std) + target_mean;
+		}
 	
 	
 	};
