@@ -443,17 +443,17 @@ namespace faQnet{
 			for(int k = 0; k < input[0].rows; k++){
 				float sum = 0;
 				for(int i = 0; i < input.size(); i++){
-					sum += input[i].at<float>(k, 1);
+					sum += input[i].at<float>(k, 0);
 				}
-				input_mean.at<float>(k,1)=sum / input.size();
+				input_mean.at<float>(k,0)=sum / input.size();
 			}
 			
 			for(int k = 0; k < input[0].rows; k++){
 				float sum = 0;
 				for(int i = 0; i < input.size(); i++){
-					sum += pow(input[i].at<float>(k, 1) - input_mean.at<float>(k, 1), 2);
+					sum += pow(input[i].at<float>(k, 0) - input_mean.at<float>(k, 0), 2);
 				}
-				input_std.at<float>(k,1) = sqrt(sum / input.size());
+				input_std.at<float>(k,0) = sqrt(sum / input.size());
 			}
 		}
 	
@@ -465,20 +465,21 @@ namespace faQnet{
 		输出矩阵（若干） 
 		这是一个储存Mat对象的vector，储存若干输出矩阵。*/
 		void preprocess_target(std::vector<cv::Mat> target){
+			int times = target.size();
 			for(int k = 0; k < target[0].rows; k++){
 				float sum = 0;
-				for(int i = 0; i < target.size(); i++){
-					sum += target[i].at<float>(k, 1);
+				for(int i = 0; i < times; i++){
+					sum += target[i].at<float>(k, 0);
 				}
-				target_mean.at<float>(k,1)=sum / target.size();
+				target_mean.at<float>(k,0)=sum / times;
 			}
 
 			for(int k = 0; k < target[0].rows; k++){
 				float sum = 0;
-				for(int i = 0; i < target.size(); i++){
-					sum += pow(target[i].at<float>(k, 1) - target_mean.at<float>(k, 1), 2);
+				for(int i = 0; i < times; i++){
+					sum += pow(target[i].at<float>(k, 0) - target_mean.at<float>(k, 0), 2);
 				}
-				target_std.at<float>(k,1) = sqrt(sum / target.size());
+				target_std.at<float>(k,0) = sqrt(sum / times);
 			}
 		}
 		
@@ -511,6 +512,22 @@ namespace faQnet{
 		输出矩阵*/
 		cv::Mat denormalize_target(cv::Mat target){
 			return target.mul(target_std) + target_mean;
+		}
+
+
+		//2024/10/14 fQwQf
+		//输出网络详情
+		void print_network(){
+			std::cout << "层数: " << layers.size() << std::endl;
+			for (int i = 0; i < layers.size(); i++){
+				std::cout << "第" << i+1 << "层: " << std::endl;
+				layers[i].print();
+			}
+			std::cout << "input_mean: " << input_mean << std::endl;
+			std::cout << "input_std: " << input_std << std::endl;
+			std::cout << "target_mean: " << target_mean << std::endl;
+			std::cout << "target_std: " << target_std << std::endl;
+
 		}
 	
 	
@@ -569,16 +586,19 @@ int main(){
     faQnet::net net(layer_size, activation_function);
 
 
-	net.layers[0].init_bias("normal", 0, 0.1);
-	net.layers[1].init_bias("normal", 0, 0.1);
-	net.layers[0].init_weight("normal", 0, 1);
-	net.layers[1].init_weight("normal", 0, 1);
+	net.layers[0].init_bias("uniform", -0.1, 0.1);
+	net.layers[1].init_bias("uniform", -0.1, 0.1);
+	net.layers[0].init_weight("uniform", -0.1, 1);
+	net.layers[1].init_weight("uniform", -0.1, 1);
 
-	net.layers[0].print();
-	net.layers[1].print();
+	
 
+	net.preprocess_input(input);
+	net.preprocess_target(target);
 
-	for (int i = 0; i < 100; i++){
+	net.print_network();
+
+	/*for (int i = 0; i < 100; i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
 		net.train(input[i], target[i], 0.01, 10);
 	}
@@ -588,5 +608,5 @@ int main(){
 		std::cout << net.predict(input[i]) << std::endl;
 		std::cout << "实际数据：" << i+1 <<"/" << 100 ;
 		std::cout << target[i] << std::endl;
-	}
+	}*/
 }
