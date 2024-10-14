@@ -4,8 +4,7 @@
 
 #include "function.cpp"
 
-using std::cout;
-using std::endl;
+
 namespace faQnet{
 
 
@@ -25,9 +24,9 @@ namespace faQnet{
 		protected:
 
 		//2024/10/9 fQwQf
-		//权值矩阵
-		//一个Mat对象，储存该层所有节点对下一层所有节点的权值。
-		//规格为该层节点数*下一层节点数 。（这样处理的意义见下文。）
+		/*权值矩阵
+		一个Mat对象，储存该层所有节点对下一层所有节点的权值。
+		规格为该层节点数*下一层节点数 。*/
 		cv::Mat weight;
 
 
@@ -158,10 +157,6 @@ namespace faQnet{
 
 
 
-		
-
-
-
 		//2024/10/10 fQwQf
 		/*单层反向传播
 		这个函数接受上一层的误差矩阵，
@@ -218,8 +213,8 @@ namespace faQnet{
 		}
 
 
-		
-		
+
+
 	};
 
 
@@ -314,7 +309,9 @@ namespace faQnet{
 		void backward(cv::Mat output, cv::Mat target){
 			target = normalize_target(target);
 			cv::Mat error = output - target;
-			for(int i = layers.size() - 1; i >= 0; i--){
+			for(int i = layers.size() -1; i >= 0; i--){
+				std::cout << "反向传播第" << i << "层" << std::endl;
+				std::cout << "error:" << std::endl << error << std::endl;
 				error = layers[i].backward(error);
 			}
 		}
@@ -332,7 +329,7 @@ namespace faQnet{
 			}
 		}
 
- 
+
 		//2024/10/10 fQwQf
 		/*偏置更新 这个函数接受一个学习率，然后循环调用每一层的偏置更新函数。
 		传入参数：
@@ -341,13 +338,13 @@ namespace faQnet{
 		void update_bias(double learning_rate,cv::Mat error){
 			for(int i = 0; i < layers.size(); i++){
 				std::cout << "更新第" << i << "层bias" << std::endl;
-				
+
 				if(i == layers.size() - 1){
 					layers[i].update_bias(learning_rate, error);
 				}else{
-				    layers[i].update_bias(learning_rate, layers[i+1].error);
+					layers[i].update_bias(learning_rate, layers[i+1].error);
 				}
-				
+
 			}
 		}
 
@@ -381,11 +378,10 @@ namespace faQnet{
 		这是一个整数，代表训练次数。*/
 		void train(cv::Mat input, cv::Mat target, double learning_rate, int train_times){
 			for(int i = 0; i < train_times; i++){
-				cout <<"训练次数：" << i+1 <<"/" << train_times ;//<< "  loss值: " << loss_value << endl;
+				std::cout <<"训练次数：" << i+1 <<"/" << train_times ;//<< "  loss值: " << loss_value << endl;
 				cv::Mat output = forward(input);
 				//float loss_value = loss(output, target, "mse");
 				backward(output, target);
-				
 				update_weight(learning_rate);
 				update_bias(learning_rate,output-target);
 				layers[0].print();
@@ -425,21 +421,21 @@ namespace faQnet{
 		文件名
 		这是一个字符串，代表文件名。*/
 		/*void load_model(std::string file_name){
-		    cv::FileStorage fs;
+			cv::FileStorage fs;
 			fs.open(file_name, cv::FileStorage::READ);
 			fs["layers"] >> layers;
 			fs.release();
 		}*/
-	
+
 
 		//2024/10/14 fQwQf
 		/*输入数据归一化预处理
 		这个函数接受若干输入矩阵，然后计算每一项数据的均值和标准差。
 		传入参数：
-		输入矩阵（若干） 
+		输入矩阵（若干）
 		这是一个储存Mat对象的vector，储存若干输入矩阵。*/
 		void preprocess_input(std::vector<cv::Mat> input){
-			
+
 			for(int k = 0; k < input[0].rows; k++){
 				float sum = 0;
 				for(int i = 0; i < input.size(); i++){
@@ -447,7 +443,7 @@ namespace faQnet{
 				}
 				input_mean.at<float>(k,0)=sum / input.size();
 			}
-			
+
 			for(int k = 0; k < input[0].rows; k++){
 				float sum = 0;
 				for(int i = 0; i < input.size(); i++){
@@ -456,13 +452,13 @@ namespace faQnet{
 				input_std.at<float>(k,0) = sqrt(sum / input.size());
 			}
 		}
-	
+
 
 		//2024/10/14 fQwQf
 		/*输出数据归一化预处理
 		这个函数接受若干输出矩阵，然后计算每一项数据的均值和标准差。
 		传入参数：
-		输出矩阵（若干） 
+		输出矩阵（若干）
 		这是一个储存Mat对象的vector，储存若干输出矩阵。*/
 		void preprocess_target(std::vector<cv::Mat> target){
 			int times = target.size();
@@ -482,8 +478,8 @@ namespace faQnet{
 				target_std.at<float>(k,0) = sqrt(sum / times);
 			}
 		}
-		
-	
+
+
 		//2024/10/14 fQwQf
 		/*输入数据归一化
 		这个函数接受一个输入矩阵，然后返回归一化后的矩阵。
@@ -529,13 +525,13 @@ namespace faQnet{
 			std::cout << "target_std: " << target_std << std::endl;
 
 		}
-	
-	
+
+
 	};
 
 
 	//2024/10/11 fQwQf
-	/*数据导入  
+	/*数据导入
 	一般而言，现有的数据集都是存储在文件中的，因此需要将文件中的数据转化为矩阵格式导入到程序中。
 	需要注意的是，导入数据不一定指明了输入和标签，且c++函数一次只能返回一个值，
 	因此这个函数实际上是返回每一行指定的两个位置间的所有数据构成的一维矩阵构成的vector,应当设计相应的能指明开始读取位置和结束读取位置的变量。
@@ -544,13 +540,13 @@ namespace faQnet{
 	std::vector<cv::Mat> load_data(std::string file_name, int start, int end){
 		std::ifstream csv_data(file_name, std::ios::in);
 		std::vector<cv::Mat> output;
-		
+
 		std::string line;
 
 		//读取的第一行可能是数据，但也可能是标题，在数据量充足的情况下，舍弃一行无关紧要。
 		getline(csv_data, line);
-				
-		
+
+
 		while (getline(csv_data, line))
 		{
 			cv::Mat temp(end-start+1, 1, CV_32F);
@@ -560,13 +556,13 @@ namespace faQnet{
 			for (int i = 1 ;getline(sin, data, ',')  && i <= end; i++){
 				if (i >= start){
 					temp.at<float>(i-start,0) = std::stof(data);
-			    }
+				}
 			}
 
 			output.push_back(temp);
 		}
 		csv_data.close();
-		
+
 		return output;
 	}
 
@@ -578,27 +574,25 @@ namespace faQnet{
 
 int main(){
 	std::vector<cv::Mat> input = faQnet::load_data("winequality-white.csv", 1, 11);
-	std::cout << input[0] << std::endl;
 	std::vector<cv::Mat> target = faQnet::load_data("winequality-white.csv", 12, 12);
-	std::cout << target[0] << std::endl;
 	std::vector<int> layer_size = {11, 5, 1};
 	std::vector<std::string> activation_function = {"sigmoid", "sigmoid"};
-    faQnet::net net(layer_size, activation_function);
 
+	faQnet::net net(layer_size, activation_function);
 
 	net.layers[0].init_bias("uniform", -0.001, 0.001);
 	net.layers[1].init_bias("uniform", -0.001, 0.001);
 	net.layers[0].init_weight("normal", 0, 50);
 	net.layers[1].init_weight("normal", 0, 50);
 
-	
-
 	net.preprocess_input(input);
 	net.preprocess_target(target);
 
-	net.print_network();
+	net.train(input[0], target[0], 0.0001, 1);
 
-	for (int i = 0; i < input.size(); i++){
+	//net.print_network();
+
+	/*for (int i = 0; i < input.size(); i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
 		net.train(input[i], target[i], 0.0001, 10);
 	}
@@ -608,5 +602,5 @@ int main(){
 		std::cout << net.predict(input[i]) << std::endl;
 		std::cout << "实际数据：" << i+1 <<"/" << 100 ;
 		std::cout << target[i] << std::endl;
-	}
+	}*/
 }
