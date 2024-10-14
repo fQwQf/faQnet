@@ -245,12 +245,12 @@ namespace faQnet{
 
 		//输出均值矩阵
 		//这是一个Mat对象，储存所有输出矩阵每一项的均值。
-		cv::Mat output_mean;
+		cv::Mat target_mean;
 
 
 		//输出标准差矩阵
 		//这是一个Mat对象，储存所有输出矩阵每一项的标准差。
-		cv::Mat output_std;
+		cv::Mat target_std;
 
 
 
@@ -280,8 +280,8 @@ namespace faQnet{
 
 			input_mean = cv::Mat::zeros(node_num[0], 1, CV_32F);
 			input_std = cv::Mat::zeros(node_num[0], 1, CV_32F);
-			output_mean = cv::Mat::zeros(node_num[node_num.size() - 1], 1, CV_32F);
-			output_std = cv::Mat::zeros(node_num[node_num.size() - 1], 1, CV_32F);
+			target_mean = cv::Mat::zeros(node_num[node_num.size() - 1], 1, CV_32F);
+			target_std = cv::Mat::zeros(node_num[node_num.size() - 1], 1, CV_32F);
 		}
 
 
@@ -429,13 +429,13 @@ namespace faQnet{
 		}*/
 	
 
-		//2024/10/13 fQwQf
+		//2024/10/14 fQwQf
 		/*输入数据归一化预处理
 		这个函数接受若干输入矩阵，然后计算每一项数据的均值和标准差。
 		传入参数：
 		输入矩阵（若干） 
 		这是一个储存Mat对象的vector，储存若干输入矩阵。*/
-		void preprocess(std::vector<cv::Mat> input){
+		void preprocess_input(std::vector<cv::Mat> input){
 			
 			for(int k = 0; k < input[0].rows; k++){
 				float sum = 0;
@@ -454,6 +454,31 @@ namespace faQnet{
 			}
 		}
 	
+
+		//2024/10/14 fQwQf
+		/*输出数据归一化预处理
+		这个函数接受若干输出矩阵，然后计算每一项数据的均值和标准差。
+		传入参数：
+		输出矩阵（若干） 
+		这是一个储存Mat对象的vector，储存若干输出矩阵。*/
+		void preprocess_target(std::vector<cv::Mat> target){
+			for(int k = 0; k < target[0].rows; k++){
+				float sum = 0;
+				for(int i = 0; i < target.size(); i++){
+					sum += target[i].at<float>(k, 1);
+				}
+				target_mean.at<float>(k,1)=sum / target.size();
+			}
+
+			for(int k = 0; k < target[0].rows; k++){
+				float sum = 0;
+				for(int i = 0; i < target.size(); i++){
+					sum += pow(target[i].at<float>(k, 1) - target_mean.at<float>(k, 1), 2);
+				}
+				target_std.at<float>(k,1) = sqrt(sum / target.size());
+			}
+		}
+		
 	
 	
 	
