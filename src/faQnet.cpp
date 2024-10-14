@@ -312,7 +312,6 @@ namespace faQnet{
 		目标矩阵
 		这是一个Mat对象，即目标输出矩阵。*/
 		void backward(cv::Mat output, cv::Mat target){
-			output = normalize_target(output);
 			target = normalize_target(target);
 			cv::Mat error = output - target;
 			for(int i = layers.size() - 1; i >= 0; i--){
