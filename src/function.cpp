@@ -312,7 +312,7 @@ namespace faQnet {
 
 	//2024/10/11 fQwQf
 	//平滑平均绝对误差 (SLL/Smooth L1Loss)
-	/*float sll(cv::Mat y_true, cv::Mat y_pred){
+	float sll(cv::Mat y_true, cv::Mat y_pred){
 		cv::Mat diff = y_true - y_pred;
 		cv::Mat smooth_l1 = cv::Mat::zeros(diff.size(), diff.type());
 		for (int i = 0; i < diff.rows; ++i) {
@@ -325,23 +325,23 @@ namespace faQnet {
 				}
 			}
 		}
-		return cv::sum(smooth_l1) / y_true.rows;
-	}*/
+		cv::Scalar sum = cv::sum(smooth_l1);
+		return sum[0] / y_true.rows;
+	}
 
 	//2024/10/11 fQwQf
 	//均方对数误差 (MSLE)
-	/*float msle(cv::Mat y_true, cv::Mat y_pred){
+	float msle(cv::Mat y_true, cv::Mat y_pred){
 		// 计算自然对数
 		cv::Mat log_y_true, log_y_pred;
-		cv::log(y_true, log_y_true + 1);
-		cv::log(y_pred, log_y_pred + 1);
+		cv::log(y_true + 1, log_y_true);
+		cv::log(y_pred + 1, log_y_pred);
 
-		// 计算差的平方
 		cv::Mat diff_squared = (log_y_true - log_y_pred).mul(log_y_true - log_y_pred);
 
-		// 求平均值
-		return cv::sum(diff_squared) / y_true.rows;
-	}*/
+		cv::Scalar sum = cv::sum(diff_squared);
+		return sum[0] / y_true.rows;
+	}
 
 	//2024/10/11 fQwQf
 	//二元交叉熵损失函数（CE）
