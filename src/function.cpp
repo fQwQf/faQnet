@@ -305,9 +305,10 @@ namespace faQnet {
 
 	//2024/10/11 fQwQf
 	//平均绝对百分比误差 (MAPE)
-	/*float mape(cv::Mat y_true, cv::Mat y_pred){
-		return cv::abs(cv::sum((y_true - y_pred) / y_true)) / y_true.rows;
-	}*/
+	float mape(cv::Mat y_true, cv::Mat y_pred){
+		cv::Scalar sum = cv::sum((y_true - y_pred) / y_true);
+		return cv::abs(sum[0]) / y_true.rows;
+	}
 
 	//2024/10/11 fQwQf
 	//平滑平均绝对误差 (SLL/Smooth L1Loss)
