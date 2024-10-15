@@ -29,7 +29,7 @@ namespace faQnet {
 		else if(act_function == "softsign"){
 			return softsign(Matrix);
 		}
-		/*else if(act_function == "softplus"){
+		else if(act_function == "softplus"){
 			return softplus(Matrix);
 		}
 		else if(act_function == "swish"){
@@ -37,7 +37,7 @@ namespace faQnet {
 		}
 		else if(act_function == "elu"){
 			return elu(Matrix);
-		}*/
+		}
 		return Matrix;
 	}
 
@@ -127,16 +127,6 @@ namespace faQnet {
 	}
 
 
-	cv::Mat easy_derivative(cv::Mat Matrix){
-		cv::Mat result = Matrix.clone();
-		for(int i = 0; i < Matrix.rows; ++i){
-			for(int j = 0; j < Matrix.cols; ++j){
-				result.at<float>(i, j) = 1 ;
-			}
-		}
-		return result;
-	}
-
 
 
 	//2024/10/10 fQwQf
@@ -168,7 +158,7 @@ namespace faQnet {
 		else if(act_function == "elu"){
 			return elu_derivative(Matrix);
 		}
-		return easy_derivative(Matrix);
+		return Matrix;
 	}
 
 	//2024/10/10 fQwQf
@@ -295,9 +285,10 @@ namespace faQnet {
 
 	//2024/10/11 fQwQf
 	//平均绝对误差 (MAE/L1Loss)
-	/*float mae(cv::Mat y_true, cv::Mat y_pred){
-		return cv::sum(cv::abs(y_true - y_pred)) / y_true.rows;
-	}*/
+	float mae(cv::Mat y_true, cv::Mat y_pred){
+		cv::Scalar sum = cv::sum(cv::abs(y_true - y_pred));
+		return sum[0] / y_true.rows;
+	}
 
 	//2024/10/11 fQwQf
 	//平均平方误差 (MSE/L2Loss)
