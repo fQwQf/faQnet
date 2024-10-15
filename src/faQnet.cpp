@@ -576,20 +576,20 @@ namespace faQnet{
 
 
 int main(){
-	std::vector<cv::Mat> input = faQnet::load_data("wdbc.csv", 4, 32);
-	std::vector<cv::Mat> target = faQnet::load_data("wdbc.csv", 2, 3);
+	std::vector<cv::Mat> input = faQnet::load_data("ObesityDataSet_raw_and_data_sinthetic.csv", 	1, 16);
+	std::vector<cv::Mat> target = faQnet::load_data("ObesityDataSet_raw_and_data_sinthetic.csv", 17, 17);
 	std::cout << "数据导入完成" << std::endl;
-	std::vector<int> layer_size = {29, 14, 2};
+	std::vector<int> layer_size = {16, 10, 1};
 	std::vector<std::string> activation_function = {"softsign", "leaky_relu"};
 	faQnet::net net(layer_size, activation_function);
 	std::cout << "网络初始化完成" << std::endl;
 
 	
 
-	net.layers[0].init_bias("uniform", -0.001, 0.001);
-	net.layers[1].init_bias("uniform", -0.001, 0.001);
-	net.layers[0].init_weight("normal", 0, 10);
-	net.layers[1].init_weight("normal", 0, 10);
+	net.layers[0].init_bias("uniform", -0.1, 0.1);
+	net.layers[1].init_bias("uniform", -0.1, 0.1);
+	net.layers[0].init_weight("normal", 0, 1);
+	net.layers[1].init_weight("normal", 0, 1);
 	std::cout << "矩阵初始化完成" << std::endl;
 
 	std::cout <<input.size() << std::endl;
@@ -598,13 +598,13 @@ int main(){
 	net.preprocess_target(target);
 	std::cout << "数据预处理2完成" << std::endl;
 
-	net.train(input[0], target[0], 0.0001, 1);
+	net.train(input[0], target[0], 0.00001, 1);
 
 	net.print_network();
 
 	for (int i = 0; i < input.size(); i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.train(input[i], target[i], 0.0001, 50);
+		net.train(input[i], target[i], 0.00001, 20);
 	}
 
 	for (int i = 0; i < 100; i++){
