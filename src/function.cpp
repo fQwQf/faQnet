@@ -263,7 +263,7 @@ namespace faQnet {
 	//2024/10/11 fQwQf
 	//损失函数
 	//传入两个矩阵和采用的损失函数名称，返回两个矩阵之间的损失值。
-	/*float loss_function(cv::Mat y_true, cv::Mat y_pred, std::string loss_function_name){
+	float loss_function(cv::Mat y_true, cv::Mat y_pred, std::string loss_function_name){
 		if(loss_function_name == "mse"){
 			return mse(y_true, y_pred);
 		}else if(loss_function_name == "mae"){
@@ -280,7 +280,7 @@ namespace faQnet {
 			return msle(y_true, y_pred);
 		}
 		return 0;
-	}*/
+	}
 
 
 	//2024/10/11 fQwQf
@@ -345,7 +345,7 @@ namespace faQnet {
 
 	//2024/10/11 fQwQf
 	//二元交叉熵损失函数（CE）
-	/*float ce(cv::Mat y_true, cv::Mat y_pred){
+	float ce(cv::Mat y_true, cv::Mat y_pred){
 		cv::Mat result = cv::Mat::zeros(y_true.size(), y_true.type());
 		for (int i = 0; i < diff.rows; ++i) {
 			for (int j = 0; j < diff.cols; ++j) {
@@ -354,8 +354,9 @@ namespace faQnet {
 				result.at<float>(i, j) = tru * log(pre) + (1 - tru) * log(1 - pre);
 			}
 		}
-		return - cv::sum(result) / y_true.rows;
-	}*/
+		cv::Scalar sum = cv::sum(result);
+		return = - sum[0] / y_true.rows;
+	}
 
 }
 
