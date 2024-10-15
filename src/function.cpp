@@ -103,11 +103,12 @@ namespace faQnet {
 	//2024/10/9 fQwQf
 	//swish函数
 	//传入一个矩阵，返回该矩阵经过swish函数处理后的矩阵。
-	/*cv::Mat swish(cv::Mat Matrix){
+	cv::Mat swish(cv::Mat Matrix){
 		cv::Mat fx;
-		fx = Matrix / (1.0 + exp(-Matrix));
+		cv::exp(-Matrix, fx);
+		fx = Matrix / (1.0 + fx);
 		return fx;
-	}*/
+	}
 
 	//2024/10/9 fQwQf
 	//ELU函数
