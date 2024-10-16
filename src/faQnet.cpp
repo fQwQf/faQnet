@@ -399,7 +399,7 @@ namespace faQnet{
 		void loss_train(cv::Mat input, cv::Mat target, double learning_rate){
 			cv::Mat output = forward(input);
 			float loss_value , loss_v = loss(output, target, "ce");
-			std::cout << "初始loss值: " << loss_value << std::endl;
+			std::cout << "初始loss值: " << loss_v << std::endl;
 			for(int i=0;loss_value <= loss_v/2 || i>10000; i++){
 				cv::Mat output = forward(input);
 				loss_value = loss(output, target, "ce");
