@@ -395,12 +395,14 @@ namespace faQnet{
 
 		//2024/10/10 fQwQf
 		/*按loss值训练
-		这个函数是对train函数的改进，它接受一个训练集，一个学习率，一个训练次数，然后训练，直到loss值小于原来的一般或者训练次数达到上限。*/
-		void loss_train(cv::Mat input, cv::Mat target, double learning_rate){
+		这个函数是对train函数的改进，它接受一个训练集，一个学习率，一个训练次数，然后训练，直到loss值小于某个值或者训练次数达到上限。*/
+		void loss_train(cv::Mat input, cv::Mat target, double learning_rate, float loss_threshold){
 			cv::Mat output = forward(input);
-			float loss_value , loss_v = loss(output, target, "ce");
+			float loss_value = loss(output, target, "ce");
+			float loss_v = loss(output, target, "ce");
 			std::cout << "初始loss值: " << loss_v << std::endl;
-			for(int i=0;loss_value <= loss_v/2 || i>10000; i++){
+			
+			while(loss_value > loss_threshold){
 				cv::Mat output = forward(input);
 				loss_value = loss(output, target, "ce");
 				std::cout << "loss值: " << loss_value << std::endl;
@@ -637,7 +639,7 @@ int main(){
 
 	for (int i = 0; i < input.size(); i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.loss_train(input[i], target[i], 0.0001);
+		net.loss_train(input[i], target[i], 0.0001 ,1.8);
 	}
 
 	net.print_network();
