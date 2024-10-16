@@ -167,9 +167,9 @@ namespace faQnet{
 		cv::Mat backward(cv::Mat last_error){
 			cv::Mat temp = last_error.mul(activation_function_derivative(result));
 			error = weight.t() * temp;
-			std::cout << "result:" << std::endl << result << std::endl;
-			std::cout << "activation_function_derivative:" << std::endl << activation_function_derivative(result) << std::endl;
-			std::cout << "error:" << std::endl << error << std::endl;
+			//std::cout << "result:" << std::endl << result << std::endl;
+			//std::cout << "activation_function_derivative:" << std::endl << activation_function_derivative(result) << std::endl;
+			//std::cout << "error:" << std::endl << error << std::endl;
 			return error;
 		}
 
@@ -313,8 +313,8 @@ namespace faQnet{
 			target = normalize_target(target);
 			cv::Mat error = output - target;
 			for(int i = layers.size() -1; i >= 0; i--){
-				std::cout << "反向传播第" << i << "层" << std::endl;
-				std::cout << "error:" << std::endl << error << std::endl;
+				//std::cout << "反向传播第" << i << "层" << std::endl;
+				//std::cout << "error:" << std::endl << error << std::endl;
 				error = layers[i].backward(error);
 			}
 		}
@@ -327,7 +327,7 @@ namespace faQnet{
 		这是一个double型变量，代表学习率。*/
 		void update_weight(double learning_rate){
 			for(int i = 0; i < layers.size(); i++){
-				std::cout << "更新第" << i << "层weight" << std::endl;
+				//std::cout << "更新第" << i << "层weight" << std::endl;
 				layers[i].update_weight(learning_rate, layers[i].error);
 			}
 		}
@@ -340,7 +340,7 @@ namespace faQnet{
 		这是一个double型变量，代表学习率。*/
 		void update_bias(double learning_rate,cv::Mat error){
 			for(int i = 0; i < layers.size(); i++){
-				std::cout << "更新第" << i << "层bias" << std::endl;
+				//std::cout << "更新第" << i << "层bias" << std::endl;
 
 				if(i == layers.size() - 1){
 					layers[i].update_bias(learning_rate, error);
@@ -361,6 +361,7 @@ namespace faQnet{
 		目标矩阵
 		这是一个Mat对象，即目标输出矩阵。*/
 		float loss(cv::Mat output, cv::Mat target, std::string loss_function_name){
+			target = normalize_target(target);
 			return loss_function(target, output,loss_function_name);
 		}
 
@@ -381,14 +382,13 @@ namespace faQnet{
 		这是一个整数，代表训练次数。*/
 		void train(cv::Mat input, cv::Mat target, double learning_rate, int train_times){
 			for(int i = 0; i < train_times; i++){
-				std::cout <<"训练次数：" << i+1 <<"/" << train_times ;//<< "  loss值: " << loss_value << endl;
+				
 				cv::Mat output = forward(input);
-				//float loss_value = loss(output, target, "mse");
+				float loss_value = loss(output, target, "ce");
+				std::cout <<"训练次数：" << i+1 <<"/" << train_times << "  loss值: " << loss_value << std::endl;
 				backward(output, target);
 				update_weight(learning_rate);
 				update_bias(learning_rate,output-target);
-				layers[0].print();
-				layers[1].print();
 			}
 		}
 
@@ -530,6 +530,15 @@ namespace faQnet{
 		}
 
 
+		//2024/10/16 fQwQf
+		/*初始化权值矩阵
+		调用每一层的初始化方法即可*/
+		void init_weight(std::string init_method,float a,float b=0){
+			for (int i = 0; i < layers.size(); i++){
+				layers[i].init_weight(init_method, a, b);
+			}
+		}
+
 	};
 
 
@@ -576,11 +585,11 @@ namespace faQnet{
 
 
 int main(){
-	std::vector<cv::Mat> input = faQnet::load_data("ObesityDataSet_raw_and_data_sinthetic.csv", 	1, 16);
-	std::vector<cv::Mat> target = faQnet::load_data("ObesityDataSet_raw_and_data_sinthetic.csv", 17, 17);
+	std::vector<cv::Mat> input = faQnet::load_data("wdbc.csv", 	4, 33);
+	std::vector<cv::Mat> target = faQnet::load_data("wdbc.csv", 2, 3);
 	std::cout << "数据导入完成" << std::endl;
-	std::vector<int> layer_size = {16, 10, 1};
-	std::vector<std::string> activation_function = {"softsign", "leaky_relu"};
+	std::vector<int> layer_size = {30, 20, 10, 2};
+	std::vector<std::string> activation_function = {"softsign", "leaky_relu","sigmoid"};
 	faQnet::net net(layer_size, activation_function);
 	std::cout << "网络初始化完成" << std::endl;
 
@@ -588,8 +597,10 @@ int main(){
 
 	net.layers[0].init_bias("uniform", -0.1, 0.1);
 	net.layers[1].init_bias("uniform", -0.1, 0.1);
-	net.layers[0].init_weight("normal", 0, 1);
-	net.layers[1].init_weight("normal", 0, 1);
+	net.layers[2].init_bias("uniform", -0.1, 0.1);
+	net.layers[0].init_weight("normal", 0, 10);
+	net.layers[1].init_weight("normal", 0, 10);
+	net.layers[2].init_weight("normal", 0, 10);
 	std::cout << "矩阵初始化完成" << std::endl;
 
 	std::cout <<input.size() << std::endl;
@@ -598,14 +609,14 @@ int main(){
 	net.preprocess_target(target);
 	std::cout << "数据预处理2完成" << std::endl;
 
-	net.train(input[0], target[0], 0.00001, 1);
-
 	net.print_network();
 
 	for (int i = 0; i < input.size(); i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.train(input[i], target[i], 0.00001, 20);
+		net.train(input[i], target[i], 0.0001, 100);
 	}
+
+	net.print_network();
 
 	for (int i = 0; i < 100; i++){
 		std::cout << "预测数据：" << i+1 <<"/" << 100 ;

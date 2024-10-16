@@ -255,10 +255,6 @@ namespace faQnet {
 	}
 
 
-	
-
-
-
 
 	//2024/10/11 fQwQf
 	//损失函数
@@ -347,15 +343,15 @@ namespace faQnet {
 	//二元交叉熵损失函数（CE）
 	float ce(cv::Mat y_true, cv::Mat y_pred){
 		cv::Mat result = cv::Mat::zeros(y_true.size(), y_true.type());
-		for (int i = 0; i < diff.rows; ++i) {
-			for (int j = 0; j < diff.cols; ++j) {
+		for (int i = 0; i < result.rows; ++i) {
+			for (int j = 0; j < result.cols; ++j) {
 				float tru = y_true.at<float>(i, j);
 				float pre = y_pred.at<float>(i, j);
 				result.at<float>(i, j) = tru * log(pre) + (1 - tru) * log(1 - pre);
 			}
 		}
 		cv::Scalar sum = cv::sum(result);
-		return = - sum[0] / y_true.rows;
+		return - sum[0] / y_true.rows;
 	}
 
 }
