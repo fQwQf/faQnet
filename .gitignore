@@ -31,5 +31,4 @@
 *.out
 *.app
 .vscode/settings.json
-*.csv
 src/demo

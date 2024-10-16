@@ -639,7 +639,7 @@ int main(){
 
 	for (int i = 0; i < input.size(); i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.loss_train(input[i], target[i], 0.0001 ,1.8);
+		net.train(input[i], target[i], 0.0001 ,100);
 	}
 
 	net.print_network();
