@@ -392,6 +392,24 @@ namespace faQnet{
 			}
 		}
 
+
+		//2024/10/10 fQwQf
+		/*按loss值训练
+		这个函数是对train函数的改进，它接受一个训练集，一个学习率，一个训练次数，然后训练，直到loss值小于原来的一般或者训练次数达到上限。*/
+		void loss_train(cv::Mat input, cv::Mat target, double learning_rate){
+			cv::Mat output = forward(input);
+			float loss_value , loss_v = loss(output, target, "ce");
+			std::cout << "初始loss值: " << loss_value << std::endl;
+			for(int i=0;loss_value <= loss_v/2 || i>10000; i++){
+				cv::Mat output = forward(input);
+				loss_value = loss(output, target, "ce");
+				std::cout << "loss值: " << loss_value << std::endl;
+				backward(output, target);
+				update_weight(learning_rate);
+				update_bias(learning_rate,output-target);
+			}
+		}
+
 		//2024/10/10 fQwQf
 		/*预测
 		这个函数接受一个输入矩阵，然后传入前向传播函数，将输出传入过滤函数，输出即是整个神经网络输出。
@@ -539,6 +557,16 @@ namespace faQnet{
 			}
 		}
 
+
+		//2024/10/16 fQwQf
+		/*初始化偏置矩阵
+		调用每一层的初始化方法即可*/
+		void init_bias(std::string init_method,float a,float b=0){
+			for (int i = 0; i < layers.size(); i++){
+				layers[i].init_bias(init_method, a, b);
+			}
+		}
+
 	};
 
 
@@ -595,12 +623,8 @@ int main(){
 
 	
 
-	net.layers[0].init_bias("uniform", -0.1, 0.1);
-	net.layers[1].init_bias("uniform", -0.1, 0.1);
-	net.layers[2].init_bias("uniform", -0.1, 0.1);
-	net.layers[0].init_weight("normal", 0, 10);
-	net.layers[1].init_weight("normal", 0, 10);
-	net.layers[2].init_weight("normal", 0, 10);
+	net.init_bias("uniform", -0.1, 0.1);
+	net.init_weight("normal", 0, 10);
 	std::cout << "矩阵初始化完成" << std::endl;
 
 	std::cout <<input.size() << std::endl;
@@ -613,7 +637,7 @@ int main(){
 
 	for (int i = 0; i < input.size(); i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.train(input[i], target[i], 0.0001, 100);
+		net.loss_train(input[i], target[i], 0.0001);
 	}
 
 	net.print_network();
