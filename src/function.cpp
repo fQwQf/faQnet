@@ -354,6 +354,28 @@ namespace faQnet {
 		return - sum[0] / y_true.rows;
 	}
 
+
+
+
+
+
+
+	//2024/10/17 fQwQf
+	//softmax函数
+	//传入一个矩阵，返回该矩阵经过softmax函数处理后的矩阵。
+	cv::Mat softmax(cv::Mat Matrix){
+		cv::Mat result;
+		cv::exp(Matrix, result);
+		float sum = 0;
+		for(int i = 0; i < Matrix.rows; ++i){
+			sum += result.at<float>(i, 0);
+		}
+		for (int i = 0; i < Matrix.rows; ++i){
+			result.at<float>(i, 0) /= sum;
+		}
+		return result;
+	}
+
 }
 
 
