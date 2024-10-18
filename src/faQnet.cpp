@@ -421,6 +421,7 @@ namespace faQnet{
 		cv::Mat predict(cv::Mat input){
 			cv::Mat output = forward(input);
 			output = denormalize_target(output);
+			output = softmax(output);
 			return output;//我们尚未实现过滤函数。
 		}
 
