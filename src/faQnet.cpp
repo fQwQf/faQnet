@@ -640,7 +640,7 @@ int main(){
 
 	for (int i = 0; i < input.size()-100; i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.train(input[i], target[i], 0.0001 ,100);
+		net.train(input[i], target[i], 0.0001 ,1000);
 	}
 
 	net.print_network();
