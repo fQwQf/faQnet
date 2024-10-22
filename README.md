@@ -315,32 +315,39 @@
 以下函数适合回归问题：  
 - 平均绝对误差 (MAE/L1Loss)  
 	公式：  
-	$$L=\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ \left| y_{ i }-y_{ i }^{ \prime } \right| }$$  
+	$$L={ \left| y_{ i }-y_{ i }^{ \prime } \right| }$$  
+	导函数： 
+	$$L=\operatorname{sign}(y_{ i } - y_{ i }^{ \prime }) $$
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
 	
 - 平均平方误差 (MSE/L2Loss)  
 	公式：  
-	$$L=\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ { (y_{ i }-y_{ i }^{ \prime } ) }^{ 2 } }$$  
+	$$L={ { (y_{ i }-y_{ i }^{ \prime } ) }^{ 2 } }$$   
+	导函数：  
+	$$L=2\left( y_{ i }-y_{ i }^{ \prime } \right) $$
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
 	
 - 平滑平均绝对误差 (SLL/Smooth L1Loss)  
 	公式：
-	$$\begin{split} L =  \frac { 1 }{ n } \sum _{ i=1 }^{ n } \begin{cases} \begin{matrix} 0.5 \left( y_{ i } - y_{ i }^{ \prime } \right) ^{ 2 } & \left| y_{ i } - y_{ i }^{ \prime } \right| <1 \end{matrix} \\ \begin{matrix} \left| y_{ i } - y_{ i } \right| - 0.5 & \left| y_{ i } - y_{ i }^{ \prime } \right| \ge 1 \end{matrix} \end{cases}\end{split}$$  
+	$$\begin{split} L =   \begin{cases} \begin{matrix} 0.5 \left( y_{ i } - y_{ i }^{ \prime } \right) ^{ 2 } & \left| y_{ i } - y_{ i }^{ \prime } \right| <1 \end{matrix} \\ \begin{matrix} \left| y_{ i } - y_{ i } \right| - 0.5 & \left| y_{ i } - y_{ i }^{ \prime } \right| \ge 1 \end{matrix} \end{cases}\end{split}$$  
+	导函数：  
+	$$\begin{split} L =   \begin{cases} \begin{matrix} y_{ i } - y_{ i }^{ \prime } & \left| y_{ i } - y_{ i }^{ \prime } \right| <1 \end{matrix} \\ \begin{matrix} \operatorname{sign}(y_{ i } - y_{ i }^{ \prime }) & \left| y_{ i } - y_{ i }^{ \prime } \right| \ge 1 \end{matrix} \end{cases}\end{split}$$
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
 	
-- 均方根误差（RMSE）  
-	公式：
-	$$L=\sqrt { \frac { 1 }{ n } \sum _{ i=1 }^{ n }{ { (y_{ i }-y_{ i }^{ \prime } ) }^{ 2 } } }$$  
-	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
 	
 - 平均绝对百分比误差 (MAPE)
 	公式：
-	$$L=\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ \left| \frac { y_{ i }-y_{ i }^{ \prime } }{ y_{ i } } \right| }$$  
+	$$L={ \left| \frac { y_{ i }-y_{ i }^{ \prime } }{ y_{ i } } \right| }$$  
+	导函数：  
+	$$L=\frac { \operatorname{sign}(y_{ i } - y_{ i }^{ \prime }) }{ y_{ i } }$$  
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
 	
 - 均方对数误差 (MSLE)  
 	公式：
-	$$L=\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ { \left( \log { (1+y_{ i }^{ \prime }) } -\log { (1+y_{ i }) } \right) }^{ 2 } }$$
+	$$L={ { \left( \log { (1+y_{ i }^{ \prime }) } -\log { (1+y_{ i }) } \right) }^{ 2 } }$$  
+	导函数：  
+	$$L=2\left( \log { (1+y_{ i }^{ \prime }) } -\log { (1+y_{ i }) } \right) \cdot \frac { 1 }{ 1+y_{ i }^{ \prime } } $$  
+
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i$ 个样本的预测值，$n$ 是样本数量。  
 	注意！不能有任何一项为-1!  
 	
@@ -349,7 +356,9 @@
 以下函数适合分类问题：  
 - 二元交叉熵损失函数（CE）
 	公式：  
-	$$L=-\frac { 1 }{ n } \sum _{ i=1 }^{ n }{ y_{ i }\log { (y_{ i }^{ \prime }) } +\left( 1-y_{ i } \right) \log { \left( 1-y_{ i }^{ \prime } \right) } }$$  
+	$$L=-{ y_{ i }\log { (y_{ i }^{ \prime }) } +\left( 1-y_{ i } \right) \log { \left( 1-y_{ i }^{ \prime } \right) } }$$  
+	导函数：  
+	$$L=-\frac { y_{ i } }{ y_{ i }^{ \prime } } +\frac { 1-y_{ i } }{ 1-y_{ i }^{ \prime } } $$
 	其中，$y_{ i }$ 是第 $i$ 个样本的真实值，$y_{ i }^{ \prime }$ 是第 $i 个样本的预测值，$n$ 是样本数量。  
 	  
 
