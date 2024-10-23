@@ -347,7 +347,7 @@ namespace faQnet {
 
 	//2024/10/11 fQwQf
 	//均方对数误差 (MSLE)
-	float msle(cv::Mat y_true, cv::Mat y_pred){
+	cv::Mat msle(cv::Mat y_true, cv::Mat y_pred){
 		// 计算自然对数
 		cv::Mat log_y_true, log_y_pred;
 		cv::log(y_true + 1, log_y_true);
@@ -355,8 +355,7 @@ namespace faQnet {
 
 		cv::Mat diff_squared = (log_y_true - log_y_pred).mul(log_y_true - log_y_pred);
 
-		cv::Scalar sum = cv::sum(diff_squared);
-		return sum[0] / y_true.rows;
+		return diff_squared;
 	}
 
 	//2024/10/11 fQwQf
