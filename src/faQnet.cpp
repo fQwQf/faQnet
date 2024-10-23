@@ -43,12 +43,16 @@ namespace faQnet{
 		//一个字符串，用于储存该层所用的激活函数。
 		std::string act_func;
 
+		//2024/10/23 fQwQf
+		//输入矩阵
+		//一个Mat对象，储存该层所有节点的前向传播中的输入。规格为该层节点数*1。在反向传播中会用到。
+		cv::Mat input_val;
 
 		//2024/10/9 fQwQf
 		//结果矩阵
 		//一个Mat对象，储存该层所有节点的前向传播中的线性运算结果。
 		//规格为该层节点数*1。在反向传播中会用到。
-		cv::Mat result;
+		cv::Mat result_val;
 
 		public:
 
@@ -151,26 +155,27 @@ namespace faQnet{
 		输出矩阵
 		这是一个Mat对象，储存输出矩阵。*/
 		cv::Mat forward(cv::Mat input){
-			result = weight * input + bias;
+			input_val = input;
+			result_val = weight * input + bias;
 			return activation_function(result, act_func);
 		}
 
 
 
 		//2024/10/10 fQwQf
+		//2024/10/23重构 fQwQf
 		/*单层反向传播
-		这个函数接受上一层的误差矩阵，
-		首先将其与这一层的激活函数在结果矩阵处的导函数值进行点乘得到一个中间矩阵，
-		然后将其与该层权值矩阵的转置矩阵相乘即得到该层的误差矩阵，将其输出并保存。
+		这个函数接受上一层的误差矩阵与上一层权值矩阵的转置矩阵相乘得到的中间矩阵，
+		将其与这一层的激活函数在结果矩阵处的导函数值进行点乘即得到该层的误差矩阵，
+		将其保存，并输出其与上一层权值矩阵的转置矩阵相乘得到的矩阵。
 		传入参数：
-		上一层的误差矩阵*/
+		上一层的误差矩阵与上一层权值矩阵的转置矩阵相乘得到的中间矩阵*/
 		cv::Mat backward(cv::Mat last_error){
-			cv::Mat temp = last_error.mul(activation_function_derivative(result,act_func));
-			error = weight.t() * temp;
+			error = last_error.mul(activation_function_derivative(result,act_func));
 			//std::cout << "result:" << std::endl << result << std::endl;
 			//std::cout << "activation_function_derivative:" << std::endl << activation_function_derivative(result) << std::endl;
 			//std::cout << "error:" << std::endl << error << std::endl;
-			return error;
+			return weight.t() * error;
 		}
 
 
