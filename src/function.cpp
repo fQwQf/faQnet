@@ -309,9 +309,9 @@ namespace faQnet {
 
 	//2024/10/11 fQwQf
 	//平均绝对误差 (MAE/L1Loss)
-	float mae(cv::Mat y_true, cv::Mat y_pred){
-		cv::Scalar sum = cv::sum(cv::abs(y_true - y_pred));
-		return sum[0] / y_true.rows;
+	cv::Mat mae(cv::Mat y_true, cv::Mat y_pred){
+		cv::Mat sum = cv::abs(y_true - y_pred);
+		return sum;
 	}
 
 	//2024/10/11 fQwQf
