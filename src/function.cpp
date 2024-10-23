@@ -316,9 +316,9 @@ namespace faQnet {
 
 	//2024/10/11 fQwQf
 	//平均平方误差 (MSE/L2Loss)
-	float mse(cv::Mat y_true, cv::Mat y_pred){
-		cv::Scalar sum = cv::sum((y_true - y_pred).mul(y_true - y_pred));
-		return  sum[0] / y_true.rows;
+	cv::Mat mse(cv::Mat y_true, cv::Mat y_pred){
+		cv::Mat sum = (y_true - y_pred).mul(y_true - y_pred);
+		return sum;
 	}
 
 	//2024/10/11 fQwQf
