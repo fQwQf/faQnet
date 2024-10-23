@@ -360,7 +360,7 @@ namespace faQnet {
 
 	//2024/10/11 fQwQf
 	//二元交叉熵损失函数（CE）
-	float ce(cv::Mat y_true, cv::Mat y_pred){
+	cv::Mat ce(cv::Mat y_true, cv::Mat y_pred){
 		cv::Mat result = cv::Mat::zeros(y_true.size(), y_true.type());
 		for (int i = 0; i < result.rows; ++i) {
 			for (int j = 0; j < result.cols; ++j) {
@@ -369,8 +369,8 @@ namespace faQnet {
 				result.at<float>(i, j) = tru * log(pre) + (1 - tru) * log(1 - pre);
 			}
 		}
-		cv::Scalar sum = cv::sum(result);
-		return - sum[0] / y_true.rows;
+		
+		return - result;
 	}
 
 
