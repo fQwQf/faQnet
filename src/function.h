@@ -68,6 +68,20 @@ namespace faQnet {
 
 
 
+    cv::Mat loss_function_derivative(cv::Mat y_true, cv::Mat y_pred, std::string loss_function_name);
+
+	cv::Mat mae_derivative(cv::Mat y_true, cv::Mat y_pred);
+
+	cv::Mat mse_derivative(cv::Mat y_true, cv::Mat y_pred);
+
+	cv::Mat mape_derivative(cv::Mat y_true, cv::Mat y_pred);
+    
+	cv::Mat sll_derivative(cv::Mat y_true, cv::Mat y_pred);
+
+	cv::Mat msle_derivative(cv::Mat y_true, cv::Mat y_pred);
+
+	cv::Mat ce_derivative(cv::Mat y_true, cv::Mat y_pred);
+
+	
 
 }
-

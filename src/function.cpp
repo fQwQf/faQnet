@@ -302,7 +302,7 @@ namespace faQnet {
 		}else if(loss_function_name == "msle"){
 			return msle(y_true, y_pred);
 		}
-		return y_true-y_pred;
+		return mse(y_true, y_pred);
 	}
 
 
@@ -393,6 +393,7 @@ namespace faQnet {
 		}else if(loss_function_name == "msle"){
 			return msle_derivative(y_true, y_pred);
 		}
+		return mse_derivative(y_true, y_pred);
 	}
 
 	//2024/10/23 fQwQf
@@ -425,6 +426,7 @@ namespace faQnet {
 				if (val >= 1.0) {
 					diff.at<float>(i, j) = sign.at<float>(i, j);
 				}
+			}
 		}
 
 		return diff;
