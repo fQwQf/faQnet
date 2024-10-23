@@ -70,6 +70,8 @@ namespace faQnet{
 			weight = cv::Mat::zeros(next_layer_node_num, this_layer_node_num, CV_32FC1);
 			bias = cv::Mat::zeros(next_layer_node_num, 1, CV_32FC1);
 			error = cv::Mat::zeros(this_layer_node_num, 1, CV_32FC1);
+			//result_val = cv::Mat::zeros(next_layer_node_num, 1, CV_32FC1);
+			//input_val = cv::Mat::zeros(this_layer_node_num, 1, CV_32FC1);
 			act_func = act_function;
 
 		}
@@ -272,7 +274,7 @@ namespace faQnet{
 		//每一层激活函数类型
 		//这是一个vector，储存一些字符串。
 		net(std::vector<int> node_num, std::vector<std::string> act_function){
-			node_num.push_back(node_num[-1]);
+			node_num.push_back(node_num[node_num.size()-1]);
 			for(int i = 0; i < node_num.size() - 1; i++){
 				layers.push_back(layer(node_num[i], node_num[i + 1], act_function[i]));
 			}
@@ -553,6 +555,7 @@ namespace faQnet{
 		void init_weight(std::string init_method,float a,float b=0){
 			for (int i = 0; i < layers.size(); i++){
 				layers[i].init_weight(init_method, a, b);
+				std::cout << "第" << i+1 << "层权值矩阵初始化完成" << std::endl;
 			}
 		}
 
