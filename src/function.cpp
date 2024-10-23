@@ -4,7 +4,7 @@
 #include"function.h"
 
 
-//这个文件储存了神经网络中用到的的激活函数，激活函数的导函数，以及损失函数的实现。
+//这个文件储存了神经网络中用到的各种函数（字面意义）的实现。
 
 namespace faQnet {
 	//2024/10/9 fQwQf
@@ -376,11 +376,75 @@ namespace faQnet {
 
 
 
+	//2024/10/23 fQwQf
+	//损失函数的导数
+	//传入两个矩阵和采用的损失函数名称，返回两个矩阵之间的损失值。
+	cv::Mat loss_function_derivative(cv::Mat y_true, cv::Mat y_pred, std::string loss_function_name){
+		if(loss_function_name == "mse"){
+			return mse_derivative(y_true, y_pred);
+		}else if(loss_function_name == "mae"){
+			return mae_derivative(y_true, y_pred);
+		}else if(loss_function_name == "sll"){
+			return sll_derivative(y_true, y_pred);
+		}else if(loss_function_name == "ce"){
+			return ce_derivative(y_true, y_pred);
+		}else if(loss_function_name == "mape"){
+			return mape_derivative(y_true, y_pred);
+		}else if(loss_function_name == "msle"){
+			return msle_derivative(y_true, y_pred);
+		}
+	}
 
+	//2024/10/23 fQwQf
+	//平均绝对误差 (MAE/L1Loss)的导数
+	cv::Mat mae_derivative(cv::Mat y_true, cv::Mat y_pred){
+		return y_true - y_pred / cv::abs(y_true - y_pred);
+	}
 
+	//2024/10/23 fQwQf
+	//平均平方误差 (MSE/L2Loss)的导数
+	cv::Mat mse_derivative(cv::Mat y_true, cv::Mat y_pred){
+		return 2 * (y_true - y_pred);
+	}
 
+	//2024/10/23 fQwQf
+	//平均绝对百分比误差 (MAPE)的导数
+	cv::Mat mape_derivative(cv::Mat y_true, cv::Mat y_pred){
+		return mae_derivative(y_true,y_pred) / y_true;
+	}
 
+	//2024/10/23 fQwQf
+	//平滑平均绝对误差 (SLL/Smooth L1Loss)的导数
+	cv::Mat sll_derivative(cv::Mat y_true, cv::Mat y_pred){
+		cv::Mat diff = y_true - y_pred;
+		cv::Mat sign = mae_derivative(y_true,y_pred);
 
+		for (int i = 0; i < diff.rows; ++i) {
+			for (int j = 0; j < diff.cols; ++j) {
+				float val = abs(diff.at<float>(i, j));
+				if (val >= 1.0) {
+					diff.at<float>(i, j) = sign.at<float>(i, j);
+				}
+		}
+
+		return diff;
+	}
+
+	//2024/10/23 fQwQf
+	//均方对数误差 (MSLE)的导数
+	cv::Mat msle_derivative(cv::Mat y_true, cv::Mat y_pred){
+		cv::Mat log_y_true, log_y_pred;
+		cv::log(y_true + 1, log_y_true);
+		cv::log(y_pred + 1, log_y_pred);
+
+		return 2 * (log_y_pred - log_y_true) / (1 + y_pred);
+	}
+
+	//2024/10/23 fQwQf
+	//二元交叉熵损失函数（CE）的导数
+	cv::Mat ce_derivative(cv::Mat y_true, cv::Mat y_pred){
+		return (1 - y_true)/(1 - y_pred) - y_true/y_pred ;
+	}
 
 	
 
