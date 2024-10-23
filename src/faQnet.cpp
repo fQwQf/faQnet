@@ -69,7 +69,6 @@ namespace faQnet{
 
 			weight = cv::Mat::zeros(next_layer_node_num, this_layer_node_num, CV_32FC1);
 			bias = cv::Mat::zeros(next_layer_node_num, 1, CV_32FC1);
-			result = cv::Mat::zeros(next_layer_node_num, 1, CV_32FC1);
 			error = cv::Mat::zeros(this_layer_node_num, 1, CV_32FC1);
 			act_func = act_function;
 
@@ -157,7 +156,7 @@ namespace faQnet{
 		cv::Mat forward(cv::Mat input){
 			input_val = input;
 			result_val = weight * input + bias;
-			return activation_function(result, act_func);
+			return activation_function(result_val, act_func);
 		}
 
 
@@ -171,8 +170,8 @@ namespace faQnet{
 		传入参数：
 		上一层的误差矩阵与上一层权值矩阵的转置矩阵相乘得到的中间矩阵*/
 		cv::Mat backward(cv::Mat last_error){
-			error = last_error.mul(activation_function_derivative(result,act_func));
-			//std::cout << "result:" << std::endl << result << std::endl;
+			error = last_error.mul(activation_function_derivative(result_val,act_func));
+			//std::cout << "result:" << std::endl << result_val << std::endl;
 			//std::cout << "activation_function_derivative:" << std::endl << activation_function_derivative(result) << std::endl;
 			//std::cout << "error:" << std::endl << error << std::endl;
 			return weight.t() * error;
@@ -212,7 +211,7 @@ namespace faQnet{
 		void print(){
 			std::cout << "weight:" << std::endl << weight << std::endl;
 			std::cout << "bias:" << std::endl << bias << std::endl;
-			std::cout << "result:" << std::endl << result << std::endl;
+			std::cout << "result:" << std::endl << result_val << std::endl;
 			std::cout << "error:" << std::endl << error << std::endl;
 		}
 
@@ -314,8 +313,8 @@ namespace faQnet{
 		这是一个Mat对象，即目标输出矩阵。
 		损失函数名
 		这是一个字符串，代表损失函数。*/
-		void backward(cv::Mat output, cv::Mat target){
-			cv::Mat error = loss_function_derivative(target, output, "MSE");
+		void backward(cv::Mat output, cv::Mat target, std::string loss_function_name="mse"){
+			cv::Mat error = loss_function_derivative(target, output, loss_function_name);
 			for(int i = layers.size() -1; i >= 0; i--){
 				//std::cout << "反向传播第" << i << "层" << std::endl;
 				error = layers[i].backward(error);
@@ -331,7 +330,7 @@ namespace faQnet{
 		void update_weight(double learning_rate){
 			for(int i = 0; i < layers.size(); i++){
 				//std::cout << "更新第" << i << "层weight" << std::endl;
-				layers[i].update_weight(learning_rate, layers[i].error);
+				layers[i].update_weight(learning_rate);
 			}
 		}
 
@@ -341,21 +340,15 @@ namespace faQnet{
 		传入参数：
 		学习率
 		这是一个double型变量，代表学习率。*/
-		void update_bias(double learning_rate,cv::Mat error){
+		void update_bias(double learning_rate){
 			for(int i = 0; i < layers.size(); i++){
 				//std::cout << "更新第" << i << "层bias" << std::endl;
-
-				if(i == layers.size() - 1){
-					layers[i].update_bias(learning_rate, error);
-				}else{
-					layers[i].update_bias(learning_rate, layers[i+1].error);
-				}
-
+				layers[i].update_bias(learning_rate);
 			}
 		}
 
 		//2024/10/10 fQwQf
-		/*损失函数 这个函数接受前向传播的输出矩阵和目标矩阵。计算损失值主要是为了显示出来便于分析，或者是因为这样看起来比较厉害。
+		/*损失函数 这个函数接受前向传播的输出矩阵和目标矩阵。计算损失值主要是为了显示出来便于分析，或者是因为这样看起来比较厉害（毕竟训练实际上只用求损失函数的导函数就够了）。
 		实际上，损失函数直接调用在function.cpp中定义的即可。
 		总感觉这样有一点………奇怪，但是这样比较方便，而且比较简单。
 		传入参数：
@@ -369,9 +362,10 @@ namespace faQnet{
 		}
 
 		//2024/10/10 fQwQf
+		//2024/10/23重构 fQwQf
 		/*训练
 		大的要来了！
-		这个函数接受一个训练集，一个学习率，一个训练次数。
+		这个函数接受一个训练集，一个学习率，一个训练次数，一个损失函数名。
 		每次训练，先将训练集传入前向传播函数为每一层生成结果矩阵，然后调用损失函数计算loss值，接着调用反向传播函数为每一层生成误差矩阵，最后完成权值更新和偏置更新。
 		这个例子里采用的是固定循环次数的训练方法。另外，也可以采用当loss值小于某个值时停止训练的方法。
 		传入参数：
@@ -383,15 +377,14 @@ namespace faQnet{
 		这是一个double型变量，代表学习率。
 		训练次数
 		这是一个整数，代表训练次数。*/
-		void train(cv::Mat input, cv::Mat target, double learning_rate, int train_times){
+		void train(cv::Mat input, cv::Mat target, double learning_rate, int train_times, std::string loss_function_name="mse"){
 			for(int i = 0; i < train_times; i++){
-				
 				cv::Mat output = forward(input);
-				cv::Mat loss_value = loss(output, target, "ce");
+				cv::Mat loss_value = loss(output, target, loss_function_name);
 				std::cout <<"训练次数：" << i+1 <<"/" << train_times << "  loss值: " << loss_value << std::endl;
-				backward(output, target);
+				backward(output, target, loss_function_name);
 				update_weight(learning_rate);
-				update_bias(learning_rate,output-target);
+				update_bias(learning_rate);
 			}
 		}
 
@@ -622,7 +615,7 @@ int main(){
 	std::vector<cv::Mat> input = faQnet::load_data("wdbc.csv", 	4, 33);
 	std::vector<cv::Mat> target = faQnet::load_data("wdbc.csv", 2, 3);
 	std::cout << "数据导入完成" << std::endl;
-	std::vector<int> layer_size = {30, 20, 10, 2};
+	std::vector<int> layer_size = {30, 15, 2};
 	std::vector<std::string> activation_function = {"softsign", "leaky_relu","sigmoid"};
 	faQnet::net net(layer_size, activation_function);
 	std::cout << "网络初始化完成" << std::endl;
