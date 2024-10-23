@@ -38,6 +38,9 @@ namespace faQnet {
 		else if(act_function == "elu"){
 			return elu(Matrix);
 		}
+		else if(act_function == "softmax"){
+		    return softmax(Matrix);
+		}
 		return Matrix;
 	}
 
@@ -126,6 +129,21 @@ namespace faQnet {
 		return Matrix;
 	}
 
+	//2024/10/17 fQwQf
+	//softmax函数
+	//传入一个矩阵，返回该矩阵经过softmax函数处理后的矩阵。
+	cv::Mat softmax(cv::Mat Matrix){
+		cv::Mat result;
+		cv::exp(Matrix, result);
+		float sum = 0;
+		for(int i = 0; i < Matrix.rows; ++i){
+			sum += result.at<float>(i, 0);
+		}
+		for (int i = 0; i < Matrix.rows; ++i){
+			result.at<float>(i, 0) /= sum;
+		}
+		return result;
+	}
 
 
 
@@ -157,6 +175,9 @@ namespace faQnet {
 		}
 		else if(act_function == "elu"){
 			return elu_derivative(Matrix);
+		}
+		else if(act_function == "softmax"){
+			return softmax_derivative(Matrix);
 		}
 		return Matrix;
 	}
@@ -252,6 +273,13 @@ namespace faQnet {
 			}
 		}
 		return result;
+	}
+
+	//2024/10/23 fQwQf
+	//softmax函数的导数
+	//传入一个矩阵，返回该矩阵经过softmax函数的导函数处理后的矩阵。
+	cv::Mat softmax_derivative(cv::Mat Matrix){
+	    
 	}
 
 
@@ -360,21 +388,9 @@ namespace faQnet {
 
 
 
-	//2024/10/17 fQwQf
-	//softmax函数
-	//传入一个矩阵，返回该矩阵经过softmax函数处理后的矩阵。
-	cv::Mat softmax(cv::Mat Matrix){
-		cv::Mat result;
-		cv::exp(Matrix, result);
-		float sum = 0;
-		for(int i = 0; i < Matrix.rows; ++i){
-			sum += result.at<float>(i, 0);
-		}
-		for (int i = 0; i < Matrix.rows; ++i){
-			result.at<float>(i, 0) /= sum;
-		}
-		return result;
-	}
+
+
+	
 
 }
 
