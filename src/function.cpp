@@ -296,8 +296,6 @@ namespace faQnet {
 			return sll(y_true, y_pred);
 		}else if(loss_function_name == "ce"){
 			return ce(y_true, y_pred);
-		}else if(loss_function_name == "rmse"){
-			return rmse(y_true, y_pred);
 		}else if(loss_function_name == "mape"){
 			return mape(y_true, y_pred);
 		}else if(loss_function_name == "msle"){
@@ -321,17 +319,12 @@ namespace faQnet {
 		return sum;
 	}
 
-	//2024/10/11 fQwQf
-	//均方根误差 (RMSE)
-	float rmse(cv::Mat y_true, cv::Mat y_pred){
-		return std::sqrt(mse(y_true, y_pred));
-	}
 
 	//2024/10/11 fQwQf
 	//平均绝对百分比误差 (MAPE)
-	float mape(cv::Mat y_true, cv::Mat y_pred){
-		cv::Scalar sum = cv::sum((y_true - y_pred) / y_true);
-		return cv::abs(sum[0]) / y_true.rows;
+	cv::Mat mape(cv::Mat y_true, cv::Mat y_pred){
+		cv::Mat sum = (y_true - y_pred) / y_true;
+		return cv::abs(sum);
 	}
 
 	//2024/10/11 fQwQf
