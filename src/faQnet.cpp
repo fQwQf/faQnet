@@ -259,12 +259,13 @@ namespace faQnet{
 		//所有的层都储存在这里。
 		std::vector<layer> layers;
 
+		//2024/10/10 fQwQf
+		//2024/10/23重构 fQwQf
 		//构造函数
 		//这个函数接受每一层每一层节点详情，然后借此初始化神经网络。
 		//这里所谓初始化神经网络的含义是：在成员变量层生成每一层。
 		//实际上这非常简单——只需要将该层节点数和下一层节点数及激活函数类型传入构造函数即可。
-		//要注意的是最后一层没有下一层，因此不进行神经网络运算，而是直接输出或执行过滤函数（这点还没有实现）。
-		//因此，最后一层不存在layers里，而是存在另一个变量里（现在还未实现）。
+		//要注意的是最后一层没有下一层，这意味着其输出数就是本层节点数。
 		//传入参数：
 		//传入参数：
 		//每一层节点数
@@ -272,7 +273,7 @@ namespace faQnet{
 		//每一层激活函数类型
 		//这是一个vector，储存一些字符串。
 		net(std::vector<int> node_num, std::vector<std::string> act_function){
-
+			node_num.push_back(node_num[-1]);
 			for(int i = 0; i < node_num.size() - 1; i++){
 				layers.push_back(layer(node_num[i], node_num[i + 1], act_function[i]));
 			}
@@ -301,21 +302,22 @@ namespace faQnet{
 
 
 		//2024/10/10 fQwQf
+		//2024/10/23重构 fQwQf
 		/*反向传播
 		这个函数接受前向传播的输出矩阵和目标矩阵，
-		首先通过输出矩阵减去目标矩阵得到最后一层的误差矩阵，
-		然后通过调用每一层的反向传播函数，将误差矩阵传入倒数第二层，将倒数第二层的误差矩阵传入倒数第三层，以此类推，直到第一层。
+		首先通过执行损失函数的导函数得到最后一层的输出对于损失值的偏导，
+		然后代入最后一层的反向传播，将结果传入倒数第二层，将倒数第二层的结果传入倒数第三层，以此类推，直到第一层。
 		传入参数：
 		输出矩阵
 		这是一个Mat对象，即前向传播的输出。
 		目标矩阵
-		这是一个Mat对象，即目标输出矩阵。*/
+		这是一个Mat对象，即目标输出矩阵。
+		损失函数名
+		这是一个字符串，代表损失函数。*/
 		void backward(cv::Mat output, cv::Mat target){
-			target = normalize_target(target);
-			cv::Mat error = output - target;
+			cv::Mat error = loss_function_derivative(target, output, "MSE");
 			for(int i = layers.size() -1; i >= 0; i--){
 				//std::cout << "反向传播第" << i << "层" << std::endl;
-				//std::cout << "error:" << std::endl << error << std::endl;
 				error = layers[i].backward(error);
 			}
 		}
