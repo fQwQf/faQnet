@@ -329,7 +329,7 @@ namespace faQnet {
 
 	//2024/10/11 fQwQf
 	//平滑平均绝对误差 (SLL/Smooth L1Loss)
-	float sll(cv::Mat y_true, cv::Mat y_pred){
+	cv::Mat sll(cv::Mat y_true, cv::Mat y_pred){
 		cv::Mat diff = y_true - y_pred;
 		cv::Mat smooth_l1 = cv::Mat::zeros(diff.size(), diff.type());
 		for (int i = 0; i < diff.rows; ++i) {
@@ -342,8 +342,7 @@ namespace faQnet {
 				}
 			}
 		}
-		cv::Scalar sum = cv::sum(smooth_l1);
-		return sum[0] / y_true.rows;
+		return smooth_l1;
 	}
 
 	//2024/10/11 fQwQf
