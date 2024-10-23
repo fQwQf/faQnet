@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 #include<opencv2/core/core.hpp>
 
+#include"function.h"
+
 
 //这个文件储存了神经网络中用到的的激活函数，激活函数的导函数，以及损失函数的实现。
 
@@ -175,9 +177,9 @@ namespace faQnet {
 		else if(act_function == "elu"){
 			return elu_derivative(Matrix);
 		}
-		else if(act_function == "softmax"){
-			return softmax_derivative(Matrix);
-		}
+		//else if(act_function == "softmax"){
+		//	return softmax_derivative(Matrix);
+		//}
 		return Matrix;
 	}
 
@@ -277,16 +279,16 @@ namespace faQnet {
 	//2024/10/23 fQwQf
 	//softmax函数的导数
 	//传入一个矩阵，返回该矩阵经过softmax函数的导函数处理后的矩阵。
-	cv::Mat softmax_derivative(cv::Mat Matrix){
+	//cv::Mat softmax_derivative(cv::Mat Matrix){
 	    
-	}
+	//}
 
 
 
 	//2024/10/11 fQwQf
 	//损失函数
 	//传入两个矩阵和采用的损失函数名称，返回两个矩阵之间的损失值。
-	float loss_function(cv::Mat y_true, cv::Mat y_pred, std::string loss_function_name){
+	cv::Mat loss_function(cv::Mat y_true, cv::Mat y_pred, std::string loss_function_name){
 		if(loss_function_name == "mse"){
 			return mse(y_true, y_pred);
 		}else if(loss_function_name == "mae"){
@@ -300,7 +302,7 @@ namespace faQnet {
 		}else if(loss_function_name == "msle"){
 			return msle(y_true, y_pred);
 		}
-		return 0;
+		return y_true-y_pred;
 	}
 
 

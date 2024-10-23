@@ -306,6 +306,10 @@
 	其中，$\sigma(x)$ 是 $sigmoid$ 函数。
 	导函数：  
 	$$f^{'}\left( x \right) =\sigma \left( x \right) +x\cdot \sigma^{'} \left( x \right) $$  
+
+- softmax函数  
+	公式：  
+	$$f\left( x \right) =\frac { { e }^{ x } }{ \sum _{ i }^{ n }{ { e }^{ x } } } $$  
 	  
 
 ## 损失函数

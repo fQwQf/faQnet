@@ -152,7 +152,7 @@ namespace faQnet{
 		这是一个Mat对象，储存输出矩阵。*/
 		cv::Mat forward(cv::Mat input){
 			result = weight * input + bias;
-			return activation_function(result);
+			return activation_function(result, act_func);
 		}
 
 
@@ -165,7 +165,7 @@ namespace faQnet{
 		传入参数：
 		上一层的误差矩阵*/
 		cv::Mat backward(cv::Mat last_error){
-			cv::Mat temp = last_error.mul(activation_function_derivative(result));
+			cv::Mat temp = last_error.mul(activation_function_derivative(result,act_func));
 			error = weight.t() * temp;
 			//std::cout << "result:" << std::endl << result << std::endl;
 			//std::cout << "activation_function_derivative:" << std::endl << activation_function_derivative(result) << std::endl;
@@ -360,7 +360,7 @@ namespace faQnet{
 		这是一个Mat对象，即前向传播的输出。
 		目标矩阵
 		这是一个Mat对象，即目标输出矩阵。*/
-		float loss(cv::Mat output, cv::Mat target, std::string loss_function_name){
+		cv::Mat loss(cv::Mat output, cv::Mat target, std::string loss_function_name){
 			target = normalize_target(target);
 			return loss_function(target, output,loss_function_name);
 		}
@@ -384,7 +384,7 @@ namespace faQnet{
 			for(int i = 0; i < train_times; i++){
 				
 				cv::Mat output = forward(input);
-				float loss_value = loss(output, target, "ce");
+				cv::Mat loss_value = loss(output, target, "ce");
 				std::cout <<"训练次数：" << i+1 <<"/" << train_times << "  loss值: " << loss_value << std::endl;
 				backward(output, target);
 				update_weight(learning_rate);
@@ -396,7 +396,7 @@ namespace faQnet{
 		//2024/10/10 fQwQf
 		/*按loss值训练
 		这个函数是对train函数的改进，它接受一个训练集，一个学习率，一个训练次数，然后训练，直到loss值小于某个值或者训练次数达到上限。*/
-		void loss_train(cv::Mat input, cv::Mat target, double learning_rate, float loss_threshold){
+		/*void loss_train(cv::Mat input, cv::Mat target, double learning_rate, float loss_threshold){
 			cv::Mat output = forward(input);
 			float loss_value = loss(output, target, "ce");
 			float loss_v = loss(output, target, "ce");
@@ -410,7 +410,7 @@ namespace faQnet{
 				update_weight(learning_rate);
 				update_bias(learning_rate,output-target);
 			}
-		}
+		}*/
 
 		//2024/10/10 fQwQf
 		/*预测
