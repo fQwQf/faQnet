@@ -180,33 +180,29 @@ namespace faQnet{
 
 
 		//2024/10/10 fQwQf
+		//2024/10/23重构 fQwQf
 		/*单层权值更新
-		这个函数接受一个学习率和上层误差矩阵。
-		权值更新的具体操作是：
-		将权值矩阵减去（学习率*上层误差矩阵*该层输出矩阵的转置矩阵mul这一层的激活函数在结果矩阵处的导函数值）
-		。注：只需将结果矩阵代入激活函数即可得到输出矩阵。
+		这个函数接受一个学习率。
+		权值更新的具体操作是：将权值矩阵减去（学习率*该层误差矩阵的转置矩阵*该层输入矩阵）。
 		传入参数：
 		学习率
-		这是一个double型变量，代表学习率。
-		上层误差矩阵*/
-		void update_weight(double learning_rate, cv::Mat last_error){//last_error其实是本层误差矩阵
-			cv::Mat output_derivative = activation_function_derivative(last_error, act_func);
-			cv::Mat delta = last_error.mul(output_derivative);
-			delta =  result * delta.t() ;
+		这是一个double型变量，代表学习率。*/
+		void update_weight(double learning_rate){
+			cv::Mat delta = error.t() * input_val;
 			weight -= learning_rate * delta;
 		}
 
 
 		//2024/10/10 fQwQf
+		//2024/10/23重构 fQwQf
 		/*单层偏置更新
-		这个函数接受一个学习率和上层误差矩阵。
-		偏置项更新的具体操作是：将偏置项矩阵减去（学习率*上层误差矩阵）。
+		这个函数接受一个学习率。
+		偏置项更新的具体操作是：将偏置项矩阵减去（学习率*该层误差矩阵）。
 		传入参数：
 		学习率
-		这是一个double型变量，代表学习率。
-		上层误差矩阵*/
-		void update_bias(double learning_rate, cv::Mat last_error){
-			bias -= learning_rate * last_error;
+		这是一个double型变量，代表学习率。*/
+		void update_bias(double learning_rate){
+			bias -= learning_rate * error;
 		}
 
 
