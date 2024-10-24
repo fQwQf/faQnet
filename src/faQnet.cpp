@@ -626,7 +626,7 @@ namespace faQnet{
 }
 
 
-int main(){
+/*int main(){
 	std::vector<cv::Mat> input = faQnet::load_data("wdbc.csv", 	4, 33);
 	std::vector<cv::Mat> target = faQnet::load_data("wdbc.csv", 2, 3);
 	std::cout << "数据导入完成" << std::endl;
@@ -662,4 +662,4 @@ int main(){
 		std::cout << "实际数据：" << i-input.size()+101 <<"/" << 100 ;
 		std::cout << target[i] << std::endl;
 	}
-} 
+} */
