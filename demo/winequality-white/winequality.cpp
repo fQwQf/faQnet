@@ -11,7 +11,7 @@ int main(){
 
 	
 
-	net.init_bias("uniform", -1, 1);
+	net.init_bias("uniform", -0.1, 0.1);
 	net.init_weight("normal", 0, 0.5);
 	std::cout << "矩阵初始化完成" << std::endl;
 
@@ -25,7 +25,7 @@ int main(){
 
 	for (int i = 0; i < input.size()-100; i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.train(input[i], target[i], 0.0001 ,10,"mse");
+		net.train(input[i], target[i], 0.00005 ,100,"mse");
 	}
 
 	net.print_network();

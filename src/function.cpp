@@ -417,14 +417,14 @@ namespace faQnet {
 				}
 			}
 		}
-		return diff;
+		return - diff;
 		
 	}
 
 	//2024/10/23 fQwQf
 	//平均平方误差 (MSE/L2Loss)的导数
 	cv::Mat mse_derivative(cv::Mat y_true, cv::Mat y_pred){
-		return 2 * (y_pred - y_true);
+		return -2 * (y_true-y_pred);
 	}
 
 	//2024/10/23 fQwQf

@@ -393,6 +393,9 @@ namespace faQnet{
 		void train(cv::Mat input, cv::Mat target, double learning_rate, int train_times, std::string loss_function_name="mse"){
 			for(int i = 0; i < train_times; i++){
 				cv::Mat output = forward(input);
+				std::cout <<"target:" << std::endl << target << std::endl;
+				std::cout <<"output:" << std::endl << output << std::endl;
+				target = normalize_target(target);
 				cv::Mat loss_value = loss(output, target, loss_function_name);
 				std::cout <<"target:" << std::endl << target << std::endl;
 				std::cout <<"output:" << std::endl << output << std::endl;
