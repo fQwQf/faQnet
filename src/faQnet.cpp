@@ -289,10 +289,7 @@ namespace faQnet{
 				layers.push_back(layer(node_num[i], node_num[i + 1], act_function[i]));
 			}
 
-			input_mean = cv::Mat::zeros(node_num[0], 1, CV_32F);
-			input_std = cv::Mat::zeros(node_num[0], 1, CV_32F);
-			target_mean = cv::Mat::zeros(node_num[node_num.size() - 1], 1, CV_32F);
-			target_std = cv::Mat::zeros(node_num[node_num.size() - 1], 1, CV_32F);
+			
 		}
 
 
