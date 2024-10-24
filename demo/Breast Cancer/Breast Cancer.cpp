@@ -18,7 +18,7 @@ int main(){
 	std::cout <<input.size() << std::endl;
 	net.preprocess_input(input);
 	std::cout << "输入数据预处理完成" << std::endl;
-	//net.preprocess_target(target);
+	//net.preprocess_target(target); 
 	//std::cout << "输出数据预处理完成" << std::endl;
 
 	net.print_network();
@@ -32,7 +32,7 @@ int main(){
 
 	for (int i = input.size()-100; i < input.size(); i++){
 		std::cout << "预测数据：" << i-input.size()+101 <<"/" << 100 ;
-		std::cout << net.predict(input[i]) << std::endl;
+		std::cout << faQnet::softmax(net.predict(input[i])) << std::endl;
 		std::cout << "实际数据：" << i-input.size()+101 <<"/" << 100 ;
 		std::cout << target[i] << std::endl;
 	}
