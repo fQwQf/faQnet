@@ -31,4 +31,4 @@
 *.out
 *.app
 .vscode/settings.json
-src/demo
+output
