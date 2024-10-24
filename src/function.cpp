@@ -42,6 +42,9 @@ namespace faQnet {
 		else if(act_function == "softmax"){
 		    return softmax(Matrix);
 		}
+		else if(act_function == "none"){
+			return Matrix;
+		}
 		return Matrix;
 	}
 
@@ -176,6 +179,9 @@ namespace faQnet {
 		}
 		else if(act_function == "elu"){
 			return elu_derivative(Matrix);
+		}
+		else if(act_function == "none"){
+		    return cv::Mat::ones(Matrix.rows, Matrix.cols, CV_32F);
 		}
 		//else if(act_function == "softmax"){
 		//	return softmax_derivative(Matrix);

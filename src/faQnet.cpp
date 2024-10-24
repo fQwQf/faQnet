@@ -631,7 +631,7 @@ int main(){
 	std::vector<cv::Mat> target = faQnet::load_data("wdbc.csv", 2, 3);
 	std::cout << "数据导入完成" << std::endl;
 	std::vector<int> layer_size = {30, 15, 2};
-	std::vector<std::string> activation_function = {"softsign", "leaky_relu","tanh"};
+	std::vector<std::string> activation_function = {"softsign", "leaky_relu","none"};
 	faQnet::net net(layer_size, activation_function);
 	std::cout << "网络初始化完成" << std::endl;
 
@@ -657,9 +657,9 @@ int main(){
 	net.print_network();
 
 	for (int i = input.size()-100; i < input.size(); i++){
-		std::cout << "预测数据：" << i+1 <<"/" << 100 ;
+		std::cout << "预测数据：" << i-input.size()+101 <<"/" << 100 ;
 		std::cout << net.predict(input[i]) << std::endl;
-		std::cout << "实际数据：" << i+1 <<"/" << 100 ;
+		std::cout << "实际数据：" << i-input.size()+101 <<"/" << 100 ;
 		std::cout << target[i] << std::endl;
 	}
 } 
