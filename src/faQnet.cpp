@@ -51,14 +51,15 @@ namespace faQnet{
 		//2024/10/9 fQwQf
 		//结果矩阵
 		//一个Mat对象，储存该层所有节点的前向传播中的线性运算结果。
-		//规格为该层节点数*1。在反向传播中会用到。
+		//规格为下一层节点数*1。在反向传播中会用到。
 		cv::Mat result_val;
 
 		public:
 
 		//2024/10/9 fQwQf
 		//误差矩阵
-		//在反向传播中计算，并用于优化。规格为该层节点数*1。
+		//储存该层线性运算的每个结果对于最终输出的损失值的偏导数。
+		//在反向传播中计算。规格为下一层节点数*1。
 		cv::Mat error;
 
 
@@ -70,8 +71,6 @@ namespace faQnet{
 			weight = cv::Mat::zeros(next_layer_node_num, this_layer_node_num, CV_32FC1);
 			bias = cv::Mat::zeros(next_layer_node_num, 1, CV_32FC1);
 			error = cv::Mat::zeros(this_layer_node_num, 1, CV_32FC1);
-			//result_val = cv::Mat::zeros(next_layer_node_num, 1, CV_32FC1);
-			//input_val = cv::Mat::zeros(this_layer_node_num, 1, CV_32FC1);
 			act_func = act_function;
 
 		}
@@ -158,6 +157,9 @@ namespace faQnet{
 		cv::Mat forward(cv::Mat input){
 			input_val = input;
 			result_val = weight * input + bias;
+			std::cout << "result_val:" << std::endl << result_val << std::endl;
+			std::cout << "activation_function:" << std::endl << act_func << std::endl;
+			std::cout << "result:" << std::endl << activation_function(result_val, act_func) << std::endl;
 			return activation_function(result_val, act_func);
 		}
 
@@ -317,6 +319,10 @@ namespace faQnet{
 		这是一个字符串，代表损失函数。*/
 		void backward(cv::Mat output, cv::Mat target, std::string loss_function_name="mse"){
 			cv::Mat error = loss_function_derivative(target, output, loss_function_name);
+			std::cout << "target:" << std::endl << target << std::endl;
+			std::cout << "output:" << std::endl << output << std::endl;
+			std::cout << "loss_function" << std::endl << loss_function_name << std::endl;
+			std::cout << "error:" << std::endl << error << std::endl;
 			for(int i = layers.size() -1; i >= 0; i--){
 				//std::cout << "反向传播第" << i << "层" << std::endl;
 				error = layers[i].backward(error);
@@ -383,8 +389,9 @@ namespace faQnet{
 			for(int i = 0; i < train_times; i++){
 				cv::Mat output = forward(input);
 				cv::Mat loss_value = loss(output, target, loss_function_name);
-				std::cout <<"训练次数：" << i+1 <<"/" << train_times << "  loss值: " << loss_value << std::endl;
+				std::cout <<"训练次数：" << i+1 <<"/" << train_times << std::endl << "  loss值: " << std::endl << loss_value << std::endl;
 				backward(output, target, loss_function_name);
+				std::cout << "反向传播完成" << std::endl;
 				update_weight(learning_rate);
 				update_bias(learning_rate);
 			}
@@ -626,20 +633,20 @@ int main(){
 	
 
 	net.init_bias("uniform", -0.1, 0.1);
-	net.init_weight("normal", 0, 10);
+	net.init_weight("normal", 0, 0.5);
 	std::cout << "矩阵初始化完成" << std::endl;
 
 	std::cout <<input.size() << std::endl;
 	net.preprocess_input(input);
-	std::cout << "数据预处理1完成" << std::endl;
+	std::cout << "输入数据预处理完成" << std::endl;
 	net.preprocess_target(target);
-	std::cout << "数据预处理2完成" << std::endl;
+	std::cout << "输出数据预处理完成" << std::endl;
 
 	net.print_network();
 
 	for (int i = 0; i < input.size()-100; i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.train(input[i], target[i], 0.0001 ,1000);
+		net.train(input[i], target[i], 0.0001 ,1000,"ce");
 	}
 
 	net.print_network();
