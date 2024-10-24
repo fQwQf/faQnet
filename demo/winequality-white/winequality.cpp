@@ -18,8 +18,8 @@ int main(){
 	std::cout <<input.size() << std::endl;
 	net.preprocess_input(input);
 	std::cout << "输入数据预处理完成" << std::endl;
-	//net.preprocess_target(target);
-	//std::cout << "输出数据预处理完成" << std::endl;
+	net.preprocess_target(target);
+	std::cout << "输出数据预处理完成" << std::endl;
 
 	net.print_network();
 
