@@ -177,7 +177,7 @@ namespace faQnet{
 			error = last_error.mul(activation_function_derivative(result_val,act_func));
 			//std::cout << "result:" << std::endl << result_val << std::endl;
 			//std::cout << "activation_function_derivative:" << std::endl << activation_function_derivative(result) << std::endl;
-			//std::cout << "error:" << std::endl << error << std::endl;
+			std::cout << "error:" << std::endl << error << std::endl;
 			return weight.t() * error;
 		}
 
@@ -191,7 +191,10 @@ namespace faQnet{
 		学习率
 		这是一个double型变量，代表学习率。*/
 		void update_weight(double learning_rate){
-			cv::Mat delta = error.t() * input_val;
+			std::cout << "input_val:" << std::endl << input_val << std::endl;
+			std::cout << "error.t():" << std::endl << error.t() << std::endl;
+			cv::Mat delta = error * input_val.t();
+			std::cout << "delta:" << std::endl << delta << std::endl;
 			weight -= learning_rate * delta;
 		}
 
@@ -393,7 +396,9 @@ namespace faQnet{
 				backward(output, target, loss_function_name);
 				std::cout << "反向传播完成" << std::endl;
 				update_weight(learning_rate);
+				std::cout << "更新权值完成" << std::endl;
 				update_bias(learning_rate);
+				std::cout << "更新偏置完成" << std::endl;
 			}
 		}
 
