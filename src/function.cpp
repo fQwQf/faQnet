@@ -194,7 +194,7 @@ namespace faQnet {
 	//Tanh函数的导数
 	//传入一个矩阵，返回该矩阵经过tanh函数的导函数处理后的矩阵。
 	cv::Mat tanh_derivative(cv::Mat Matrix){
-		return 1 - tanh(Matrix) * tanh(Matrix);
+		return 1 - tanh(Matrix).mul(tanh(Matrix));
 	}
 
 	//2024/10/10 fQwQf

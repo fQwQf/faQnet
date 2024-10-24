@@ -157,9 +157,9 @@ namespace faQnet{
 		cv::Mat forward(cv::Mat input){
 			input_val = input;
 			result_val = weight * input + bias;
-			std::cout << "result_val:" << std::endl << result_val << std::endl;
-			std::cout << "activation_function:" << std::endl << act_func << std::endl;
-			std::cout << "result:" << std::endl << activation_function(result_val, act_func) << std::endl;
+			//std::cout << "result_val:" << std::endl << result_val << std::endl;
+			//std::cout << "activation_function:" << std::endl << act_func << std::endl;
+			//std::cout << "result:" << std::endl << activation_function(result_val, act_func) << std::endl;
 			return activation_function(result_val, act_func);
 		}
 
@@ -432,7 +432,7 @@ namespace faQnet{
 			cv::Mat output = forward(input);
 			output = denormalize_target(output);
 			output = softmax(output);
-			return output;//我们尚未实现过滤函数。
+			return output;
 		}
 
 		//2024/10/10 fQwQf
@@ -631,7 +631,7 @@ int main(){
 	std::vector<cv::Mat> target = faQnet::load_data("wdbc.csv", 2, 3);
 	std::cout << "数据导入完成" << std::endl;
 	std::vector<int> layer_size = {30, 15, 2};
-	std::vector<std::string> activation_function = {"softsign", "leaky_relu","sigmoid"};
+	std::vector<std::string> activation_function = {"softsign", "leaky_relu","tanh"};
 	faQnet::net net(layer_size, activation_function);
 	std::cout << "网络初始化完成" << std::endl;
 
@@ -651,7 +651,7 @@ int main(){
 
 	for (int i = 0; i < input.size()-100; i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.train(input[i], target[i], 0.0001 ,1000,"ce");
+		net.train(input[i], target[i], 0.0001 ,10,"ce");
 	}
 
 	net.print_network();
