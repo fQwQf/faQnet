@@ -405,11 +405,20 @@ namespace faQnet {
 	//2024/10/23 fQwQf
 	//平均绝对误差 (MAE/L1Loss)的导数
 	cv::Mat mae_derivative(cv::Mat y_true, cv::Mat y_pred){
-		if (y_true=== y_pred) {
-			return cv::Mat::zeros(y_true.size(), y_true.type());
-		}else {
-		    return y_true - y_pred / cv::abs(y_true - y_pred);
+		cv::Mat diff = y_true - y_pred;
+		for (int i = 0; i < y_true.rows; ++i) {
+			for (int j = 0; j < y_true.cols; ++j) {
+				if (diff.at<float>(i, j) > 0) {
+					diff.at<float>(i, j) = 1;
+				} else if (diff.at<float>(i, j) < 0) {
+					diff.at<float>(i, j) = -1;
+				} else {
+					diff.at<float>(i, j) = 0;
+				}
+			}
 		}
+		return diff;
+		
 	}
 
 	//2024/10/23 fQwQf
