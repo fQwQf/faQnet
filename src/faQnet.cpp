@@ -177,7 +177,7 @@ namespace faQnet{
 			error = last_error.mul(activation_function_derivative(result_val,act_func));
 			//std::cout << "result:" << std::endl << result_val << std::endl;
 			//std::cout << "activation_function_derivative:" << std::endl << activation_function_derivative(result) << std::endl;
-			std::cout << "error:" << std::endl << error << std::endl;
+			//std::cout << "error:" << std::endl << error << std::endl;
 			return weight.t() * error;
 		}
 
@@ -191,10 +191,10 @@ namespace faQnet{
 		学习率
 		这是一个double型变量，代表学习率。*/
 		void update_weight(double learning_rate){
-			std::cout << "input_val:" << std::endl << input_val << std::endl;
-			std::cout << "error.t():" << std::endl << error.t() << std::endl;
+			//std::cout << "input_val:" << std::endl << input_val << std::endl;
+			//std::cout << "error.t():" << std::endl << error.t() << std::endl;
 			cv::Mat delta = error * input_val.t();
-			std::cout << "delta:" << std::endl << delta << std::endl;
+			//std::cout << "delta:" << std::endl << delta << std::endl;
 			weight -= learning_rate * delta;
 		}
 
@@ -284,6 +284,7 @@ namespace faQnet{
 			target_mean = cv::Mat::zeros(node_num[node_num.size() - 1], 0, CV_32F);
 			target_std = cv::Mat::zeros(node_num[node_num.size() - 1], 1, CV_32F);
 			node_num.push_back(node_num[node_num.size()-1]);
+			
 			for(int i = 0; i < node_num.size() - 1; i++){
 				layers.push_back(layer(node_num[i], node_num[i + 1], act_function[i]));
 			}
@@ -326,10 +327,10 @@ namespace faQnet{
 		这是一个字符串，代表损失函数。*/
 		void backward(cv::Mat output, cv::Mat target, std::string loss_function_name="mse"){
 			cv::Mat error = loss_function_derivative(target, output, loss_function_name);
-			std::cout << "target:" << std::endl << target << std::endl;
-			std::cout << "output:" << std::endl << output << std::endl;
-			std::cout << "loss_function" << std::endl << loss_function_name << std::endl;
-			std::cout << "error:" << std::endl << error << std::endl;
+			//std::cout << "target:" << std::endl << target << std::endl;
+			//std::cout << "output:" << std::endl << output << std::endl;
+			//std::cout << "loss_function" << std::endl << loss_function_name << std::endl;
+			//std::cout << "error:" << std::endl << error << std::endl;
 			for(int i = layers.size() -1; i >= 0; i--){
 				//std::cout << "反向传播第" << i << "层" << std::endl;
 				error = layers[i].backward(error);
@@ -398,11 +399,11 @@ namespace faQnet{
 				cv::Mat loss_value = loss(output, target, loss_function_name);
 				std::cout <<"训练次数：" << i+1 <<"/" << train_times << std::endl << "  loss值: " << std::endl << loss_value << std::endl;
 				backward(output, target, loss_function_name);
-				std::cout << "反向传播完成" << std::endl;
+				//std::cout << "反向传播完成" << std::endl;
 				update_weight(learning_rate);
-				std::cout << "更新权值完成" << std::endl;
+				//std::cout << "更新权值完成" << std::endl;
 				update_bias(learning_rate);
-				std::cout << "更新偏置完成" << std::endl;
+				//std::cout << "更新偏置完成" << std::endl;
 			}
 		}
 
