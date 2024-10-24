@@ -9,7 +9,7 @@ int main(){
 	faQnet::net net(layer_size, activation_function);
 	std::cout << "网络初始化完成" << std::endl;
 
-	
+
 
 	net.init_bias("uniform", -0.01, 0.01);
 	net.init_weight("normal", 0, 0.5);
@@ -36,4 +36,4 @@ int main(){
 		std::cout << "实际数据：" << i-input.size()+101 <<"/" << 100 ;
 		std::cout << target[i] << std::endl;
 	}
-} 
+}

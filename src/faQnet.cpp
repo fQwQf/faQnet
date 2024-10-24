@@ -287,12 +287,12 @@ namespace faQnet{
 			target_mean = cv::Mat::zeros(node_num[node_num.size() - 1], 1, CV_32F);
 			target_std = cv::Mat::ones(node_num[node_num.size() - 1], 1, CV_32F);
 			node_num.push_back(node_num[node_num.size()-1]);
-			
+
 			for(int i = 0; i < node_num.size() - 1; i++){
 				layers.push_back(layer(node_num[i], node_num[i + 1], act_function[i]));
 			}
 
-			
+
 		}
 
 
@@ -422,7 +422,7 @@ namespace faQnet{
 			float loss_value = loss(output, target, "ce");
 			float loss_v = loss(output, target, "ce");
 			std::cout << "初始loss值: " << loss_v << std::endl;
-			
+
 			while(loss_value > loss_threshold){
 				cv::Mat output = forward(input);
 				loss_value = loss(output, target, "ce");
@@ -645,7 +645,7 @@ namespace faQnet{
 	faQnet::net net(layer_size, activation_function);
 	std::cout << "网络初始化完成" << std::endl;
 
-	
+
 
 	net.init_bias("uniform", -0.1, 0.1);
 	net.init_weight("normal", 0, 0.5);

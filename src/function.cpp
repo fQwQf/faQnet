@@ -26,7 +26,7 @@ namespace faQnet {
 		else if(act_function == "leaky_relu"){
 			return leaky_relu(Matrix);
 		}
-		
+
 		else if(act_function == "softsign"){
 			return softsign(Matrix);
 		}
@@ -286,7 +286,7 @@ namespace faQnet {
 	//softmax函数的导数
 	//传入一个矩阵，返回该矩阵经过softmax函数的导函数处理后的矩阵。
 	//cv::Mat softmax_derivative(cv::Mat Matrix){
-	    
+
 	//}
 
 
@@ -376,7 +376,7 @@ namespace faQnet {
 				result.at<float>(i, j) = tru * log(pre) + (1 - tru) * log(1 - pre);
 			}
 		}
-		
+
 		return - result;
 	}
 
@@ -418,7 +418,7 @@ namespace faQnet {
 			}
 		}
 		return - diff;
-		
+
 	}
 
 	//2024/10/23 fQwQf
@@ -467,7 +467,7 @@ namespace faQnet {
 		return (1 - y_true)/(1 - y_pred) - y_true/y_pred ;
 	}
 
-	
+
 
 }
 

@@ -112,4 +112,3 @@ namespace faQnet{
 	std::vector<cv::Mat> load_data(std::string file_name, int start, int end);
 
 }
-
