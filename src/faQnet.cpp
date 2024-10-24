@@ -279,6 +279,10 @@ namespace faQnet{
 		//每一层激活函数类型
 		//这是一个vector，储存一些字符串。
 		net(std::vector<int> node_num, std::vector<std::string> act_function){
+			input_mean = cv::Mat::zeros(node_num[0], 0, CV_32F);
+			input_std = cv::Mat::zeros(node_num[0], 1, CV_32F);
+			target_mean = cv::Mat::zeros(node_num[node_num.size() - 1], 0, CV_32F);
+			target_std = cv::Mat::zeros(node_num[node_num.size() - 1], 1, CV_32F);
 			node_num.push_back(node_num[node_num.size()-1]);
 			for(int i = 0; i < node_num.size() - 1; i++){
 				layers.push_back(layer(node_num[i], node_num[i + 1], act_function[i]));

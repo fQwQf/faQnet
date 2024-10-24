@@ -5,7 +5,7 @@ int main(){
 	std::vector<cv::Mat> target = faQnet::load_data("winequality-white.csv", 12, 12);
 	std::cout << "数据导入完成" << std::endl;
 	std::vector<int> layer_size = {11, 6 , 1};
-	std::vector<std::string> activation_function = {"relu", "sigmoid","leaky_relu"};
+	std::vector<std::string> activation_function = {"relu", "sigmoid","none"};
 	faQnet::net net(layer_size, activation_function);
 	std::cout << "网络初始化完成" << std::endl;
 
