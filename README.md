@@ -6,12 +6,14 @@
 1. 安装OpenCV库，并设置环境变量。
 2. 下载faQnet，解压到任意目录。
 3. 在需要使用faQnet的文件中，引用头文件/src/faQnet.h	
-
-		#include "/src/faQnet.h"  
+```c++
+	#include "/src/faQnet.h"  
+```
 
 4. 在编译时，将/src/faQnet.cpp加入编译。  
-
-		g++ -o test test.cpp /src/faQnet.cpp  
+```shell
+	g++ -o test test.cpp /src/faQnet.cpp  
+```
 
 现在，你就可以使用faQnet了！
 
