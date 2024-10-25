@@ -99,7 +99,7 @@ namespace faQnet{
 		//正态分布初始化
 		//传入正态分布的均值和标准差和需要初始化的矩阵，将矩阵中的每一项赋值为一个正态分布的随机值。
 		void normal_init(float mean, float std, cv::Mat &Matrix){
-			cv:randn(Matrix, mean, std);
+			cv::randn(Matrix, mean, std);
 		}
 
 		//摆烂了。
