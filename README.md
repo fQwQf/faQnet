@@ -28,14 +28,12 @@
 	在faQnet中，数据以单列矩阵的形式导入。因此我们内置了`load_data`函数，用于从csv文件中导入数据。  
 
 		std::vector<cv::Mat> input = faQnet::load_data("wdbc.csv", 	4, 33);
-		
 		std::vector<cv::Mat> target = faQnet::load_data("wdbc.csv", 2, 3);
 
 3.  构建网络结构  
 	在faQnet中，我们使用`faQnet::net`类来构建网络结构。您只需要将储存每一层节点数和激活函数类型的vector传入构造函数即可。  
 
 		std::vector<int> layer_size = {30, 15, 2};
-		
 		std::vector<std::string> activation_function = {"softsign", "leaky_relu","none"};
 		
 		faQnet::net net(layer_size, activation_function);   
@@ -43,3 +41,28 @@
 4. 初始化矩阵  
 	在faQnet中，我们使用您构建的net对象的`init_bias`和`init_weight`方法来初始化偏置项矩阵和权值矩阵。只需传入初始化方法和对应参数即可。  
 
+		net.init_bias("uniform", -0.1, 0.1);
+		net.init_weight("normal", 0, 0.5);
+
+5. （可选）数据归一化预处理  
+	在faQnet中，我们使用net对象的`preprocess_input`方法对输入数据进行归一化预处理。  
+
+		net.preprocess_input(input);
+
+6. 训练网络  
+	在faQnet中，我们使用net对象的`train`方法对网络进行训练。只需传入输入数据、预期输出、学习率、训练次数、采用的损失函数即可。  
+
+		for (int i = 0; i < input.size()-100; i++){
+			std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
+			net.train(input[i], target[i], 0.0001 ,10,"ce");
+		}
+
+7. 预测
+	在faQnet中，我们使用net对象的`predict`方法对数据进行预测。只需传入输入数据即可。同时，您还可以使用`faQnet::softmax`函数对输出进行softmax处理。  
+
+		for (int i = input.size()-100; i < input.size(); i++){
+			std::cout << "预测数据：" << i-input.size()+101 <<"/" << 100 ;
+			std::cout << faQnet::softmax(net.predict(input[i])) << std::endl;
+			std::cout << "实际数据：" << i-input.size()+101 <<"/" << 100 ;
+			std::cout << target[i] << std::endl;
+		}
