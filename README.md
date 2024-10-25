@@ -88,4 +88,4 @@
 |README.md	|项目说明文件	|提供项目的基本信息和使用指南|
 
 # 联系信息
-如果你有任何问题或建议，请随时通过我的电子邮件<fQwQf66@outlook.com>或<supertjz123@foxmail.com>与我联系。
+如果你有任何问题或建议，请随时通过我的电子邮件<fQwQf6@outlook.com>或<supertjz123@foxmail.com>与我联系。
