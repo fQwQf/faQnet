@@ -213,3 +213,22 @@ cv::Mat loss_value = myNet.loss(output, target, "mse");
 std::cout << "Loss value: " << loss_value << std::endl;
 ```
 		
+### 2. 其他函数
+#### 2.1 数据集加载函数
+```c++
+std::vector<cv::Mat> load_data(std::string file_name, int start, int end);
+```
+- **功能**：从CSV文件中加载数据，并将其转换为OpenCV矩阵。
+- **参数**:
+  - `file_name`：`std::string` 类型，表示CSV文件的路径。
+  - `start`：`int` 类型，表示要加载的数据的起始列索引。
+  - `end`：`int` 类型，表示要加载的数据的结束列索引。
+- **返回**：`std::vector<cv::Mat>` 类型的vector，包含从CSV文件中加载的一系列数据。注意：csv文件的第一行将被跳过，因为有可能为表头。
+
+**示例**：
+```c++
+std::vector<cv::Mat> input = faQnet::load_data("wdbc.csv", 4, 33);
+std::vector<cv::Mat> target = faQnet::load_data("wdbc.csv", 2, 3);
+```
+
+
