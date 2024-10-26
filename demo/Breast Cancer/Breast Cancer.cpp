@@ -1,4 +1,4 @@
-#include "../../src/faQnet.cpp"
+#include "../../src/faQnet.h"
 
 int main(){
 	std::vector<cv::Mat> input = faQnet::load_data("wdbc.csv", 	4, 33);
@@ -16,19 +16,19 @@ int main(){
 	std::cout << "矩阵初始化完成" << std::endl;
 
 	std::cout <<input.size() << std::endl;
-	net.preprocess_input(input);
+	net.normalize_preprocess_input(input);
 	std::cout << "输入数据预处理完成" << std::endl;
-	//net.preprocess_target(target); 
+	//net.normalize_preprocess_target(target); 
 	//std::cout << "输出数据预处理完成" << std::endl;
 
-	net.print_network();
+	net.print_net();
 
 	for (int i = 0; i < input.size()-100; i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
 		net.train(input[i], target[i], 0.0001 ,10,"ce");
 	}
 
-	net.print_network();
+	net.print_net();
 
 	for (int i = input.size()-100; i < input.size(); i++){
 		std::cout << "预测数据：" << i-input.size()+101 <<"/" << 100 ;

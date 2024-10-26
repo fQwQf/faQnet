@@ -34,7 +34,7 @@ net myNet(layer_sizes, act_functions);
 
 #### 1.2 数据预处理函数
 ```c++
-void preprocess_input(std::vector<cv::Mat> input);
+void normalize_preprocess_input(std::vector<cv::Mat> input);
 ```
 
 - **功能**：对输入数据和目标数据进行归一化预处理。预处理后，数据在输入神经网络时会自动归一化。  
@@ -100,12 +100,12 @@ std::cout << "Network output: " << output << std::endl;
 
 #### 1.6 输出网络详情函数
 ```c++
-void print_network();
+void print_net();
 ```
 - **功能**：输出网络结构信息，具体到层。
 - **示例**：
 ```c++
-myNet.print_network(); // 输出网络结构信息
+myNet.print_net(); // 输出网络结构信息
 ```
 
 #### 1.7 非常用方法

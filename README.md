@@ -58,9 +58,9 @@
 ```
 
 5. （可选）数据归一化预处理  
-	在faQnet中，我们使用net对象的`preprocess_input()`方法对输入数据进行归一化预处理。  
+	在faQnet中，我们使用net对象的`normalize_preprocess_input()`方法对输入数据进行归一化预处理。  
 ```c++
-	net.preprocess_input(input);
+	net.normalize_preprocess_input(input);
 ```
 
 6. 训练网络  

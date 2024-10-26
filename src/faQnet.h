@@ -91,9 +91,9 @@ namespace faQnet{
 
 		cv::Mat predict(cv::Mat input);
 
-		void preprocess_input(std::vector<cv::Mat> input);
+		void normalize_preprocess_input(std::vector<cv::Mat> input);
 
-		void preprocess_target(std::vector<cv::Mat> target);
+		void normalize_preprocess_target(std::vector<cv::Mat> target);
 
 		cv::Mat normalize_input(cv::Mat input);
 
@@ -101,7 +101,7 @@ namespace faQnet{
 
 		cv::Mat denormalize_target(cv::Mat target);
 
-		void print_network();
+		void print_net();
 
 		void init_weight(std::string init_method,float a,float b=0);
 

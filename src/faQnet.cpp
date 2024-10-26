@@ -478,7 +478,7 @@ namespace faQnet{
 		传入参数：
 		输入矩阵（若干）
 		这是一个储存Mat对象的vector，储存若干输入矩阵。*/
-		void preprocess_input(std::vector<cv::Mat> input){
+		void normalize_preprocess_input(std::vector<cv::Mat> input){
 			std::cout <<input.size();
 			for(int k = 0; k < input[0].rows; k++){
 				float sum = 0;
@@ -504,7 +504,7 @@ namespace faQnet{
 		传入参数：
 		输出矩阵（若干）
 		这是一个储存Mat对象的vector，储存若干输出矩阵。*/
-		void preprocess_target(std::vector<cv::Mat> target){
+		void normalize_preprocess_target(std::vector<cv::Mat> target){
 			int times = target.size();
 			for(int k = 0; k < target[0].rows; k++){
 				float sum = 0;
@@ -557,7 +557,7 @@ namespace faQnet{
 
 		//2024/10/14 fQwQf
 		//输出网络详情
-		void print_network(){
+		void print_net(){
 			std::cout << "层数: " << layers.size() << std::endl;
 			for (int i = 0; i < layers.size(); i++){
 				std::cout << "第" << i+1 << "层: " << std::endl;
