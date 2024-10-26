@@ -8,19 +8,19 @@ faQnet是一个简洁的 C++ 神经网络框架，支持多层网络的构建与
 
 ### 1. `net` 类
 
-`net` 是神经网络的核心类，代表整个神经网络，负责神经网络的创建、前向传播、反向传播、损失计算、以及权重和偏置的更新。
+`net` 是神经网络的核心类，代表整个神经网络，负责神经网络的创建,前向传播,反向传播,损失计算,以及权重和偏置的更新。
 
 #### 1.1 构造函数
 
 ```c++
 net(std::vector<int> node_num,std::vector<std::string> act_function);
-
 ```
 
 - **功能**：初始化一个神经网络。
 - **参数**:
-  - `node_num`：`vector<int>` 类型，表示每层神经元的数量。例如，`{3, 5, 1}` 表示包含 3 个输入神经元、5 个第一隐藏层神经元和 1 个输出神经元的三层网络。  
-  - `act_function`：`vector<string>` 类型，表示每层激活函数的类型。例如，`{"softsign", "leaky_relu","none"}` 表示第一层使用 `softsign` 激活函数，第二层使用 `leaky_relu` 激活函数，第三层不使用激活函数。 
+  - `node_num`：`vector<int>` 类型，表示每层神经元的数量。例如，`{3, 5, 1}` 表示包含 3 个输入神经元,5 个第一隐藏层神经元和 1 个输出神经元的三层网络。  
+  - `act_function`：`vector<string>` 类型，表示每层激活函数的类型。例如，`{"softsign", "leaky_relu","none"}` 表示第一层使用 `softsign` 激活函数，第二层使用 `leaky_relu` 激活函数，第三层不使用激活函数。  
+  支持的激活函数包括：`"sigmoid"`, `"tanh"`, `"relu"`, `"leaky_relu"`, `"softsign"`, `"softplus"`, `"swish"`, `"elu"`, `"none"`。
 
 **示例**：
 ```c++
@@ -39,7 +39,7 @@ void train(cv::Mat input, cv::Mat target, double learning_rate, int train_times,
   - `target`：`cv::Mat` 类型，表示目标值。
   - `learning_rate`：`double` 类型，即学习率。
   - `train_times`：`int` 类型，表示训练的迭代次数。
-  - `loss_function_name`：`std::string` 类型，可选参数，指定损失函数类型。支持 `"mae"`、`"mse"`、`"sll"`、`"mape"`、`"msle"`、`"ce"`。默认为 `"mse"`。
+  - `loss_function_name`：`std::string` 类型，可选参数，指定损失函数类型。支持 `"mae"`,`"mse"`,`"sll"`,`"mape"`,`"msle"`,`"ce"`。默认为 `"mse"`。
 - **示例**：
 ```c++
 myNet.train(input, target, 0.01, 1000, "mse"); // 使用 MSE 损失函数训练网络
@@ -91,7 +91,7 @@ void init_bias(std::string init_method,float a,float b);
 ```
 - **功能**：根据指定的初始化方法，对网络中的权值矩阵进行初始化。
 - **参数**:
-  - `init_method`：`std::string` 类型，表示初始化方法的名称。支持的初始化方法包括 `"uniform"`、`"normal"`、`"constant"`。
+  - `init_method`：`std::string` 类型，表示初始化方法的名称。支持的初始化方法包括 `"uniform"`,`"normal"`,`"constant"`。
   - `a`：`float` 类型，表示初始化参数a。  
   对于 `"uniform"` 方法，表示均匀分布的下界；对于 `"normal"` 方法，表示正态分布的均值；对于 `"constant"` 方法，表示常数值。
   - `b`：`float` 类型，表示初始化参数b。  
@@ -155,7 +155,7 @@ void backward(cv::Mat target, cv::Mat output, std::string loss_function_name = "
 - **参数**:
   - `target`：`cv::Mat` 类型，表示目标输出的矩阵。
   - `output`：`cv::Mat` 类型，表示实际输出矩阵（通常为前向传播的结果）。
-  - `loss_function_name`：`std::string` 类型，可选参数，指定损失函数类型。支持 `"mse"`（均方误差）、`"mape"`（平均绝对百分比误差）、`"msle"`（均方对数误差）、`"ce"`（二元交叉熵）。默认为 `"mse"`。
+  - `loss_function_name`：`std::string` 类型，可选参数，指定损失函数类型。支持 `"mse"`（均方误差）,`"mape"`（平均绝对百分比误差）,`"msle"`（均方对数误差）,`"ce"`（二元交叉熵）。默认为 `"mse"`。
 
 **示例**：
 ```c++
@@ -204,7 +204,7 @@ cv::Mat loss(cv::Mat output, cv::Mat target, std::string loss_function_name);
 - **参数**:
   - `output`：`cv::Mat` 类型，表示网络的实际输出。
   - `target`：`cv::Mat` 类型，表示目标值。
-  - `loss_function_name`：`std::string` 类型，指定损失函数的类型。支持的类型包括 `"mse"`、`"mape"`、`"msle"`、`"ce"`。
+  - `loss_function_name`：`std::string` 类型，指定损失函数的类型。支持的类型包括 `"mse"`,`"mape"`,`"msle"`,`"ce"`。
 - **返回**：`cv::Mat` 类型的矩阵，包含损失值。
 
 **示例**：
