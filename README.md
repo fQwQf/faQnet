@@ -1,5 +1,7 @@
 # 项目描述
+
 ![logo](./faQnet.png)
+
 **faQnet** /fɑːkjuːnet/是一个c++神经网络框架，它使用OpenCV库，并且使用单列矩阵储存输入输出。"faQnet"这个名字是"flexible and Quick neural network"的缩写，旨在实现一个强调灵活性和快速开发的神经网络框架，能够适应各种神经网络架构，同时提升开发效率。  
 
 # 安装和使用说明  
