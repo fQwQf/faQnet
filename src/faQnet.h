@@ -2,7 +2,6 @@
 #include<opencv2/core/core.hpp>
 #include<opencv2/highgui/highgui.hpp>
 #include "function.h"
-
 namespace faQnet{
 	class layer{
 		protected:
@@ -127,11 +126,9 @@ namespace faQnet{
 			return loss_function(target, output,loss_function_name);
 		}
 		void train(cv::Mat input, cv::Mat target, double learning_rate, int train_times, std::string loss_function_name="mse"){
+			target = normalize_target(target);
 			for(int i = 0; i < train_times; i++){
 				cv::Mat output = forward(input);
-				std::cout <<"target:" << std::endl << target << std::endl;
-				std::cout <<"output:" << std::endl << output << std::endl;
-				target = normalize_target(target);
 				cv::Mat loss_value = loss(output, target, loss_function_name);
 				std::cout <<"target:" << std::endl << target << std::endl;
 				std::cout <<"output:" << std::endl << output << std::endl;

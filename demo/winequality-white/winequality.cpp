@@ -18,14 +18,14 @@ int main(){
 	std::cout <<input.size() << std::endl;
 	net.normalize_preprocess_input(input);
 	std::cout << "输入数据预处理完成" << std::endl;
-	//net.normalize_preprocess_target(target);
-	//std::cout << "输出数据预处理完成" << std::endl;
+	net.normalize_preprocess_target(target);
+	std::cout << "输出数据预处理完成" << std::endl;
 
 	net.print_net();
 
 	for (int i = 0; i < input.size()-100; i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size() << std::endl;
-		net.train(input[i], target[i], 0.00005 ,100,"mse");
+		net.train(input[i], target[i], 0.00001 ,10,"sll");
 	}
 
 	net.print_net();

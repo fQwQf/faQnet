@@ -394,11 +394,12 @@ namespace faQnet{
 		训练次数
 		这是一个整数，代表训练次数。*/
 		void train(cv::Mat input, cv::Mat target, double learning_rate, int train_times, std::string loss_function_name="mse"){
+			target = normalize_target(target);
 			for(int i = 0; i < train_times; i++){
 				cv::Mat output = forward(input);
-				std::cout <<"target:" << std::endl << target << std::endl;
-				std::cout <<"output:" << std::endl << output << std::endl;
-				target = normalize_target(target);
+				//std::cout <<"target:" << std::endl << target << std::endl;
+				//std::cout <<"output:" << std::endl << output << std::endl;
+				
 				cv::Mat loss_value = loss(output, target, loss_function_name);
 				std::cout <<"target:" << std::endl << target << std::endl;
 				std::cout <<"output:" << std::endl << output << std::endl;

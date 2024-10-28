@@ -35,11 +35,13 @@ net myNet(layer_sizes, act_functions);
 #### 1.2 数据预处理函数
 ```c++
 void normalize_preprocess_input(std::vector<cv::Mat> input);
+void normalize_preprocess_target(std::vector<cv::Mat> target);
 ```
 
-- **功能**：对输入数据和目标数据进行归一化预处理。预处理后，数据在输入神经网络时会自动归一化。  
+- **功能**：对输入数据和目标数据进行归一化预处理。预处理后，数据在输入和输出神经网络时会自动归一化。  
 - **参数**:
-  - `input`：`std::vector<cv::Mat>` 类型，表示输入数据。
+  - `input`：`std::vector<cv::Mat>` 类型，表示输入数据。  
+  - `target`：`std::vector<cv::Mat>` 类型，表示目标值。
 
 #### 1.3 初始化权值矩阵函数与初始化偏置矩阵函数
 ```c++
@@ -159,7 +161,7 @@ void backward(cv::Mat target, cv::Mat output, std::string loss_function_name = "
 - **参数**:
   - `target`：`cv::Mat` 类型，表示目标输出的矩阵。
   - `output`：`cv::Mat` 类型，表示实际输出矩阵（通常为前向传播的结果）。
-  - `loss_function_name`：`std::string` 类型，可选参数，指定损失函数类型。支持 `"mse"`（均方误差）,`"mape"`（平均绝对百分比误差）,`"msle"`（均方对数误差）,`"ce"`（二元交叉熵）。默认为 `"mse"`。
+  - `loss_function_name`：`std::string` 类型，可选参数，指定损失函数类型。支持 `"mse"`（均方误差）,`"mape"`（平均绝对百分比误差）,`"sll"`(平滑平均绝对误差),`"msle"`（均方对数误差）,`"ce"`（二元交叉熵）。默认为 `"mse"`。
 
 **示例**：
 ```c++
@@ -208,7 +210,7 @@ cv::Mat loss(cv::Mat output, cv::Mat target, std::string loss_function_name);
 - **参数**:
   - `output`：`cv::Mat` 类型，表示网络的实际输出。
   - `target`：`cv::Mat` 类型，表示目标值。
-  - `loss_function_name`：`std::string` 类型，指定损失函数的类型。支持的类型包括 `"mse"`,`"mape"`,`"msle"`,`"ce"`。
+  - `loss_function_name`：`std::string` 类型，指定损失函数的类型。支持的类型包括 `"mse"`,`"mape"`,`"sll"`,`"msle"`,`"ce"`。
 - **返回**：`cv::Mat` 类型的矩阵，包含损失值。
 
 **示例**：
