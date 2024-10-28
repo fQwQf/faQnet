@@ -13,7 +13,7 @@ int main(){
 
 	net.init_bias("uniform", -0.01, 0.01);
 	net.init_weight("normal", 0, 0.5);
-	std::cout << "矩阵初始化完成" << std::endl;
+	std::cout << "\" << std::endl;
 
 	std::cout <<input.size() << std::endl;
 	net.normalize_preprocess_input(input);
