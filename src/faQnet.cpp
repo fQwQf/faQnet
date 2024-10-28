@@ -401,9 +401,9 @@ namespace faQnet{
 				//std::cout <<"output:" << std::endl << output << std::endl;
 				
 				cv::Mat loss_value = loss(output, target, loss_function_name);
-				std::cout <<"target:" << std::endl << target << std::endl;
-				std::cout <<"output:" << std::endl << output << std::endl;
-				std::cout <<"loss_function" << std::endl << loss_function_name << std::endl;
+				//std::cout <<"target:" << std::endl << target << std::endl;
+				//std::cout <<"output:" << std::endl << output << std::endl;
+				//std::cout <<"loss_function" << std::endl << loss_function_name << std::endl;
 				std::cout <<"训练次数：" << i+1 <<"/" << train_times << std::endl << "  loss值: " << std::endl << loss_value << std::endl;
 				backward(output, target, loss_function_name);
 				//std::cout << "反向传播完成" << std::endl;
