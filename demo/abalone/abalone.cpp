@@ -5,7 +5,7 @@ int main(){
 	std::vector<cv::Mat> target = faQnet::load_data("abalone.csv", 11, 11);
 	std::cout << "数据导入完成" << std::endl;
 	std::vector<int> layer_size = {10 , 5, 1};
-	std::vector<std::string> activation_function = {"leaky_relu","elu", "leaky_relu"};
+	std::vector<std::string> activation_function = {"sigmoid","elu", "leaky_relu"};
 	faQnet::net net(layer_size, activation_function);
 	std::cout << "网络初始化完成" << std::endl;
 
@@ -22,9 +22,9 @@ int main(){
 
 	net.print_net();
 
-	for (int i = 0; i < input.size()-50; i++){
+	for (int i = 0; i < 500; i++){
 		std::cout << "训练数据：" << i+1 <<"/" << input.size()-50 << std::endl;
-		net.train(input[i], target[i], 0.0005 ,100,"mse");
+		net.train(input[i], target[i], 0.0001 ,1000,"mse");
 	}
 
 	net.print_net();
