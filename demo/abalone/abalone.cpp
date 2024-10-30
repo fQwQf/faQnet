@@ -11,8 +11,8 @@ int main(){
 
 
 
-	net.init_bias("uniform", -0.01, 0.01);
-	net.init_weight("normal", 0, 0.1);
+	net.init_bias("uniform", -0.1, 0.1);
+	net.init_weight("normal", 0, 0.2);
 
 	std::cout <<input.size() << std::endl;
 	net.normalize_preprocess_input(input);
@@ -22,9 +22,9 @@ int main(){
 
 	net.print_net();
 
-	for (int i = 0; i < 500; i++){
-		std::cout << "训练数据：" << i+1 <<"/" << input.size()-50 << std::endl;
-		net.train(input[i], target[i], 0.0001 ,1000,"mse");
+	for (int i = 0; i < input.size()-100; i++){
+		std::cout << "训练数据：" << i+1 <<"/" << input.size()-100 << std::endl;
+		net.train(input[i], target[i], 0.003 ,100,"mse");
 	}
 
 	net.print_net();
